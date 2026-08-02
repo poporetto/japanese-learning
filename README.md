@@ -87,8 +87,37 @@ with the listed filenames and they appear automatically; until then a coloured
 placeholder shows. Same for `assets/photos/` — the photo bubble shows a dashed
 placeholder with the expected path when a file is missing.
 
-Photos unlock by affection (`minAffection`), have a cooldown, and she also sends
-them unprompted at low probability.
+### Photo events
+
+Photos are **contextual**, not just random — that's what makes them feel like
+she's actually living somewhere. Each entry in `dialogue.photos` declares when
+she'd send it:
+
+```jsonc
+{
+  "id": "ph_ramen",
+  "kind": "scene",                                   // or "selfie"
+  "minAffection": 6,
+  "file": "assets/photos/ramen.jpg",
+  "when": { "intent": ["food_talk"], "topic": ["t_meals"] },
+  "b": [{ "jp": "はい、証拠{しょうこ}写真{しゃしん}。", "en": "Here, photographic evidence." }]
+}
+```
+
+- Mention ramen and she sends the bowl; complain about work and you get her
+  desk; say it's raining and you get her window.
+- `band` triggers on time of day — the station at dusk, morning light in her
+  kitchen, the empty office floor at night.
+- **scene** photos (her surroundings) are frequent, 5-turn cooldown. **selfies**
+  are rarer, 12-turn cooldown, and are what 「写真見せて」 reaches for first —
+  falling back to showing you her surroundings if she isn't comfortable yet.
+- A photo with no `when` only appears on the low-probability random path.
+- Ask too often and she deflects (`photoDeny`) rather than spamming.
+
+Currently 19 photos: konbini hauls, ramen, her desk, the office at night, the
+sky, rain on the window, Nakameguro station, the Meguro river, a neighbourhood
+cat, her film camera, developed prints, her room, burnt home cooking — plus four
+selfies gated at affection 25/35/45/60.
 
 ## Relationship model
 

@@ -9,7 +9,12 @@
       "q": "sets pendingSlot: the user's next message is stored in this slot",
       "sug": "quick-reply chips",
       "aff": "affection delta",
-      "cond": "{ minAff, maxAff, stage, needSlot, flag, notFlag }"
+      "cond": "{ minAff, maxAff, stage, needSlot, lacksSlot, minTurns, flag, notFlag }"
+    },
+    "photos": {
+      "kind": "'scene' (her surroundings — frequent, 5-turn cooldown) or 'selfie' (rarer, 12-turn cooldown, what 「写真見せて」 reaches for first)",
+      "when": "{ intent: [...], topic: [...], band: [...] } — when she'd naturally send it. A photo with no `when` only ever appears on the random path.",
+      "minAffection": "how close she has to feel before this one is on the table"
     }
   },
 
@@ -579,22 +584,226 @@
 
   "photos": [
     {
-      "id": "ph_desk",
-      "minAffection": 15,
-      "file": "assets/photos/desk.jpg",
-      "alt": "Yui's desk at work",
-      "s": "smile",
+      "id": "ph_konbini",
+      "kind": "scene",
+      "minAffection": 4,
+      "file": "assets/photos/konbini.jpg",
+      "alt": "A konbini haul on her desk",
+      "s": "excited",
+      "when": { "intent": ["food_talk"], "topic": ["t_meals"] },
       "b": [
-        { "jp": "はい、これ今{いま}の机{つくえ}の上{うえ}。散{ち}らかってるでしょ。", "en": "Here, this is my desk right now. Messy, right." },
-        { "jp": "…写{うつ}り込{こ}んでるけど、気{き}にしないで。", "en": "...I'm in the shot a bit, but don't mind it." }
+        { "jp": "見{み}て、今日{きょう}の戦利品{せんりひん}。", "en": "Look, today's haul." },
+        { "jp": "おにぎり二個{にこ}とプリン。栄養{えいよう}バランスって何{なん}だっけ。", "en": "Two onigiri and a pudding. What was 'nutritional balance' again?" }
+      ]
+    },
+    {
+      "id": "ph_ramen",
+      "kind": "scene",
+      "minAffection": 6,
+      "file": "assets/photos/ramen.jpg",
+      "alt": "A bowl of ramen, shot from above",
+      "s": "excited",
+      "when": { "intent": ["food_talk"], "topic": ["t_meals"] },
+      "b": [
+        { "jp": "はい、証拠{しょうこ}写真{しゃしん}。今週{こんしゅう}二回目{にかいめ}。", "en": "Here, photographic evidence. Second time this week." },
+        { "jp": "スープまで飲{の}んだのは内緒{ないしょ}ね。", "en": "The fact that I drank the soup too is a secret." }
       ],
       "aff": 1
     },
     {
+      "id": "ph_coffee",
+      "kind": "scene",
+      "minAffection": 4,
+      "file": "assets/photos/coffee.jpg",
+      "alt": "A latte on a cafe counter",
+      "s": "smile",
+      "when": { "band": ["afternoon"], "intent": ["food_talk", "tired"] },
+      "b": [
+        { "jp": "三時{さんじ}の休憩{きゅうけい}。これがないと午後{ごご}が越{こ}えられない。", "en": "Three o'clock break. I can't get through the afternoon without this." }
+      ]
+    },
+    {
+      "id": "ph_desk",
+      "kind": "scene",
+      "minAffection": 6,
+      "file": "assets/photos/desk.png",
+      "alt": "Aya smiling at her desk",
+      "s": "smile",
+      "when": { "intent": ["work_talk"], "topic": ["t_work"] },
+      "b": [
+        { "jp": "はい、これ今{いま}の机{つくえ}の上{うえ}。散{ち}らかってるでしょ。", "en": "Here, this is my desk right now. Messy, right." },
+        { "jp": "付箋{ふせん}の数{かず}が忙{いそが}しさのバロメーター。", "en": "The number of sticky notes is my busyness barometer." }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "ph_desk_night",
+      "kind": "scene",
+      "minAffection": 12,
+      "file": "assets/photos/desk-night.jpg",
+      "alt": "Her office at night, mostly dark",
+      "s": "tired",
+      "when": { "intent": ["work_talk", "tired"], "band": ["night"] },
+      "b": [
+        { "jp": "フロアに私{わたし}しか残{のこ}ってない。", "en": "I'm the only one left on the floor." },
+        { "jp": "非常灯{ひじょうとう}だけついてるの、ちょっと綺麗{きれい}なんだよね。こういうときだけ。", "en": "With only the emergency lights on it's kind of pretty. Only at times like this." }
+      ]
+    },
+    {
+      "id": "ph_sky",
+      "kind": "scene",
+      "minAffection": 3,
+      "file": "assets/photos/sky.jpg",
+      "alt": "Sky from the office window",
+      "s": "neutral",
+      "when": { "intent": ["weather"] },
+      "b": [
+        { "jp": "今{いま}こっちの空{そら}こんな感{かん}じ。", "en": "The sky over here looks like this right now." },
+        { "jp": "そっちは？同{おな}じ空{そら}のはずなのにね。", "en": "How about yours? It's supposed to be the same sky." }
+      ]
+    },
+    {
+      "id": "ph_rain",
+      "kind": "scene",
+      "minAffection": 8,
+      "file": "assets/photos/rain.jpg",
+      "alt": "Rain running down a window",
+      "s": "neutral",
+      "when": { "intent": ["weather", "sad"] },
+      "b": [
+        { "jp": "窓{まど}の雨{あめ}、ずっと見{み}てた。傘{かさ}忘{わす}れたんだけどね。", "en": "I've been watching the rain on the window. I forgot my umbrella, though." },
+        { "jp": "こういう日{ひ}は、誰{だれ}かと喋{しゃべ}ってたくなる。", "en": "On days like this I want to be talking to someone." }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "ph_morning_window",
+      "kind": "scene",
+      "minAffection": 10,
+      "file": "assets/photos/morning-window.jpg",
+      "alt": "Morning light through her kitchen window",
+      "s": "sleepy",
+      "when": { "band": ["morning"] },
+      "b": [
+        { "jp": "朝{あさ}の光{ひかり}だけは、毎日{まいにち}ちょっと違{ちが}うんだよ。", "en": "The morning light is the one thing that's a bit different every day." },
+        { "jp": "…って言{い}いながら二度寝{にどね}しそう。", "en": "...Says the person about to fall back asleep." }
+      ]
+    },
+    {
+      "id": "ph_station",
+      "kind": "scene",
+      "minAffection": 10,
+      "file": "assets/photos/station.jpg",
+      "alt": "Nakameguro station at dusk",
+      "s": "neutral",
+      "when": { "band": ["evening"] },
+      "b": [
+        { "jp": "帰{かえ}り道{みち}。中目黒{なかめぐろ}のホーム、この時間{じかん}がいちばん好{す}き。", "en": "On my way home. The Nakameguro platform — this hour is my favorite." },
+        { "jp": "電車{でんしゃ}一本{いっぽん}見送{みおく}って写真{しゃしん}撮{と}っちゃった。", "en": "I let one train go just to take a picture." }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "ph_river",
+      "kind": "scene",
+      "minAffection": 12,
+      "file": "assets/photos/meguro-river.jpg",
+      "alt": "The Meguro river walkway",
+      "s": "smile",
+      "when": { "intent": ["weekend", "hobby"], "topic": ["t_weekend"] },
+      "b": [
+        { "jp": "目黒川{めぐろがわ}沿{ぞ}い。散歩{さんぽ}コースこれしかないんだけど、飽{あ}きない。", "en": "Along the Meguro river. It's my only walking route, but I never get tired of it." }
+      ]
+    },
+    {
+      "id": "ph_cat",
+      "kind": "scene",
+      "minAffection": 8,
+      "file": "assets/photos/cat.jpg",
+      "alt": "A neighbourhood cat on a wall",
+      "s": "excited",
+      "when": { "intent": ["weekend", "hobby", "happy"], "topic": ["t_weekend"] },
+      "b": [
+        { "jp": "緊急{きんきゅう}。近所{きんじょ}の猫{ねこ}、今日{きょう}は撫{な}でさせてくれた。", "en": "Emergency. The neighborhood cat let me pet it today." },
+        { "jp": "三{さん}ヶ月{かげつ}かかったよ、ここまで。", "en": "It took three months to get this far." }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "ph_camera",
+      "kind": "scene",
+      "minAffection": 12,
+      "file": "assets/photos/camera.jpg",
+      "alt": "Her film camera on a table",
+      "s": "smile",
+      "when": { "intent": ["hobby"], "topic": ["t_music"] },
+      "b": [
+        { "jp": "これが例{れい}のカメラ。父{ちち}のお下{さ}がり。", "en": "This is the camera I mentioned. A hand-me-down from my dad." },
+        { "jp": "重{おも}いし不便{ふべん}だけど、なんか手放{てばな}せなくて。", "en": "It's heavy and inconvenient, but somehow I can't let it go." }
+      ]
+    },
+    {
+      "id": "ph_prints",
+      "kind": "scene",
+      "minAffection": 22,
+      "file": "assets/photos/prints.jpg",
+      "alt": "Developed film prints spread on a table",
+      "s": "excited",
+      "when": { "intent": ["hobby"] },
+      "b": [
+        { "jp": "現像{げんぞう}上{あ}がってきた！半分{はんぶん}くらい失敗{しっぱい}だけど。", "en": "The film came back! About half of them are failures, though." },
+        { "jp": "この一枚{いちまい}だけ、我{われ}ながら良{よ}くない？", "en": "Just this one — even I think it's good, don't you?" }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "ph_room",
+      "kind": "scene",
+      "minAffection": 25,
+      "file": "assets/photos/room.jpg",
+      "alt": "A corner of her apartment at night",
+      "s": "smile",
+      "when": { "band": ["night"] },
+      "b": [
+        { "jp": "うちの部屋{へや}。狭{せま}いけど、この角{かど}だけは気{き}に入{い}ってる。", "en": "My place. It's small, but this corner is the one bit I like." },
+        { "jp": "人{ひと}に見{み}せたの、たぶん{name}が初{はじ}めて。", "en": "You're probably the first person I've shown it to, {name}." }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_cooking",
+      "kind": "scene",
+      "minAffection": 18,
+      "file": "assets/photos/cooking.jpg",
+      "alt": "A slightly burnt home-cooked dinner",
+      "s": "shy",
+      "when": { "intent": ["food_talk"], "topic": ["t_meals"] },
+      "b": [
+        { "jp": "今日{きょう}はちゃんと作{つく}った。ちょっと焦{こ}げたけど。", "en": "I actually cooked today. It burned a little, though." },
+        { "jp": "笑{わら}わないでよ。味{あじ}は悪{わる}くないんだから。", "en": "Don't laugh. It doesn't taste bad, okay." }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "ph_selfie_work",
+      "kind": "selfie",
+      "minAffection": 25,
+      "file": "assets/photos/selfie-work.jpg",
+      "alt": "Yui at her desk, lanyard on",
+      "s": "tired",
+      "when": { "intent": ["work_talk", "tired"], "topic": ["t_work"] },
+      "b": [
+        { "jp": "これが残業{ざんぎょう}三時間目{さんじかんめ}の顔{かお}です。ひどいでしょ。", "en": "This is my face three hours into overtime. Awful, right." },
+        { "jp": "でも{name}に見{み}せたら、ちょっと元気{げんき}出{で}た。", "en": "But showing you cheered me up a bit, {name}." }
+      ],
+      "aff": 2
+    },
+    {
       "id": "ph_selfie",
+      "kind": "selfie",
       "minAffection": 35,
-      "file": "assets/photos/selfie.jpg",
-      "alt": "Yui, selfie",
+      "file": "assets/photos/selfie.png",
+      "alt": "Aya's evening mirror selfie",
       "s": "shy",
       "b": [
         { "jp": "……今日{きょう}、髪型{かみがた}うまくいったから。特別{とくべつ}ね。", "en": "......My hair turned out well today. So, just this once." },
@@ -603,16 +812,44 @@
       "aff": 2
     },
     {
-      "id": "ph_night",
-      "minAffection": 60,
-      "file": "assets/photos/night.jpg",
-      "alt": "Yui at night, by the window",
+      "id": "ph_selfie_out",
+      "kind": "selfie",
+      "minAffection": 45,
+      "file": "assets/photos/selfie-out.jpg",
+      "alt": "Yui outside, before going out",
       "s": "happy_shy",
+      "when": { "intent": ["weekend", "compliment"], "topic": ["t_weekend"] },
+      "b": [
+        { "jp": "今日{きょう}はちょっとだけおしゃれした。出{で}かける前{まえ}に一枚{いちまい}。", "en": "I dressed up a little today. One shot before heading out." },
+        { "jp": "…感想{かんそう}、聞{き}いてもいい？", "en": "...Can I ask what you think?" }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_night",
+      "kind": "selfie",
+      "minAffection": 60,
+      "file": "assets/photos/night.png",
+      "alt": "Aya at night by her window",
+      "s": "happy_shy",
+      "when": { "band": ["night"] },
       "b": [
         { "jp": "寝{ね}る前{まえ}。ちょっとだけ、顔{かお}見{み}せたくなった。", "en": "Before bed. I just felt like showing you my face a little." },
         { "jp": "…なんでだろうね。", "en": "...I wonder why." }
       ],
       "aff": 2
+    },
+    {
+      "id": "ph_date_night",
+      "minAffection": 80,
+      "file": "assets/photos/date-night.png",
+      "alt": "Aya dressed up for a romantic night out",
+      "s": "happy_shy",
+      "b": [
+        { "jp": "今夜{こんや}の私{わたし}、どう？…君{きみ}に一番{いちばん}に見{み}せたかった。", "en": "How do I look tonight? ...I wanted you to be the first to see." },
+        { "jp": "そんなに見{み}つめられたら、ちょっと照{て}れるけど。", "en": "If you stare that much, you're going to make me blush." }
+      ],
+      "aff": 3
     }
   ]
 }

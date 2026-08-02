@@ -97,19 +97,49 @@ export function direct(ctx) {
   return { kind: 'deflect', variant: deflect, topic };
 }
 
-/** Should a photo ride along with this turn? */
-export function photoPlan(state, dialogue, forced) {
+// Snapshots of her surroundings are cheap and frequent; pictures of herself
+// are the rarer, more loaded thing.
+const COOLDOWN = { scene: 5, selfie: 12 };
+
+/** Does this photo fit what's being talked about right now? */
+function fitsContext(photo, ctx) {
+  const w = photo.when;
+  if (!w) return false; // ambient photos only ever fire on the random path
+  if (w.intent?.includes(ctx.intentId)) return true;
+  if (w.topic?.includes(ctx.topicId)) return true;
+  if (w.band?.includes(ctx.band)) return true;
+  return false;
+}
+
+/**
+ * Should a photo ride along with this turn?
+ * Context-matched photos fire readily — her sending a bowl of ramen the moment
+ * ramen comes up is most of what makes the feature feel alive.
+ */
+export function photoPlan(state, dialogue, ctx = {}) {
+  const { forced = false } = ctx;
   const since = state.turns - state.lastPhotoTurn;
+
   const eligible = (dialogue.photos || []).filter(
-    (p) => state.affection >= p.minAffection
+    (p) =>
+      state.affection >= p.minAffection &&
+      since >= (forced ? 4 : COOLDOWN[p.kind] ?? COOLDOWN.scene)
   );
   if (!eligible.length) return null;
-  // Asking gets you one sooner, but not on demand every turn — otherwise
-  // 「写真見せて」 x10 yields ten photos and photoDeny never fires.
-  const cooldown = forced ? 4 : 14;
-  if (since < cooldown) return null;
-  if (!forced && Math.random() > 0.22) return null;
-  return pick(eligible, state) || (forced ? eligible[0] : null);
+
+  // Asked directly: she reaches for a picture of herself if she's comfortable
+  // enough, otherwise deflects into showing her surroundings instead.
+  if (forced) {
+    const selfies = eligible.filter((p) => p.kind === 'selfie');
+    return pick(selfies, state) || pick(eligible, state);
+  }
+
+  const relevant = eligible.filter((p) => fitsContext(p, ctx));
+  if (relevant.length && Math.random() < 0.5) return pick(relevant, state);
+
+  // Otherwise, occasionally, unprompted — she just felt like sharing.
+  if (Math.random() < 0.15) return pick(eligible, state);
+  return null;
 }
 
 /** Should a grammar note be appended? Roughly every 4 turns, never twice in a row. */

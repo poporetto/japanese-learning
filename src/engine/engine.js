@@ -39,7 +39,11 @@ export class Companion {
       gapDays,
       band: timeBand(),
     });
-    return this._compose(plan, state, { newMemories: [], script: 'jp' });
+    return this._compose(plan, state, {
+      newMemories: [],
+      script: 'jp',
+      band: timeBand(),
+    });
   }
 
   /** Main entry: user said something. */
@@ -70,7 +74,13 @@ export class Companion {
       justLearned: newMemories.length > 0,
     });
 
-    return this._compose(plan, state, { newMemories, script });
+    // What she's currently talking about decides which photo she'd reach for.
+    return this._compose(plan, state, {
+      newMemories,
+      script,
+      intentId: match?.id ?? null,
+      band: timeBand(),
+    });
   }
 
   _compose(plan, state, meta) {
@@ -97,7 +107,7 @@ export class Companion {
     }
 
     if (plan.kind === 'photo_request') {
-      const p = photoPlan(state, this.dialogue, true);
+      const p = photoPlan(state, this.dialogue, { ...meta, forced: true });
       if (p) {
         bubbles.push(...clone(p.b));
         photo = { file: p.file, alt: p.alt };
@@ -143,14 +153,20 @@ export class Companion {
       state.pendingTopic = null;
     }
 
-    // Unsolicited photo, on her own initiative.
+    // Unsolicited photo, on her own initiative — usually because the photo
+    // matches whatever she just brought up.
     if (!photo && plan.kind !== 'photo_request') {
-      const p = photoPlan(state, this.dialogue, false);
+      const p = photoPlan(state, this.dialogue, {
+        ...meta,
+        topicId: plan.topic?.id ?? state.pendingTopic ?? null,
+      });
       if (p) {
         bubbles.push(...clone(p.b));
         photo = { file: p.file, alt: p.alt };
+        sprite = p.s || sprite;
         state.lastPhotoTurn = state.turns;
         state.seen[p.id] = (state.seen[p.id] || 0) + 1;
+        bumpAffection(state, p.aff ?? 0);
       }
     }
 
