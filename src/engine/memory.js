@@ -38,7 +38,9 @@ export function ingest(state, raw, lexicon, opts = {}) {
     // Free-text capture is only safe for open slots like {name}. For slots
     // backed by a lexicon (food, hobby...) the scan below is the only path —
     // otherwise "疲れた…" gets filed as a favourite food.
-    if (!lexicon[slot]) {
+    // ...and only when the message isn't something else entirely. Without
+    // this, answering 「こんにちは」 to 「なんて呼べばいい？」 names you Konnichiwa.
+    if (!lexicon[slot] && !opts.intentId) {
       const val = cleanSlotAnswer(raw);
       if (val && val.length <= 24 && !/[?？]/.test(raw)) {
         remember(state, slot, val);

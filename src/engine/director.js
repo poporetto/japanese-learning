@@ -12,6 +12,8 @@ export function pick(variants, state) {
     if (c.maxAff != null && state.affection >= c.maxAff) return false;
     if (c.stage && stageOf(state).id !== c.stage) return false;
     if (c.needSlot && recall(state, c.needSlot) === null) return false;
+    if (c.lacksSlot && recall(state, c.lacksSlot) !== null) return false;
+    if (c.minTurns != null && state.turns < c.minTurns) return false;
     if (c.flag && !state.flags[c.flag]) return false;
     if (c.notFlag && state.flags[c.notFlag]) return false;
     // Never offer a line whose {slots} we can't fill.
@@ -87,7 +89,10 @@ export function direct(ctx) {
   // 6. Deflect and start a fresh topic. She never says "I don't understand".
   //    But if she just successfully learned something, apologizing for not
   //    following would be nonsense — pivot straight into a new topic.
-  const topic = pick(dialogue.topics, state);
+  // Topics that exist to fill a gap she still has (like your name) jump the
+  // queue — otherwise they lose the random draw forever.
+  const gapTopics = dialogue.topics.filter((t) => t.cond?.lacksSlot);
+  const topic = pick(gapTopics, state) || pick(dialogue.topics, state);
   const deflect = ctx.justLearned ? null : pick(dialogue.deflect, state);
   return { kind: 'deflect', variant: deflect, topic };
 }

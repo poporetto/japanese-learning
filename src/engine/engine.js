@@ -48,6 +48,7 @@ export class Companion {
     const match = matchIntent(raw, this.intents);
     const newMemories = ingest(state, raw, this.lexicon, {
       skipScan: match && SCAN_BLOCKING.includes(match.id),
+      intentId: match?.id ?? null,
     });
 
     // Writing in Japanese is the behaviour we want to reinforce.
@@ -134,6 +135,8 @@ export class Companion {
       suggestions = open.sug || suggestions;
       if (open.q) state.pendingSlot = open.q;
       state.pendingTopic = plan.topic.id;
+      // Count the topic too — that's the key repeat-avoidance picks topics on.
+      state.seen[plan.topic.id] = (state.seen[plan.topic.id] || 0) + 1;
       state.seen[plan.topic.open.id] = (state.seen[plan.topic.open.id] || 0) + 1;
     } else if (plan.kind === 'topic_follow') {
       state.pendingTopic = null;

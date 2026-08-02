@@ -121,7 +121,11 @@ html, body {
   border-bottom-right-radius: 6px;
 }
 
-.bubble .jp { font-size: 17px; }
+.bubble .jp { font-size: 17px; line-height: 2.1; }
+
+/* Readings must not push the base text apart. */
+ruby { ruby-align: center; }
+ruby rt { letter-spacing: -.04em; white-space: nowrap; }
 .bubble .en {
   margin-top: 6px;
   padding-top: 6px;

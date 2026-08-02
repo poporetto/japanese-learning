@@ -138,6 +138,7 @@ function setSuggestions(list) {
 /* ---------- turn playback ---------- */
 
 let busy = false;
+let queued = null;
 
 async function play(turn) {
   busy = true;
@@ -166,12 +167,23 @@ async function play(turn) {
   setMeter();
   State.save(state);
   busy = false;
+
+  // Anything typed while she was "typing" gets sent now, not dropped.
+  if (queued) {
+    const next = queued;
+    queued = null;
+    send(next);
+  }
 }
 
 function send(text) {
   const value = text.trim();
-  if (!value || busy) return;
+  if (!value) return;
   $('#input').value = '';
+  if (busy) {
+    queued = value;
+    return;
+  }
   addUserBubble(value);
   play(yui.respond(value, state));
 }

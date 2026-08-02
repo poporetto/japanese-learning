@@ -407,6 +407,29 @@
 
   "topics": [
     {
+      "id": "t_askname",
+      "cond": { "lacksSlot": "name", "minTurns": 3 },
+      "open": {
+        "id": "t_askname_open",
+        "s": "pout",
+        "b": [
+          { "jp": "ねえ、そういえばまだ名前{なまえ}聞{き}いてないんだけど。", "en": "Hey, I still haven't heard your name, you know." },
+          { "jp": "このままだと「あなた」って呼{よ}び続{つづ}けることになるよ。", "en": "At this rate I'll just keep calling you 'you'." }
+        ],
+        "q": "name",
+        "sug": [{ "jp": "ケンだよ", "en": "It's Ken (use your name)" }]
+      },
+      "follow": [
+        {
+          "id": "t_askname_f1",
+          "s": "smile",
+          "cond": { "needSlot": "name" },
+          "b": [{ "jp": "{name}か。うん、いい名前{なまえ}じゃん。", "en": "{name}, huh. Yeah, that's a good name." }],
+          "aff": 1
+        }
+      ]
+    },
+    {
       "id": "t_meals",
       "open": {
         "id": "t_meals_open",
