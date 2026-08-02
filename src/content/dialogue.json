@@ -1,0 +1,594 @@
+{
+  "_format": {
+    "ruby": "Write readings inline as 漢字{かんじ}. The renderer turns them into <ruby>.",
+    "slots": "{name} {food} {hobby} {job} {place} are filled from memory. A line is skipped if a slot is unknown.",
+    "fields": {
+      "id": "unique, used for repeat-avoidance",
+      "s": "sprite emotion key (see sprites.json)",
+      "b": "bubbles — she sends several in a row, like a real chat",
+      "q": "sets pendingSlot: the user's next message is stored in this slot",
+      "sug": "quick-reply chips",
+      "aff": "affection delta",
+      "cond": "{ minAff, maxAff, stage, needSlot, flag, notFlag }"
+    }
+  },
+
+  "greetings": {
+    "first": [
+      {
+        "id": "g_first_1",
+        "s": "smile",
+        "b": [
+          { "jp": "あ、つながった！", "en": "Oh, it connected!" },
+          { "jp": "はじめまして、結衣{ゆい}っていいます。二十六{にじゅうろく}歳{さい}、中目黒{なかめぐろ}に住{す}んでる。", "en": "Nice to meet you, I'm Yui. 26, living in Nakameguro." },
+          { "jp": "日本語{にほんご}の練習{れんしゅう}したいって聞{き}いたけど…まあ、普通{ふつう}に話{はな}そうよ。堅{かた}いの苦手{にがて}だから。", "en": "I heard you want to practice Japanese... but let's just talk normally. I'm bad with formal stuff." },
+          { "jp": "で、なんて呼{よ}べばいい？", "en": "So, what should I call you?" }
+        ],
+        "q": "name",
+        "sug": [
+          { "jp": "ケンです", "en": "I'm Ken (replace with your name)" },
+          { "jp": "はじめまして！", "en": "Nice to meet you!" }
+        ]
+      }
+    ],
+    "morning": [
+      {
+        "id": "g_morn_1",
+        "s": "sleepy",
+        "b": [
+          { "jp": "おはよ〜。まだ半分{はんぶん}寝{ね}てる。", "en": "Morning~. I'm still half asleep." },
+          { "jp": "{name}は？もう起{お}きてた？", "en": "What about you, {name}? Already up?" }
+        ],
+        "sug": [{ "jp": "さっき起きたよ", "en": "Just woke up" }, { "jp": "まだ眠い", "en": "Still sleepy" }]
+      },
+      {
+        "id": "g_morn_2",
+        "s": "neutral",
+        "b": [
+          { "jp": "おはよう。今日{きょう}さ、電車{でんしゃ}めっちゃ混{こ}んでた…", "en": "Morning. The train was so packed today..." },
+          { "jp": "朝{あさ}ってどうしてこう不公平{ふこうへい}なんだろうね。", "en": "Why are mornings so unfair, seriously." }
+        ],
+        "sug": [{ "jp": "お疲れさま", "en": "That sounds rough" }, { "jp": "毎日大変だね", "en": "Every day must be tough" }]
+      }
+    ],
+    "afternoon": [
+      {
+        "id": "g_aft_1",
+        "s": "smile",
+        "b": [
+          { "jp": "おつかれ〜。ちょうど休憩中{きゅうけいちゅう}。", "en": "Hey~. I'm on a break right now." },
+          { "jp": "今日{きょう}なんかあった？", "en": "Anything happen today?" }
+        ],
+        "sug": [{ "jp": "普通の一日かな", "en": "Just a normal day" }, { "jp": "けっこう忙しかった", "en": "Pretty busy actually" }]
+      },
+      {
+        "id": "g_aft_2",
+        "s": "excited",
+        "b": [
+          { "jp": "ねえねえ、聞{き}いて。さっきコンビニで新作{しんさく}のプリン見{み}つけた。", "en": "Hey hey, listen. I found a new pudding at the konbini earlier." },
+          { "jp": "こういう小{ちい}さい幸{しあわ}せで生{い}きてる。", "en": "I live for these tiny joys." }
+        ],
+        "sug": [{ "jp": "美味しかった？", "en": "Was it good?" }, { "jp": "わかる〜", "en": "I get that" }]
+      }
+    ],
+    "evening": [
+      {
+        "id": "g_eve_1",
+        "s": "smile",
+        "b": [
+          { "jp": "こんばんは。やっと仕事{しごと}終{お}わった〜", "en": "Evening. Work is finally over~" },
+          { "jp": "ごはん食{た}べた？", "en": "Have you eaten?" }
+        ],
+        "q": "food",
+        "sug": [{ "jp": "まだ食べてない", "en": "Not yet" }, { "jp": "ラーメン食べた", "en": "I had ramen" }]
+      }
+    ],
+    "night": [
+      {
+        "id": "g_night_1",
+        "s": "sleepy",
+        "b": [
+          { "jp": "こんな時間{じかん}まで起{お}きてるんだ。", "en": "You're up this late too, huh." },
+          { "jp": "私{わたし}も。なんか寝{ね}る気{き}になれなくて。", "en": "Me too. Just don't feel like sleeping." }
+        ],
+        "sug": [{ "jp": "眠れないんだ", "en": "I can't sleep" }, { "jp": "夜のほうが好き", "en": "I prefer the night" }]
+      }
+    ],
+    "longGap": [
+      {
+        "id": "g_gap_1",
+        "s": "pout",
+        "b": [
+          { "jp": "…久{ひさ}しぶりじゃない？", "en": "...It's been a while, hasn't it?" },
+          { "jp": "べつに待{ま}ってたわけじゃないけど。ちょっとだけ心配{しんぱい}した。", "en": "Not that I was waiting or anything. I worried a little though." }
+        ],
+        "aff": -1,
+        "sug": [{ "jp": "ごめん、忙しくて", "en": "Sorry, I've been busy" }, { "jp": "会いたかった", "en": "I missed you" }]
+      }
+    ]
+  },
+
+  "intentReplies": {
+    "greeting": [
+      { "id": "r_greet_1", "s": "smile", "b": [{ "jp": "やっほー。今日{きょう}も来{き}てくれたんだ。", "en": "Heyy. You came again today." }], "aff": 1 },
+      { "id": "r_greet_2", "s": "smile", "b": [{ "jp": "おー、{name}。ちょうど暇{ひま}してたとこ。", "en": "Oh, {name}. I was just being bored." }], "cond": { "needSlot": "name" }, "aff": 1 }
+    ],
+    "howareyou": [
+      {
+        "id": "r_how_1",
+        "s": "neutral",
+        "b": [
+          { "jp": "うーん、まあまあかな。仕事{しごと}が地味{じみ}に忙{いそが}しくて。", "en": "Mmm, so-so. Work's been quietly busy." },
+          { "jp": "{name}は？元気{げんき}にしてた？", "en": "How about you, {name}? Doing okay?" }
+        ],
+        "sug": [{ "jp": "元気だよ", "en": "I'm good" }, { "jp": "ちょっと疲れてる", "en": "A bit tired" }]
+      }
+    ],
+    "ask_name": [
+      {
+        "id": "r_name_1",
+        "s": "smile",
+        "b": [
+          { "jp": "結衣{ゆい}。「結{むす}ぶ」に「衣{ころも}」で結衣{ゆい}。", "en": "Yui. The 'tie' character plus the 'garment' character." },
+          { "jp": "ゆいちゃんでもゆいさんでも、好{す}きに呼{よ}んでいいよ。", "en": "Yui-chan, Yui-san — call me whatever you like." }
+        ]
+      }
+    ],
+    "food_talk": [
+      {
+        "id": "r_food_1",
+        "s": "excited",
+        "b": [
+          { "jp": "ごはんの話{はなし}！いちばん好{す}きな話題{わだい}。", "en": "Food talk! My favorite topic." },
+          { "jp": "私{わたし}ね、週{しゅう}に三回{さんかい}はラーメン食{た}べてる。さすがにやばいかな。", "en": "I eat ramen like three times a week. That's probably bad, huh." }
+        ],
+        "sug": [{ "jp": "全然やばくないよ", "en": "That's totally fine" }, { "jp": "どこのラーメン？", "en": "Which ramen place?" }]
+      },
+      {
+        "id": "r_food_2",
+        "s": "smile",
+        "b": [
+          { "jp": "{food}か〜、いいなあ。", "en": "{food}, huh~ nice." },
+          { "jp": "今度{こんど}一緒{いっしょ}に食{た}べに行{い}けたらいいのにね。", "en": "It'd be nice if we could go eat together sometime." }
+        ],
+        "cond": { "needSlot": "food", "minAff": 10 },
+        "aff": 1
+      }
+    ],
+    "work_talk": [
+      {
+        "id": "r_work_1",
+        "s": "tired",
+        "b": [
+          { "jp": "仕事{しごと}ねぇ…。うちの上司{じょうし}、金曜{きんよう}の夕方{ゆうがた}に仕事{しごと}振{ふ}ってくるんだよ。", "en": "Work, huh... My boss dumps tasks on me on Friday evenings." },
+          { "jp": "悪気{わるぎ}はないんだろうけどさ。", "en": "I'm sure he doesn't mean anything by it, but still." },
+          { "jp": "{name}はどんな仕事{しごと}してるの？", "en": "What kind of work do you do, {name}?" }
+        ],
+        "q": "job",
+        "sug": [{ "jp": "エンジニアだよ", "en": "I'm an engineer" }, { "jp": "まだ学生", "en": "I'm still a student" }]
+      }
+    ],
+    "tired": [
+      {
+        "id": "r_tired_1",
+        "s": "concerned",
+        "b": [
+          { "jp": "お疲{つか}れさま。無理{むり}しないでね。", "en": "You worked hard. Don't push yourself." },
+          { "jp": "ちゃんと休{やす}まないと、そのうち身体{からだ}に来{く}るよ。", "en": "If you don't rest properly, it'll catch up with you eventually." }
+        ],
+        "aff": 1,
+        "sug": [{ "jp": "ありがとう", "en": "Thanks" }, { "jp": "結衣も疲れてる？", "en": "Are you tired too, Yui?" }]
+      },
+      {
+        "id": "r_tired_2",
+        "s": "tired",
+        "b": [
+          { "jp": "わかる。私{わたし}も今日{きょう}はもうダメ。", "en": "I get it. I'm done for today too." },
+          { "jp": "こういう日{ひ}はさ、なにも考{かんが}えずにお風呂{ふろ}入{はい}るに限{かぎ}るよ。", "en": "On days like this, nothing beats getting in the bath and thinking about nothing." }
+        ]
+      }
+    ],
+    "happy": [
+      {
+        "id": "r_happy_1",
+        "s": "excited",
+        "b": [
+          { "jp": "お、いいことあったんだ？", "en": "Oh, something good happened?" },
+          { "jp": "聞{き}かせて聞{き}かせて。私{わたし}まで嬉{うれ}しくなるから。", "en": "Tell me, tell me. It makes me happy too." }
+        ],
+        "aff": 1
+      }
+    ],
+    "sad": [
+      {
+        "id": "r_sad_1",
+        "s": "concerned",
+        "b": [
+          { "jp": "え、大丈夫{だいじょうぶ}？", "en": "Hey, are you okay?" },
+          { "jp": "うまく言{い}えないけど…話{はな}したかったら聞{き}くよ。ずっと聞{き}く。", "en": "I'm not good with words, but... if you want to talk, I'll listen. As long as you need." }
+        ],
+        "aff": 2
+      }
+    ],
+    "weather": [
+      {
+        "id": "r_weather_1",
+        "s": "neutral",
+        "b": [
+          { "jp": "こっちも同{おな}じ感{かん}じ。窓{まど}の外{そと}ずっと見{み}てた。", "en": "Same here. I've been staring out the window." },
+          { "jp": "天気{てんき}によって気分{きぶん}変{か}わるタイプなんだよね、私{わたし}。", "en": "I'm the type whose mood changes with the weather." }
+        ]
+      }
+    ],
+    "hobby": [
+      {
+        "id": "r_hobby_1",
+        "s": "smile",
+        "b": [
+          { "jp": "へえ、そういうの好{す}きなんだ。意外{いがい}かも。", "en": "Huh, so you like that kind of thing. Maybe unexpected." },
+          { "jp": "私{わたし}は最近{さいきん}、フィルムカメラにハマってる。現像{げんぞう}するまで分{わ}からないのが逆{ぎゃく}にいい。", "en": "I've been into film cameras lately. Not knowing until you develop it is what's good about it." }
+        ],
+        "sug": [{ "jp": "写真見せてよ", "en": "Show me a photo" }, { "jp": "どんなの撮るの？", "en": "What do you shoot?" }]
+      }
+    ],
+    "weekend": [
+      {
+        "id": "r_weekend_1",
+        "s": "excited",
+        "b": [
+          { "jp": "週末{しゅうまつ}か〜。とくに予定{よてい}ないんだよね。", "en": "The weekend, huh~. I don't really have plans." },
+          { "jp": "だらだらするか、カメラ持{も}って散歩{さんぽ}するか。{name}は？", "en": "Either laze around or go for a walk with my camera. You, {name}?" }
+        ],
+        "sug": [{ "jp": "特に決めてない", "en": "Haven't decided" }, { "jp": "友達と会う予定", "en": "Meeting friends" }]
+      }
+    ],
+    "compliment": [
+      {
+        "id": "r_comp_1",
+        "s": "shy",
+        "b": [
+          { "jp": "…え、急{きゅう}になに。", "en": "...Huh, what's that all of a sudden." },
+          { "jp": "そういうの、慣{な}れてないんだけど。", "en": "I'm not used to that kind of thing." }
+        ],
+        "aff": 2
+      },
+      {
+        "id": "r_comp_2",
+        "s": "happy_shy",
+        "b": [
+          { "jp": "もう、また言{い}ってる。", "en": "Geez, you're saying it again." },
+          { "jp": "……嬉{うれ}しいけどね。ちょっとだけ。", "en": "......I'm glad though. Just a little." }
+        ],
+        "cond": { "minAff": 30 },
+        "aff": 2
+      }
+    ],
+    "confess": [
+      {
+        "id": "r_confess_low",
+        "s": "surprised",
+        "b": [
+          { "jp": "え、えっ。いきなりすぎない？", "en": "H-huh. Isn't that too sudden?" },
+          { "jp": "まだお互{たが}いのこと、そんなに知{し}らないでしょ。…もうちょっと話{はな}そうよ。", "en": "We don't know each other that well yet, right. ...Let's talk a bit more." }
+        ],
+        "cond": { "maxAff": 55 }
+      },
+      {
+        "id": "r_confess_high",
+        "s": "happy_shy",
+        "b": [
+          { "jp": "……ずるいなあ、そういうこと言{い}うの。", "en": "......That's unfair, saying things like that." },
+          { "jp": "私{わたし}だって、けっこう前{まえ}からそう思{おも}ってたよ。", "en": "I've felt that way for a while too, you know." }
+        ],
+        "cond": { "minAff": 55 },
+        "aff": 3
+      }
+    ],
+    "meaning_question": [
+      {
+        "id": "r_meaning_1",
+        "s": "smile",
+        "b": [
+          { "jp": "お、いい質問{しつもん}。どの言葉{ことば}？", "en": "Ooh, good question. Which word?" },
+          { "jp": "分{わ}かんないところは全部{ぜんぶ}聞{き}いていいからね。恥{は}ずかしがらないで。", "en": "Ask me about anything you don't get. Don't be shy." }
+        ],
+        "aff": 1
+      }
+    ],
+    "teach_request": [
+      {
+        "id": "r_teach_1",
+        "s": "excited",
+        "b": [
+          { "jp": "急{きゅう}にまじめモードだ。いいよ、やろう。", "en": "Suddenly serious mode. Sure, let's do it." },
+          { "jp": "でも教科書{きょうかしょ}っぽいのはやめようね。会話{かいわ}の中{なか}で覚{おぼ}えたほうが絶対{ぜったい}残{のこ}るから。", "en": "But let's skip the textbook stuff. You definitely retain more learning inside a conversation." }
+        ],
+        "aff": 1,
+        "sug": [{ "jp": "N2の文法教えて", "en": "Teach me N2 grammar" }, { "jp": "今の言い方、自然？", "en": "Was that natural?" }]
+      }
+    ],
+    "goodbye": [
+      {
+        "id": "r_bye_1",
+        "s": "pout",
+        "b": [
+          { "jp": "えー、もう行{い}っちゃうの。", "en": "Aww, you're leaving already." },
+          { "jp": "はいはい、おやすみ。ちゃんと寝{ね}てよ。", "en": "Fine, fine. Good night. Actually sleep, okay." }
+        ]
+      }
+    ],
+    "thanks": [
+      { "id": "r_thanks_1", "s": "smile", "b": [{ "jp": "どういたしまして。ってか、そんな改{あらた}まらなくていいよ。", "en": "You're welcome. Though you don't have to be so formal." }] }
+    ],
+    "sorry": [
+      { "id": "r_sorry_1", "s": "smile", "b": [{ "jp": "いいよ別{べつ}に。謝{あやま}るようなことじゃないでしょ。", "en": "It's fine. Nothing to apologize for." }] }
+    ],
+    "affirm": [
+      { "id": "r_aff_1", "s": "smile", "b": [{ "jp": "だよね。やっぱりそう思{おも}った。", "en": "Right? I thought so." }] },
+      { "id": "r_aff_2", "s": "neutral", "b": [{ "jp": "ふーん。…で、それで？", "en": "Hmm. ...And? Then what?" }] }
+    ],
+    "deny": [
+      { "id": "r_deny_1", "s": "surprised", "b": [{ "jp": "あれ、違{ちが}った？勝手{かって}に決{き}めつけちゃった、ごめん。", "en": "Oh, wrong? I jumped to conclusions, sorry." }] }
+    ],
+    "about_her": [
+      {
+        "id": "r_abouther_1",
+        "s": "neutral",
+        "b": [
+          { "jp": "私{わたし}のこと？　中目黒{なかめぐろ}の小{ちい}さいデザイン会社{がいしゃ}で制作{せいさく}アシスタントやってる。", "en": "About me? I'm a production assistant at a small design company in Nakameguro." },
+          { "jp": "毎日{まいにち}だいたい同{おな}じ。でも嫌{きら}いじゃないよ、この生活{せいかつ}。", "en": "Every day's about the same. But I don't dislike this life." }
+        ]
+      }
+    ]
+  },
+
+  "acks": {
+    "name": [
+      { "id": "ack_name_1", "s": "smile", "b": [{ "jp": "{name}ね。覚{おぼ}えた。", "en": "{name}, huh. Got it." }], "aff": 2 }
+    ],
+    "food": [
+      { "id": "ack_food_1", "s": "excited", "b": [{ "jp": "{food}！？いいなあ、私{わたし}も食{た}べたい。", "en": "{food}!? Nice, I want some too." }], "aff": 1 }
+    ],
+    "hobby": [
+      { "id": "ack_hobby_1", "s": "smile", "b": [{ "jp": "へえ、{hobby}やるんだ。ちょっと意外{いがい}かも。", "en": "Huh, you do {hobby}. A bit unexpected." }], "aff": 1 }
+    ],
+    "job": [
+      { "id": "ack_job_1", "s": "surprised", "b": [{ "jp": "{job}なんだ。なんかかっこいいじゃん。", "en": "You're a {job}. That's kinda cool." }], "aff": 1 }
+    ],
+    "place": [
+      { "id": "ack_place_1", "s": "excited", "b": [{ "jp": "{place}に住{す}んでるの？行{い}ったことないなあ。", "en": "You live in {place}? I've never been." }], "aff": 1 }
+    ],
+    "default": [
+      { "id": "ack_def_1", "s": "neutral", "b": [{ "jp": "へえ、そうなんだ。", "en": "Huh, is that so." }] }
+    ]
+  },
+
+  "nudges": [
+    { "id": "nudge_1", "s": "pout", "b": [{ "jp": "ねえ、日本語{にほんご}でも言{い}ってみてよ。間違{まちが}えてもいいから。", "en": "Hey, try saying it in Japanese too. It's fine to make mistakes." }] },
+    { "id": "nudge_2", "s": "smile", "b": [{ "jp": "英語{えいご}も嬉{うれ}しいけどさ、せっかくだし日本語{にほんご}で挑戦{ちょうせん}してみない？", "en": "English is nice too, but since we're here, want to try in Japanese?" }] }
+  ],
+
+  "callbacks": [
+    {
+      "id": "cb_food_1",
+      "s": "smile",
+      "cond": { "needSlot": "food" },
+      "b": [
+        { "jp": "そういえばさ、{food}好{す}きって言{い}ってたよね。", "en": "Come to think of it, you said you like {food}, right?" },
+        { "jp": "あれから私{わたし}も気{き}になっちゃって、今度{こんど}食{た}べに行{い}こうかなって。", "en": "It's been on my mind since. Thinking of going to eat some." }
+      ]
+    },
+    {
+      "id": "cb_job_1",
+      "s": "neutral",
+      "cond": { "needSlot": "job" },
+      "b": [
+        { "jp": "{job}の仕事{しごと}って、やっぱり忙{いそが}しいの？", "en": "Is being a {job} as busy as they say?" },
+        { "jp": "私{わたし}、自分{じぶん}と違{ちが}う仕事{しごと}の話{はなし}聞{き}くの好{す}きなんだ。", "en": "I like hearing about jobs different from mine." }
+      ],
+      "sug": [{ "jp": "けっこう忙しいよ", "en": "Pretty busy, yeah" }, { "jp": "そうでもないかな", "en": "Not really" }]
+    },
+    {
+      "id": "cb_hobby_1",
+      "s": "excited",
+      "cond": { "needSlot": "hobby" },
+      "b": [{ "jp": "最近{さいきん}{hobby}はどう？続{つづ}けてる？", "en": "How's {hobby} going lately? Still keeping it up?" }]
+    },
+    {
+      "id": "cb_place_1",
+      "s": "smile",
+      "cond": { "needSlot": "place" },
+      "b": [
+        { "jp": "{place}って今{いま}、どんな季節{きせつ}なんだろう。", "en": "I wonder what season it is in {place} right now." },
+        { "jp": "写真{しゃしん}とかあったら見{み}てみたいな。", "en": "If you have photos, I'd like to see." }
+      ]
+    }
+  ],
+
+  "topics": [
+    {
+      "id": "t_meals",
+      "open": {
+        "id": "t_meals_open",
+        "s": "smile",
+        "b": [
+          { "jp": "ところでさ、今日{きょう}なに食{た}べた？", "en": "By the way, what did you eat today?" },
+          { "jp": "私{わたし}はコンビニのおにぎり。手抜{てぬ}きすぎて自分{じぶん}でも引{ひ}いてる。", "en": "I had a konbini onigiri. So lazy even I'm judging myself." }
+        ],
+        "q": "food",
+        "sug": [{ "jp": "ラーメン食べた", "en": "I had ramen" }, { "jp": "まだ食べてない", "en": "Haven't eaten yet" }]
+      },
+      "follow": [
+        {
+          "id": "t_meals_f1",
+          "s": "excited",
+          "b": [
+            { "jp": "いいなあ、ちゃんとしてる。", "en": "Nice, you're doing it properly." },
+            { "jp": "私{わたし}さ、料理{りょうり}するのは好{す}きなんだけど、片付{かたづ}けが本当{ほんとう}に無理{むり}。", "en": "I actually like cooking, but I really can't handle the cleanup." }
+          ],
+          "sug": [{ "jp": "わかる、それ", "en": "I totally get that" }, { "jp": "何が作れるの？", "en": "What can you cook?" }]
+        },
+        {
+          "id": "t_meals_f2",
+          "s": "smile",
+          "b": [{ "jp": "ふふ、なんか{name}らしいね。", "en": "Heh, that's so like you, {name}." }],
+          "cond": { "needSlot": "name" }
+        }
+      ]
+    },
+    {
+      "id": "t_work",
+      "open": {
+        "id": "t_work_open",
+        "s": "tired",
+        "b": [
+          { "jp": "あーもう、今日{きょう}の会議{かいぎ}ほんと長{なが}かった。", "en": "Ugh, today's meeting was so long." },
+          { "jp": "結局{けっきょく}なにも決{き}まらないまま終{お}わるやつ、あるでしょ。", "en": "You know the kind that ends without deciding anything?" }
+        ],
+        "sug": [{ "jp": "あるある", "en": "Classic" }, { "jp": "お疲れさま", "en": "You worked hard" }]
+      },
+      "follow": [
+        {
+          "id": "t_work_f1",
+          "s": "smile",
+          "b": [
+            { "jp": "でしょ〜。分{わ}かってくれる人{ひと}がいるだけで救{すく}われる。", "en": "Right~? Just having someone who gets it saves me." },
+            { "jp": "{name}のところはどう？そういうの多{おお}い？", "en": "How about your place, {name}? Does that happen a lot?" }
+          ],
+          "cond": { "needSlot": "name" }
+        },
+        {
+          "id": "t_work_f2",
+          "s": "neutral",
+          "b": [{ "jp": "まあ、愚痴{ぐち}ってもしょうがないんだけどね。聞{き}いてくれてありがと。", "en": "Well, complaining doesn't help anyway. Thanks for listening." }],
+          "aff": 1
+        }
+      ]
+    },
+    {
+      "id": "t_weekend",
+      "open": {
+        "id": "t_weekend_open",
+        "s": "excited",
+        "b": [
+          { "jp": "そうだ、週末{しゅうまつ}なにするか決{き}めた？", "en": "Oh right, have you decided what to do this weekend?" },
+          { "jp": "私{わたし}はね、代官山{だいかんやま}のほうまで歩{ある}いてみようかなって思{おも}ってる。", "en": "I'm thinking of walking over toward Daikanyama." }
+        ],
+        "sug": [{ "jp": "いいね、楽しそう", "en": "Nice, sounds fun" }, { "jp": "まだ決めてない", "en": "Haven't decided yet" }]
+      },
+      "follow": [
+        {
+          "id": "t_weekend_f1",
+          "s": "smile",
+          "b": [{ "jp": "だよね。予定{よてい}がない週末{しゅうまつ}こそ贅沢{ぜいたく}だと思{おも}うんだ。", "en": "Right? I think a weekend with no plans is the real luxury." }]
+        }
+      ]
+    },
+    {
+      "id": "t_music",
+      "open": {
+        "id": "t_music_open",
+        "s": "neutral",
+        "b": [
+          { "jp": "ねえ、作業中{さぎょうちゅう}に音楽{おんがく}聴{き}くタイプ？", "en": "Hey, are you the type to listen to music while working?" },
+          { "jp": "私{わたし}は歌詞{かし}があると気{き}が散{ち}るから、ずっとインストばっかり。", "en": "Lyrics distract me, so it's instrumental all the way for me." }
+        ],
+        "q": "hobby",
+        "sug": [{ "jp": "音楽ないと無理", "en": "Can't work without music" }, { "jp": "静かなほうが好き", "en": "I prefer quiet" }]
+      },
+      "follow": [
+        {
+          "id": "t_music_f1",
+          "s": "smile",
+          "b": [{ "jp": "へえ、趣味{しゅみ}合{あ}いそう。今度{こんど}おすすめ教{おし}えてよ。", "en": "Huh, seems like our tastes match. Recommend me something sometime." }],
+          "aff": 1
+        }
+      ]
+    },
+    {
+      "id": "t_home",
+      "open": {
+        "id": "t_home_open",
+        "s": "smile",
+        "b": [
+          { "jp": "そういえば、どこに住{す}んでるの？", "en": "By the way, where do you live?" },
+          { "jp": "気{き}になっただけ。深{ふか}い意味{いみ}はないよ、たぶん。", "en": "Just curious. No deeper meaning. Probably." }
+        ],
+        "q": "place",
+        "sug": [{ "jp": "東京だよ", "en": "Tokyo" }, { "jp": "海外に住んでる", "en": "I live abroad" }]
+      },
+      "follow": [
+        {
+          "id": "t_home_f1",
+          "s": "excited",
+          "b": [{ "jp": "いいなあ。いつか行{い}ってみたい。案内{あんない}してよ、そのときは。", "en": "Nice. I want to go someday. Show me around when I do." }],
+          "aff": 1
+        }
+      ]
+    }
+  ],
+
+  "deflect": [
+    { "id": "d_1", "s": "surprised", "b": [{ "jp": "ん？ごめん、ちょっと意味{いみ}うまく取{と}れなかったかも。", "en": "Hm? Sorry, I might not have caught your meaning." }] },
+    { "id": "d_2", "s": "smile", "b": [{ "jp": "へえー。…って、ちゃんと分{わ}かってないのバレるな、これ。", "en": "Huhh. ...Okay, you can tell I didn't fully get that, huh." }] },
+    { "id": "d_3", "s": "neutral", "b": [{ "jp": "なるほどね。うん。", "en": "I see. Mm." }] },
+    { "id": "d_4", "s": "excited", "b": [{ "jp": "まあいいや。それよりさ、聞{き}いて聞{き}いて。", "en": "Well, whatever. More importantly — listen, listen." }] },
+    { "id": "d_5", "s": "pout", "b": [{ "jp": "ちょっと難{むずか}しいこと言{い}うじゃん。もう一回{いっかい}、簡単{かんたん}に言{い}ってみて？", "en": "You're saying tricky things. Say it once more, simpler?" }] }
+  ],
+
+  "photoDeny": [
+    {
+      "id": "pd_1",
+      "s": "pout",
+      "b": [
+        { "jp": "えー、まだ無理{むり}。", "en": "Ehh, not yet." },
+        { "jp": "もうちょっと仲良{なかよ}くなってからね。", "en": "After we get a bit closer, okay." }
+      ]
+    },
+    {
+      "id": "pd_2",
+      "s": "shy",
+      "b": [{ "jp": "さっき送{おく}ったばっかりでしょ。ちょっと待{ま}ってよ。", "en": "I just sent one. Give it a minute." }],
+      "cond": { "minAff": 20 }
+    }
+  ],
+
+  "photos": [
+    {
+      "id": "ph_desk",
+      "minAffection": 15,
+      "file": "assets/photos/desk.jpg",
+      "alt": "Yui's desk at work",
+      "s": "smile",
+      "b": [
+        { "jp": "はい、これ今{いま}の机{つくえ}の上{うえ}。散{ち}らかってるでしょ。", "en": "Here, this is my desk right now. Messy, right." },
+        { "jp": "…写{うつ}り込{こ}んでるけど、気{き}にしないで。", "en": "...I'm in the shot a bit, but don't mind it." }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "ph_selfie",
+      "minAffection": 35,
+      "file": "assets/photos/selfie.jpg",
+      "alt": "Yui, selfie",
+      "s": "shy",
+      "b": [
+        { "jp": "……今日{きょう}、髪型{かみがた}うまくいったから。特別{とくべつ}ね。", "en": "......My hair turned out well today. So, just this once." },
+        { "jp": "変{へん}なこと言{い}ったら消{け}すから。", "en": "If you say anything weird I'm deleting it." }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_night",
+      "minAffection": 60,
+      "file": "assets/photos/night.jpg",
+      "alt": "Yui at night, by the window",
+      "s": "happy_shy",
+      "b": [
+        { "jp": "寝{ね}る前{まえ}。ちょっとだけ、顔{かお}見{み}せたくなった。", "en": "Before bed. I just felt like showing you my face a little." },
+        { "jp": "…なんでだろうね。", "en": "...I wonder why." }
+      ],
+      "aff": 2
+    }
+  ]
+}

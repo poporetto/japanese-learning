@@ -1,0 +1,13 @@
+{
+  "_note": "Drop your sprite files into assets/sprites/ using these filenames and they replace the placeholders automatically. No code change needed. `hue` only styles the fallback swatch.",
+  "neutral":    { "file": "assets/sprites/neutral.png",    "label": "ふつう",    "hue": 210 },
+  "smile":      { "file": "assets/sprites/smile.png",      "label": "にっこり",  "hue": 340 },
+  "excited":    { "file": "assets/sprites/excited.png",    "label": "わくわく",  "hue": 30 },
+  "shy":        { "file": "assets/sprites/shy.png",        "label": "照れ",      "hue": 350 },
+  "happy_shy":  { "file": "assets/sprites/happy_shy.png",  "label": "嬉し照れ",  "hue": 320 },
+  "pout":       { "file": "assets/sprites/pout.png",       "label": "むすっ",    "hue": 265 },
+  "surprised":  { "file": "assets/sprites/surprised.png",  "label": "びっくり",  "hue": 190 },
+  "concerned":  { "file": "assets/sprites/concerned.png",  "label": "心配",      "hue": 230 },
+  "tired":      { "file": "assets/sprites/tired.png",      "label": "つかれ",    "hue": 250 },
+  "sleepy":     { "file": "assets/sprites/sleepy.png",     "label": "ねむい",    "hue": 245 }
+}

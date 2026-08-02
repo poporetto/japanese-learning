@@ -1,0 +1,96 @@
+[
+  {
+    "id": "n2_wake_da",
+    "point": "〜わけだ",
+    "en": "no wonder / that's why",
+    "ex": "残業{ざんぎょう}続{つづ}きだったんだ。疲{つか}れてるわけだ。",
+    "exEn": "You've had overtime nonstop. No wonder you're tired.",
+    "note": "Presents a logical conclusion from what was just said. Very common in casual explanation."
+  },
+  {
+    "id": "n2_kkanenai",
+    "point": "〜かねない",
+    "en": "might well (something bad)",
+    "ex": "このペースだと体{からだ}を壊{こわ}しかねないよ。",
+    "exEn": "At this pace you might well ruin your health.",
+    "note": "Only for undesirable outcomes. Attaches to the verb ます-stem."
+  },
+  {
+    "id": "n2_bakarika",
+    "point": "〜ばかりか",
+    "en": "not only... but also",
+    "ex": "彼{かれ}は遅{おく}れたばかりか、連絡{れんらく}もしなかった。",
+    "exEn": "Not only was he late, he didn't even get in touch.",
+    "note": "Stronger and more written than 〜だけでなく, but shows up in spoken complaints."
+  },
+  {
+    "id": "n2_ni_shitewa",
+    "point": "〜にしては",
+    "en": "for / considering that",
+    "ex": "初{はじ}めてにしては上手{じょうず}じゃない？",
+    "exEn": "For a first try, isn't that pretty good?",
+    "note": "Expectation vs reality. Great for praising someone's Japanese."
+  },
+  {
+    "id": "n2_tokoroni",
+    "point": "〜たところに",
+    "en": "just as / right when",
+    "ex": "出{で}ようとしたところに電話{でんわ}がかかってきた。",
+    "exEn": "Right as I was about to leave, the phone rang.",
+    "note": "Timing expression. Pairs with 〜ようとした for 'just about to'."
+  },
+  {
+    "id": "n2_wo_komete",
+    "point": "〜を込{こ}めて",
+    "en": "with (feeling) put into it",
+    "ex": "気持{きも}ちを込{こ}めて作{つく}ったんだから、味{あじ}は許{ゆる}して。",
+    "exEn": "I made it with real feeling, so forgive the taste.",
+    "note": "感謝・愛情・心 are the usual nouns before it."
+  },
+  {
+    "id": "n2_teshikatanai",
+    "point": "〜てしかたがない",
+    "en": "can't help feeling / unbearably",
+    "ex": "今日{きょう}は眠{ねむ}くてしかたがない。",
+    "exEn": "I'm unbearably sleepy today.",
+    "note": "Casual speech shortens it to 〜てしょうがない."
+  },
+  {
+    "id": "n2_kagiri",
+    "point": "〜限{かぎ}り",
+    "en": "as long as / as far as",
+    "ex": "私{わたし}が知{し}っている限{かぎ}り、あの店{みせ}はまだあるよ。",
+    "exEn": "As far as I know, that shop is still there.",
+    "note": "知っている限り and 見る限り are set phrases worth memorizing whole."
+  },
+  {
+    "id": "n2_dokoroka",
+    "point": "〜どころか",
+    "en": "far from / let alone",
+    "ex": "休{やす}めるどころか、仕事{しごと}が増{ふ}えた。",
+    "exEn": "Far from getting to rest, my workload increased.",
+    "note": "Sets up a reversal that's stronger than the listener expected."
+  },
+  {
+    "id": "n2_ppanashi",
+    "point": "〜っぱなし",
+    "en": "leaving something as it is",
+    "ex": "電気{でんき}つけっぱなしで寝{ね}ちゃった。",
+    "exEn": "I fell asleep with the lights left on.",
+    "note": "Usually carries mild criticism or self-reproach. Verb ます-stem + っぱなし."
+  },
+  {
+    "id": "n2_kkkeni",
+    "point": "〜だけに",
+    "en": "precisely because",
+    "ex": "楽{たの}しみにしていただけに、中止{ちゅうし}はショックだった。",
+    "exEn": "Precisely because I'd looked forward to it, the cancellation was a shock."
+  },
+  {
+    "id": "n2_saichuu",
+    "point": "〜最中{さいちゅう}に",
+    "en": "right in the middle of",
+    "ex": "会議{かいぎ}の最中{さいちゅう}にお腹{なか}が鳴{な}った。最悪{さいあく}。",
+    "exEn": "My stomach growled right in the middle of the meeting. The worst."
+  }
+]
