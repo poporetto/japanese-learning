@@ -1,7 +1,7 @@
 // Public surface. Everything the UI needs is behind respond() / openSession().
 // Swapping in a local LLM later means replacing only the `deflect` branch.
 
-import { detectScript, isQuestion } from './normalize.js';
+import { detectScript } from './normalize.js';
 import { matchIntent } from './match.js';
 import { ingest, fillSlots, recall } from './memory.js';
 import { direct, pick, photoPlan, teachPlan } from './director.js';
@@ -27,6 +27,10 @@ export class Companion {
   /** First turn of a session: she speaks first, unprompted. */
   openSession(state) {
     const { gapDays } = touchDay(state);
+    // A question she asked last session isn't pending anymore. Without this,
+    // a restored pendingSlot swallows the first thing said on return.
+    state.pendingSlot = null;
+    state.pendingTopic = null;
     const plan = direct({
       state,
       dialogue: this.dialogue,
@@ -66,12 +70,7 @@ export class Companion {
       justLearned: newMemories.length > 0,
     });
 
-    return this._compose(plan, state, {
-      newMemories,
-      script,
-      question: isQuestion(raw),
-      intentId: match?.id ?? null,
-    });
+    return this._compose(plan, state, { newMemories, script });
   }
 
   _compose(plan, state, meta) {

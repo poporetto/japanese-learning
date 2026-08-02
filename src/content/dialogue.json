@@ -563,6 +563,7 @@
     {
       "id": "pd_1",
       "s": "pout",
+      "cond": { "maxAff": 20 },
       "b": [
         { "jp": "えー、まだ無理{むり}。", "en": "Ehh, not yet." },
         { "jp": "もうちょっと仲良{なかよ}くなってからね。", "en": "After we get a bit closer, okay." }

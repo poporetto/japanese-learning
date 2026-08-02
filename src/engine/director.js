@@ -16,8 +16,8 @@ export function pick(variants, state) {
     if (c.minTurns != null && state.turns < c.minTurns) return false;
     if (c.flag && !state.flags[c.flag]) return false;
     if (c.notFlag && state.flags[c.notFlag]) return false;
-    // Never offer a line whose {slots} we can't fill.
-    const text = (v.b || []).map((x) => x.jp).join('');
+    // Never offer a line — or a quick-reply chip — whose {slots} we can't fill.
+    const text = [...(v.b || []), ...(v.sug || [])].map((x) => x.jp).join('');
     if (!slotsSatisfied(text, state)) return false;
     return true;
   });
@@ -104,7 +104,11 @@ export function photoPlan(state, dialogue, forced) {
     (p) => state.affection >= p.minAffection
   );
   if (!eligible.length) return null;
-  if (!forced && (since < 14 || Math.random() > 0.22)) return null;
+  // Asking gets you one sooner, but not on demand every turn — otherwise
+  // 「写真見せて」 x10 yields ten photos and photoDeny never fires.
+  const cooldown = forced ? 4 : 14;
+  if (since < cooldown) return null;
+  if (!forced && Math.random() > 0.22) return null;
   return pick(eligible, state) || (forced ? eligible[0] : null);
 }
 
