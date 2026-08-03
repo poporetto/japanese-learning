@@ -3,14 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>結衣 — Japanese companion</title>
+  <meta name="theme-color" content="#0878f9">
+  <meta name="application-name" content="kaiwassap">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="kaiwassap">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/kaiwassap-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/kaiwassap-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <title>kaiwassap</title>
   <link rel="stylesheet" href="src/styles.css">
 </head>
 <body>
   <main class="app">
     <header class="top">
       <div id="sprite" class="sprite">
-        <img id="sprite-img" alt="">
+        <img id="sprite-img" alt="Yui">
         <span class="sprite-placeholder"></span>
       </div>
       <div class="ident">
@@ -22,6 +30,7 @@
       </div>
       <div class="tools">
         <span class="emo" id="sprite-label"></span>
+        <button id="settings" title="Settings">⚙</button>
         <button id="debug" title="Inspect state">ⓘ</button>
         <button id="reset" title="Reset memory">↺</button>
       </div>
@@ -37,6 +46,43 @@
     </form>
     <p class="hint">Tap a message to reveal the English. ⧉ copies the plain Japanese.</p>
   </main>
+
+  <dialog id="settings-dlg" class="dlg">
+    <form method="dialog">
+      <h2>設定 Settings</h2>
+
+      <label class="fld">
+        <span>Google AI Studio API key</span>
+        <input id="set-key" type="password" placeholder="AI Studio → Get API key"
+               autocomplete="off" spellcheck="false">
+      </label>
+      <p class="fine">
+        Stored in this browser's <code>localStorage</code> only — never in the repo.
+        Anyone using your deployed page needs their own key.
+        <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Get one</a>.
+        <br><strong>Free tier only:</strong> don't attach a billing account to the
+        Google Cloud project. Without one the API returns "quota exceeded" instead
+        of charging you, and she falls back to her written lines for the rest of the day.
+      </p>
+
+      <label class="fld">
+        <span>Model</span>
+        <select id="set-model"></select>
+      </label>
+
+      <label class="chk"><input id="set-llm" type="checkbox">
+        <span>Let her improvise replies via Gemini <small id="llm-status"></small></span></label>
+      <label class="chk"><input id="set-proactive" type="checkbox">
+        <span>She messages first when it goes quiet <small>Authored lines — costs no quota.</small></span></label>
+      <label class="chk"><input id="set-notify" type="checkbox">
+        <span>Browser notification when the tab isn't focused</span></label>
+
+      <menu>
+        <button value="cancel">Cancel</button>
+        <button id="set-save" value="save" class="primary">Save</button>
+      </menu>
+    </form>
+  </dialog>
 
   <script type="module" src="src/app.js"></script>
 </body>

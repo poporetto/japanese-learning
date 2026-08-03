@@ -1,10 +1,11 @@
 import { Companion } from './engine/engine.js';
 import * as State from './engine/state.js';
+import { MODELS, llmReady, lastError, quotaStatus } from './engine/llm.js';
 
 const $ = (sel) => document.querySelector(sel);
 const log = $('#log');
 
-let yui, state;
+let yui, state, settings;
 
 /* ---------- rendering helpers ---------- */
 
@@ -81,7 +82,7 @@ function addTeach(g) {
   el.className = 'row her';
   el.innerHTML = `
     <details class="teach">
-      <summary><span class="tag">N2</span> ${esc(g.point)} — ${esc(g.en)}</summary>
+      <summary><span class="tag">N2</span> ${ruby(g.point)} — ${esc(g.en)}</summary>
       <p class="ex">${ruby(g.ex)}</p>
       <p class="exen">${esc(g.exEn)}</p>
       ${g.note ? `<p class="note">${esc(g.note)}</p>` : ''}
@@ -103,6 +104,8 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* ---------- chrome: sprite, meter, suggestions ---------- */
 
+const PROFILE_FALLBACK = 'assets/portraits/yui-chat-profile.png';
+
 function setSprite(key) {
   const def = yui.sprites[key] || yui.sprites.neutral;
   const wrap = $('#sprite');
@@ -110,8 +113,17 @@ function setSprite(key) {
   $('#sprite-label').textContent = def.label;
   const img = $('#sprite-img');
   img.hidden = false;
+  img.dataset.profileFallback = '0';
+  img.onload = () => { img.hidden = false; };
+  img.onerror = () => {
+    if (img.dataset.profileFallback === '1') {
+      img.hidden = true;
+      return;
+    }
+    img.dataset.profileFallback = '1';
+    img.src = PROFILE_FALLBACK;
+  };
   img.src = def.file;
-  img.onerror = () => { img.hidden = true; };
 }
 
 function setMeter() {
@@ -176,7 +188,7 @@ async function play(turn) {
   }
 }
 
-function send(text) {
+async function send(text) {
   const value = text.trim();
   if (!value) return;
   $('#input').value = '';
@@ -185,7 +197,77 @@ function send(text) {
     return;
   }
   addUserBubble(value);
-  play(yui.respond(value, state));
+  ensureNotifyPermission();
+  // Held from here so a slow API call can't be raced by the idle timer.
+  busy = true;
+  const turn = await yui.respond(value, state);
+  busy = false;
+  await play(turn);
+  // Rescheduled only now: respond() zeroes `unanswered`, and scheduling before
+  // that read the pre-reply value — which at 5 meant she'd given up and
+  // answering her never brought her back.
+  scheduleProactive();
+}
+
+/* ---------- she messages first ---------- */
+
+let proactiveTimer = null;
+
+/** Idle gap before she says something unprompted, growing as she's ignored. */
+function nextDelay() {
+  const base = 55000 + Math.random() * 50000;             // 55–105s
+  const backoff = Math.min(6, 1.7 ** (state.unanswered || 0));
+  return Math.round(base * backoff);
+}
+
+function scheduleProactive() {
+  clearTimeout(proactiveTimer);
+  if (!settings.proactive) return;
+  // She gives up after a handful of unanswered messages rather than nagging
+  // an empty room forever. Sending anything at all resets this.
+  if ((state.unanswered || 0) >= 5) return;
+  proactiveTimer = setTimeout(fireProactive, nextDelay());
+}
+
+async function fireProactive() {
+  if (busy) return scheduleProactive();
+  busy = true;
+  const turn = await yui.proactive(state);
+  busy = false;
+  if (!turn) return scheduleProactive();
+
+  await play(turn);
+  notify(turn);
+  scheduleProactive();
+}
+
+function notify(turn) {
+  if (!settings.notify || !document.hidden) return;
+  if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
+  const body = turn.bubbles.map((b) => stripRuby(b.jp)).join(' ');
+  try {
+    // `renotify` so a second message re-alerts instead of silently replacing
+    // the first — the tag still keeps her to one notification in the tray.
+    const n = new Notification('結衣 Yui', {
+      body,
+      tag: 'yui',
+      renotify: true,
+      icon: 'assets/portraits/yui-chat-profile.png',
+    });
+    n.onclick = () => { window.focus(); n.close(); };
+  } catch { /* Safari throws outside a service worker; the bubble is still there */ }
+}
+
+/**
+ * Browsers only grant notification permission from a user gesture, so this
+ * rides the first click or send rather than firing at boot — where it would
+ * be auto-denied and never askable again.
+ */
+async function ensureNotifyPermission() {
+  if (!settings.notify || typeof Notification === 'undefined') return;
+  if (Notification.permission !== 'default') return;
+  settings.notify = (await Notification.requestPermission()) === 'granted';
+  State.saveSettings(settings);
 }
 
 /* ---------- boot ---------- */
@@ -225,21 +307,76 @@ async function boot() {
 
   state = State.load();
   setMeter();
-  await play(yui.openSession(state));
+  buildSettings();
+  await play(await yui.openSession(state));
+  scheduleProactive();
 }
+
+/* ---------- settings ---------- */
+
+function buildSettings() {
+  const sel = $('#set-model');
+  sel.innerHTML = MODELS.map(
+    (m) => `<option value="${m.id}">${esc(m.label)}</option>`
+  ).join('');
+  syncSettingsForm();
+}
+
+function syncSettingsForm() {
+  $('#set-key').value = settings.apiKey;
+  $('#set-model').value = settings.model;
+  $('#set-llm').checked = settings.llm;
+  $('#set-proactive').checked = settings.proactive;
+  $('#set-notify').checked = settings.notify;
+  const q = quotaStatus(settings);
+  $('#llm-status').textContent = !llmReady(settings)
+    ? 'off — authored replies only'
+    : q.exhausted
+      ? 'free tier used up for today — authored replies until it resets'
+      : `on — ${q.used}/${q.cap} requests used today`;
+  document.body.classList.toggle('llm-on', llmReady(settings) && !q.exhausted);
+}
+
+$('#settings').addEventListener('click', () => {
+  syncSettingsForm();
+  $('#settings-dlg').showModal();
+});
+
+$('#set-save').addEventListener('click', async (e) => {
+  e.preventDefault();
+  settings = {
+    ...settings,
+    apiKey: $('#set-key').value.trim(),
+    model: $('#set-model').value,
+    llm: $('#set-llm').checked,
+    proactive: $('#set-proactive').checked,
+    notify: $('#set-notify').checked,
+  };
+
+  if (settings.notify && typeof Notification !== 'undefined' && Notification.permission === 'default') {
+    settings.notify = (await Notification.requestPermission()) === 'granted';
+  }
+
+  State.saveSettings(settings);
+  syncSettingsForm();
+  scheduleProactive();
+  $('#settings-dlg').close();
+});
 
 $('#form').addEventListener('submit', (e) => {
   e.preventDefault();
   send($('#input').value);
 });
 
-$('#reset').addEventListener('click', () => {
-  if (!confirm('Reset Yui\'s memory and start over?')) return;
+$('#reset').addEventListener('click', async () => {
+  if (!confirm('Reset Yui\'s memory and start over?\n\n(Your API key and settings are kept.)')) return;
+  clearTimeout(proactiveTimer);
   State.reset();
   log.innerHTML = '';
   state = State.load();
   setMeter();
-  play(yui.openSession(state));
+  await play(await yui.openSession(state));
+  scheduleProactive();
 });
 
 $('#debug').addEventListener('click', () => {
@@ -248,9 +385,17 @@ $('#debug').addEventListener('click', () => {
     .join('\n') || '(nothing yet)';
   alert(
     `affection: ${state.affection}\nturns: ${state.turns}\nstage: ${State.stageOf(state).en}\n` +
-    `pendingSlot: ${state.pendingSlot}\npendingTopic: ${state.pendingTopic}\n\n` +
+    `pendingSlot: ${state.pendingSlot}\npendingTopic: ${state.pendingTopic}\n` +
+    `unanswered: ${state.unanswered}\nLLM: ${llmReady(settings) ? settings.model : 'off'}` +
+    `${lastError ? ` (last error: ${lastError})` : ''}\n\n` +
     `memory:\n${mem}\n\ngrammar seen: ${state.learned.length}`
   );
 });
 
+// Coming back to the tab shouldn't trigger an instant backlog of nudges.
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) scheduleProactive();
+});
+
+settings = State.loadSettings();
 boot();

@@ -57,10 +57,10 @@ export function reset() {
 
 const DEFAULT_SETTINGS = {
   apiKey: '',
-  model: 'gemini-2.5-flash',
+  model: 'gemini-flash-latest',
   llm: true,          // use the API when a key is present
   proactive: true,    // she messages first when the conversation goes quiet
-  notify: false,      // browser notification when the tab isn't focused
+  notify: true,       // browser notification when the tab isn't focused
 };
 
 export function loadSettings() {

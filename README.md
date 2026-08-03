@@ -1,9 +1,12 @@
 # 結衣 — a Japanese companion chat app
 
-A rule-based companion character who chats in casual N2 Japanese, remembers what
-you tell her, builds a relationship over time, and occasionally sends photos.
+A companion character who chats in casual N2 Japanese, remembers what you tell
+her, messages you first when the conversation goes quiet, builds a relationship
+over time, and occasionally sends photos.
 
-**No AI API, no backend, no build step.** Static files + `localStorage`.
+**No backend, no build step.** Static files + `localStorage`. Works fully
+offline on authored content; add a Google AI Studio key and she improvises the
+wording of her replies instead of picking from a script.
 
 ## Run it
 
@@ -29,24 +32,138 @@ Pattern matching alone produces a FAQ bot. Four things do the actual work:
 4. **The director decides turn *type* before turn *text*** — react, ask, call
    back a memory, teach, send a photo. That's what gives it pacing.
 
+## Gemini (optional)
+
+Open ⚙, paste a [Google AI Studio key](https://aistudio.google.com/apikey), save.
+The key lives in `localStorage` in that one browser — **it is never written to
+this repo** and `↺` (reset memory) doesn't erase it.
+
+What changes: the director still decides the *kind* of turn — react, ask, call
+back a memory, deflect into a new topic — and memory, affection, photos and
+grammar notes run exactly as before. The API only rewrites the *words* of the
+turn the director already planned. So her pacing and her personality are the
+authored ones either way; the API buys you replies that actually engage with
+what you wrote instead of the nearest matching pattern.
+
+`persona.json → life` is the shared canon — her flat, her boss 田中さん, the
+stray cat 「しっぽ」, the ramen place she goes to weekly. It's injected into
+every request, which is what stops an improvised reply inventing a different
+life each turn.
+
+### Staying on the free tier
+
+The hard guarantee is Google's: **don't attach a billing account** to the Cloud
+project behind the key. Without one the API returns `429 RESOURCE_EXHAUSTED`
+rather than charging you. On top of that, `llm.js` enforces three limits itself:
+
+| Gate | Behaviour |
+|---|---|
+| Daily cap | 200 requests for Flash, 800 for Flash-Lite — under the free RPD |
+| Rate limit | 4.5s minimum between calls, under the free RPM |
+| 429 latch | One quota error and it stops calling until the Pacific-midnight reset |
+
+Every one of those falls back to the authored line. Hitting the limit looks like
+her being slightly less responsive, never like an error. ⚙ shows the day's count.
+
+## Her backstory
+
+She likes you. She's also two years out of a relationship that taught her not
+to trust being liked back, and it surfaces in her — briefly, and never on
+demand. `persona.json → life.past` holds the canon; the beats are that she was
+only called when convenient, that she read being needed as being valued, that
+"I want to see you more" got her called clingy, and that she found out
+afterwards there had been someone else. What stuck isn't the betrayal, it's the
+suspicion that two years of her was just useful.
+
+It unfolds across three gated threads: `t_ex` (affection 40) is her telling
+you, `t_trust` (50) is her admitting the reflex it left her with, `t_like` (55)
+is her noticing she likes you and finding that frightening. Telling you sets
+`knows_ex`, which unlocks quieter follow-ups — the photo folder she can't
+delete, bracing when you're kind, the admission that she thinks about him less
+now and it might not only be because she's busy.
+
+Three mechanisms keep this from becoming her whole personality:
+
+- **`cond.chance`** — a rarity dial on `pick()`. Without it, an unseen line
+  *wins* the least-seen draw, so the rarest content would fire the most.
+- **Affection gates** on the topics, the proactive asides, and the 42 grammar
+  cards tagged to the thread.
+- **`llm.js` only puts `life.past` in the prompt above affection 40**, so Gemini
+  can't raise on turn one what the authored gates are holding back.
+
+A 400-draw simulation at affection 0 produces zero references to any of it.
+
+## Proactive messages
+
+She starts messages on her own after 55–105 seconds of silence, backing off
+1.7× per unanswered nudge and giving up after five. These are **always
+authored**, never API calls — they fire on a timer, so routing them through
+Gemini would spend quota on an empty room.
+
+About 40% of her nudges are **questions** rather than reports — entries marked
+`"ask": true`, drawn from their own pool so a run of monologue always has
+something answerable in it. Commenting on your silence needs two unanswered
+nudges of grace and then wins only a third of draws, which puts 「あれ、いない？」
+at roughly 9% of nudges instead of dominating them.
+
+Author them in `dialogue.proactive`, same shape as everything else:
+
+```jsonc
+{
+  "id": "p_a1", "s": "pout",
+  "cond": { "band": ["afternoon"] },
+  "b": [{ "jp": "田中{たなか}さんの修正{しゅうせい}指示{しじ}、また「なんかもうちょっとこう…」だった。",
+          "en": "Tanaka's edit note was 'can you make it, like, a bit more…' again." }],
+  "sug": [{ "jp": "それはひどい", "en": "That's rough" }]
+}
+```
+
+`cond.minUnanswered` / `maxUnanswered` gate on how long she's been ignored, and
+those lines jump the queue — otherwise 「無視してる？」 would lose the random
+draw against 60 ordinary ones and never appear.
+
+Currently 65 proactive lines: time-banded slices of her day, 14 questions aimed
+at you, ignored-escalation, and affection-gated ones.
+
+### Notifications
+
+On by default. Permission is requested on your first message rather than at
+load, because browsers auto-deny a request that isn't tied to a user gesture
+and then never ask again. She only notifies when the tab isn't focused, and
+`renotify` means a second message re-alerts rather than silently replacing the
+first. Turn it off in ⚙.
+
+## Deploying to GitHub Pages
+
+Push and enable Pages; it's static, so nothing else is needed. **No key goes in
+the repo** — each visitor (including you, per browser) enters their own in ⚙.
+
+If you want the key restricted so a copied key is useless elsewhere, add an
+HTTP-referrer restriction on it in the Google Cloud console, limited to
+`yourname.github.io/*`. That's the only meaningful protection for a key used
+from a browser; a key shipped inside the page is readable by anyone regardless
+of how it's obfuscated.
+
 ## Layout
 
 ```
 index.html
-src/app.js              UI: bubbles, furigana, typing delays, chips
+src/app.js              UI: bubbles, furigana, typing delays, chips, settings
 src/styles.css
 src/engine/
   normalize.js          NFKC, katakana→hiragana, script detection
   match.js              weighted substring intent scoring
   memory.js             entity capture + slot filling
-  state.js              affection, stages, persistence
+  state.js              affection, stages, persistence, settings, history
   director.js           chooses the KIND of turn
+  llm.js                optional Gemini leg + free-tier quota gates
   engine.js             getReply orchestration
 src/content/            ← author here, no JS needed
-  persona.json          who she is
+  persona.json          who she is, and her fixed life canon
   intents.json          what the user might mean
-  dialogue.json         everything she says
-  grammar-n2.json       N2 points woven in as side notes
+  dialogue.json         everything she says, incl. proactive
+  qa.json               questions aimed at her
+  grammar-n2.json       all 156 N2 points, tagged to intents and topics
   lexicon.json          entities worth remembering
   sprites.json          emotion → sprite file
 assets/sprites/         drop your sprites here
@@ -114,10 +231,56 @@ she'd send it:
 - A photo with no `when` only appears on the low-probability random path.
 - Ask too often and she deflects (`photoDeny`) rather than spamming.
 
-Currently 19 photos: konbini hauls, ramen, her desk, the office at night, the
-sky, rain on the window, Nakameguro station, the Meguro river, a neighbourhood
-cat, her film camera, developed prints, her room, burnt home cooking — plus four
-selfies gated at affection 25/35/45/60.
+Currently 41 photos: konbini hauls, ramen, gyoza, her desk at work and at home,
+the empty office floor, the train window, the shopping street at dusk, the
+konbini at 1am, the sky, rain, umbrellas, laundry, Nakameguro station, the
+Meguro river in spring, the neighbourhood cat, her film camera, undeveloped
+rolls, prints, her brother's CDs, the guitar she keeps not buying, her room,
+burnt home cooking — plus eight selfies gated at affection
+25/35/45/60/72/80/88/96.
+
+A missing file shows a dashed placeholder with the path it expects, so entries
+are authored before the images exist — drop a file in with the right name and it
+appears with no code change. **18 are still needed:** `cafe-window`,
+`office-empty`, `train-window`, `shotengai`, `konbini-night`, `desk-home`,
+`umbrella`, `bento`, `gyoza`, `sakura`, `shippo-close`, `film-rolls`, `records`,
+`guitar-shop`, `laundry`, `breakfast`, `deadline`, `old-photos` — all `.jpg` in
+`assets/photos/`.
+
+Most arrive through the `t_showme` topic (「今どこにいるか、当ててみて」) and the
+`p_where*` proactive lines, so they read as her showing you where she is rather
+than as a random drop.
+
+## N2 grammar
+
+All **156 points** of the standard JLPT N2 list are in `grammar-n2.json`, and a
+600-turn simulation surfaces every one of them. They ride along as a collapsible
+side note, never as the main message — roughly one every four turns, unseen
+points first.
+
+Each is tagged with `when.intent` and/or `when.topic`, and a matching card beats
+a random one: complain about work and you get 〜どころか, say you're exhausted and
+you get 〜てしかたがない, and the ex thread pulls 〜ざるを得ない, 〜ものの,
+〜てはじめて. Topic matching matters because most of the conversation happens
+inside her topic threads, where `intentId` is null and an intent-only match
+would always fall through to a random card.
+
+Examples are written in her voice and set in her life — 田中さん's vague edits,
+the ramen place, the film she hasn't developed — so a card reads as an aside
+from the conversation rather than a page from a textbook.
+
+```jsonc
+{
+  "id": "n2_dokoroka",
+  "point": "〜どころか",                      // furigana renders here too
+  "en": "far from / let alone",
+  "ex": "休{やす}めるどころか、仕事{しごと}が増{ふ}えた。",
+  "exEn": "Far from getting a rest, I got more work.",
+  "note": "Reality is the opposite of the expectation, and worse.",
+  "when": { "intent": ["tired", "work_talk"], "topic": ["t_work"] },
+  "cond": { "minAff": 40 }                  // 42 points sit in the ex thread
+}
+```
 
 ## Relationship model
 
@@ -127,9 +290,13 @@ things about yourself, and specific authored lines. Stages: 知り合い → 友
 
 The ⓘ button dumps live state; ↺ resets her memory.
 
-## If you later want an LLM
+## Why the authored layer stays
 
-`Companion.respond()` is the only surface the UI touches, and the fallback path
-is one branch in `director.js` (`kind: 'deflect'`). Swapping in WebLLM or an API
-for *just that branch* leaves the authored personality, memory, and pacing
-intact.
+It isn't a fallback bolted on for offline use — it's the thing that makes her a
+character rather than a chat window. The director's pacing, the memory
+callbacks, the contextual photos and the relationship gates all live there, and
+they behave identically whether or not the API answers. Turning the key off
+costs you responsiveness to unusual input; it costs you none of the personality.
+
+That's also what makes the free-tier limits survivable: running out of quota
+degrades her, but never breaks her.

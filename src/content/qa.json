@@ -698,6 +698,218 @@
           ]
         }
       ]
+    },
+    {
+      "id": "qa_ex",
+      "kw": [
+        "元カレ",
+        "元彼",
+        "前の彼",
+        "付き合ってた",
+        "ex",
+        "前の人",
+        "昔の彼"
+      ],
+      "a": [
+        {
+          "id": "qa_ex_low",
+          "s": "neutral",
+          "cond": {
+            "maxAff": 40
+          },
+          "b": [
+            {
+              "jp": "いたよ。でも、その話{はなし}はまだいいや。",
+              "en": "There was someone. But let's leave that for now."
+            },
+            {
+              "jp": "そういうのはさ、もうちょっと仲良{なかよ}くなってからで。",
+              "en": "That kind of thing can wait until we know each other better."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "わかった",
+              "en": "Understood"
+            },
+            {
+              "jp": "ごめん",
+              "en": "Sorry for asking"
+            }
+          ]
+        },
+        {
+          "id": "qa_ex_mid",
+          "s": "neutral",
+          "cond": {
+            "minAff": 40
+          },
+          "setFlag": "knows_ex",
+          "b": [
+            {
+              "jp": "二年{にねん}付{つ}き合{あ}って、去年{きょねん}の秋{あき}に別{わか}れた。",
+              "en": "Two years together, broke up last autumn."
+            },
+            {
+              "jp": "都合{つごう}のいい時{とき}だけ呼{よ}ばれる感{かん}じ、って言{い}えば伝{つた}わるかな。",
+              "en": "'Only called when convenient' — does that get it across?"
+            }
+          ],
+          "sug": [
+            {
+              "jp": "それはつらいね",
+              "en": "That's hard"
+            },
+            {
+              "jp": "よく頑張ったね",
+              "en": "You held up well"
+            }
+          ],
+          "aff": 2
+        }
+      ]
+    },
+    {
+      "id": "qa_over_him",
+      "kw": [
+        "もう平気",
+        "忘れられた",
+        "立ち直",
+        "吹っ切れ",
+        "over him",
+        "まだ好き"
+      ],
+      "a": [
+        {
+          "id": "qa_over_1",
+          "s": "neutral",
+          "cond": {
+            "minAff": 45,
+            "flag": "knows_ex"
+          },
+          "b": [
+            {
+              "jp": "好{す}きかって聞{き}かれたら、もう違{ちが}う。それは確{たし}か。",
+              "en": "If you ask whether I still love him — no. That much I'm sure of."
+            },
+            {
+              "jp": "ただ、あの二年{にねん}が無{む}駄{だ}だったって思{おも}いたくないだけ。",
+              "en": "I just don't want to believe those two years were wasted."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "無駄じゃないよ",
+              "en": "They weren't wasted"
+            },
+            {
+              "jp": "そっか",
+              "en": "I see"
+            }
+          ],
+          "aff": 3
+        }
+      ]
+    },
+    {
+      "id": "qa_do_you_like_me",
+      "kw": [
+        "俺のこと好き",
+        "私のこと好き",
+        "好きなの",
+        "好き？",
+        "do you like me"
+      ],
+      "a": [
+        {
+          "id": "qa_like_low",
+          "s": "shy",
+          "cond": {
+            "maxAff": 45
+          },
+          "b": [
+            {
+              "jp": "えっ。急{きゅう}に何{なに}。",
+              "en": "What. Where did that come from."
+            },
+            {
+              "jp": "……嫌{きら}いじゃないよ。それ以上{いじょう}は聞{き}かないで。",
+              "en": "…I don't dislike you. Don't ask past that."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "わかった",
+              "en": "Okay"
+            },
+            {
+              "jp": "ずるいなあ",
+              "en": "That's a dodge"
+            }
+          ]
+        },
+        {
+          "id": "qa_like_high",
+          "s": "happy_shy",
+          "cond": {
+            "minAff": 55
+          },
+          "b": [
+            {
+              "jp": "……ずるい聞{き}き方{かた}するね。",
+              "en": "…That's an unfair way to ask."
+            },
+            {
+              "jp": "好{す}きだよ。でも、それを言{い}うのがちょっと怖{こわ}い。",
+              "en": "I do like you. But saying it scares me a little."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "怖くないよ",
+              "en": "Don't be scared"
+            },
+            {
+              "jp": "わたしも",
+              "en": "Me too"
+            }
+          ],
+          "aff": 5
+        }
+      ]
+    },
+    {
+      "id": "qa_where_now",
+      "kw": [
+        "今どこ",
+        "どこにいる",
+        "where are you",
+        "今どこにいる",
+        "なにしてる場所"
+      ],
+      "a": [
+        {
+          "id": "qa_where_1",
+          "s": "smile",
+          "b": [
+            {
+              "jp": "今{いま}ね、ちょうどいいところ。見{み}せたほうが早{はや}いか。",
+              "en": "Somewhere good, actually. Easier to just show you."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "見せて",
+              "en": "Show me"
+            },
+            {
+              "jp": "気になる",
+              "en": "Now I'm curious"
+            }
+          ],
+          "aff": 1
+        }
+      ]
     }
   ]
 }

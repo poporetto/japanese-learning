@@ -70,10 +70,14 @@ export class Companion {
       gapDays,
       band: timeBand(),
     });
+    // Authored, like the proactive nudges: the opener answers nothing, so
+    // spending a request on it would cost a free-tier slot per page load —
+    // and burn the rate-limit gap that the first real reply wants.
     return this._compose(plan, state, {
       newMemories: [],
       script: 'jp',
       band: timeBand(),
+      noLLM: true,
     });
   }
 
@@ -211,6 +215,9 @@ export class Companion {
         state.lastPhotoTurn = state.turns;
         state.seen[p.id] = (state.seen[p.id] || 0) + 1;
         bumpAffection(state, p.aff ?? 1);
+        // A photo that asks you something needs chips to answer it with.
+        if (p.sug) suggestions = p.sug;
+        if (p.q) state.pendingSlot = p.q;
       } else {
         const deny = pick(this.dialogue.photoDeny, state);
         if (deny) {
@@ -327,27 +334,35 @@ export class Companion {
         state.lastPhotoTurn = state.turns;
         state.seen[p.id] = (state.seen[p.id] || 0) + 1;
         bumpAffection(state, p.aff ?? 0);
+        // She asked what you think — her question outranks whatever chips the
+        // turn's own line offered, since the photo is what's on screen now.
+        if (p.sug) suggestions = p.sug;
+        if (p.q) state.pendingSlot = p.q;
       }
     }
 
     // Teaching rides along as a side note, never as the main message.
     let teach = null;
-    const g = teachPlan(state, this.grammar, meta);
+    const g = teachPlan(state, this.grammar, {
+      ...meta,
+      topicId: plan.topic?.id ?? state.pendingTopic ?? null,
+    });
     if (g && bubbles.length) {
       teach = g;
       state.lastTeachTurn = state.turns;
       if (!state.learned.includes(g.id)) state.learned.push(g.id);
     }
 
+    // Authored lines are guaranteed fillable by pick(); an improvised one is
+    // not, so anything still in braces after filling gets its braces dropped
+    // rather than shown to the user as 「{name}、それ本当？」.
     const extras = echo ? { echo } : {};
+    const deSlot = (s) => fillSlots(s, state, extras).replace(/\{(\w+)\}/g, '$1');
     for (const b of bubbles) {
-      b.jp = fillSlots(b.jp, state, extras);
-      if (b.en) b.en = fillSlots(b.en, state, extras);
+      b.jp = deSlot(b.jp);
+      if (b.en) b.en = deSlot(b.en);
     }
-    suggestions = suggestions.map((s) => ({
-      jp: fillSlots(s.jp, state, extras),
-      en: s.en,
-    }));
+    suggestions = suggestions.map((s) => ({ jp: deSlot(s.jp), en: s.en }));
 
     // Her side of the transcript, ruby markup stripped — the API shouldn't be
     // shown furigana braces as if they were part of normal Japanese.

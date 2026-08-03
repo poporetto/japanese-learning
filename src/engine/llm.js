@@ -10,12 +10,13 @@
 const ENDPOINT = (model) =>
   `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
-// Free tier, as of 2026: flash ~250 req/day, flash-lite ~1000. One request per
-// user turn, so either is comfortable for personal use.
+// Rolling aliases, not pinned ids. Pinned older ids (gemini-2.5-flash and
+// below) now 404 for keys issued recently — "no longer available to new users" —
+// so an alias is the only thing that stays working without edits.
+// One request per user turn; free tier is comfortable for personal use.
 export const MODELS = [
-  { id: 'gemini-2.5-flash', label: 'Gemini 2.5 Flash — 250/day' },
-  { id: 'gemini-2.5-flash-lite', label: 'Gemini 2.5 Flash-Lite — 1000/day, faster' },
-  { id: 'gemini-3.6-flash', label: 'Gemini 3.6 Flash — newest' },
+  { id: 'gemini-flash-latest', label: 'Flash (latest) — best quality' },
+  { id: 'gemini-flash-lite-latest', label: 'Flash-Lite (latest) — faster, higher daily limit' },
 ];
 
 const SPRITES = [
@@ -29,7 +30,97 @@ export function llmReady(settings) {
   return !!(settings?.llm && settings?.apiKey?.trim());
 }
 
+/* ---------- staying inside the free tier ---------- */
+//
+// The only *hard* guarantee is on Google's side: a project with no billing
+// account attached cannot spend money — it returns 429 RESOURCE_EXHAUSTED
+// instead. Everything below is the client-side half, so the app stops asking
+// well before that, and stops asking entirely once told no.
+
+const QUOTA_KEY = 'yui.quota.v1';
+
+// Free-tier requests-per-day, minus headroom. Flash is 250/day, Flash-Lite
+// 1000; both share a per-minute cap that human typing speed can't reach.
+const DAILY_CAP = { 'gemini-flash-latest': 200, 'gemini-flash-lite-latest': 800 };
+const DEFAULT_CAP = 200;
+const MIN_GAP_MS = 6500; // ≈9 req/min ceiling, under the free tier's 10 RPM
+
+/** Google's daily quota resets at midnight Pacific, not local midnight. */
+function quotaDay() {
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'America/Los_Angeles' });
+}
+
+export function loadQuota() {
+  let q;
+  try {
+    q = JSON.parse(localStorage.getItem(QUOTA_KEY) || '{}');
+  } catch {
+    q = {};
+  }
+  if (q.day !== quotaDay()) q = {};
+  return { day: quotaDay(), used: 0, exhausted: false, lastCall: 0, blockedUntil: 0, strikes: 0, ...q };
+}
+
+function saveQuota(q) {
+  localStorage.setItem(QUOTA_KEY, JSON.stringify(q));
+}
+
+export function quotaStatus(settings) {
+  const q = loadQuota();
+  return { used: q.used, cap: DAILY_CAP[settings?.model] ?? DEFAULT_CAP, exhausted: q.exhausted };
+}
+
+/**
+ * Both the per-minute and the per-day free-tier limits come back as
+ * 429 RESOURCE_EXHAUSTED, so the status alone can't tell them apart — and
+ * treating a one-second burst as "no more Gemini today" would be far more
+ * annoying than the problem it prevents. The violated quota's id says which:
+ * per-day ids contain "PerDay", per-minute ones "PerMinute".
+ */
+function classifyQuotaError(status, body) {
+  if (status !== 429 && !(status === 403 && /quota|RESOURCE_EXHAUSTED/i.test(body))) {
+    return null;
+  }
+
+  let details = [];
+  try {
+    details = JSON.parse(body)?.error?.details || [];
+  } catch { /* non-JSON body — fall through to the ambiguous case */ }
+
+  const ids = details
+    .flatMap((d) => d.violations || [])
+    .map((v) => `${v.quotaId || ''} ${v.quotaMetric || ''}`)
+    .join(' ');
+
+  if (/PerDay/i.test(ids)) return { scope: 'day' };
+  if (/PerMinute/i.test(ids)) {
+    const retry = details.find((d) => String(d['@type']).endsWith('RetryInfo'))?.retryDelay;
+    const secs = parseFloat(retry) || 30;
+    return { scope: 'minute', waitMs: (secs + 1) * 1000 };
+  }
+  // Unattributable 429: back off for a few minutes rather than a day, but
+  // don't let it drip forever — three in a row is treated as the daily wall.
+  return { scope: 'unknown', waitMs: 5 * 60 * 1000 };
+}
+
 /* ---------- prompt ---------- */
+
+// Below this she doesn't talk about her ex, and the API isn't even told he
+// exists. Putting `life.past` in every prompt would let Gemini raise it on
+// turn one, which would make the authored affection gating decorative.
+const PAST_MIN_AFFECTION = 40;
+
+function pastBlock(persona, state) {
+  const past = persona.life?.past;
+  if (!past || state.affection < PAST_MIN_AFFECTION) return '';
+  return `
+
+【過去のこと — 親しくなった相手にだけ、ぽつりと漏らす程度に】
+${past.summary}
+${(past.beats || []).map((b) => `- ${b}`).join('\n')}
+扱い方: 自分からは持ち出さない。相手が過去や恋愛の話をしたときに、一言だけこぼす。
+長く語らない。同情を引こうとしない。すぐ話題を戻して、笑ってごまかす。`;
+}
 
 function personaBlock(persona) {
   const L = persona.life || {};
@@ -88,15 +179,14 @@ function directionBlock(direction) {
 
 /* ---------- output hygiene ---------- */
 
-// fillSlots() substitutes {word} for ASCII-word contents. Furigana braces hold
-// kana so they're safe, but a stray {name} from the model would either get
-// silently replaced or render as literal braces. Strip them here instead.
-const stripSlotBraces = (s) => String(s).replace(/\{(\w+)\}/g, '$1');
-
+// Braces are deliberately left intact here. The model is told not to emit
+// {name}-style variables, but when it copies the habit from context anyway,
+// fillSlots downstream substitutes the real value — which is the outcome we
+// want. Only genuinely unfillable leftovers get flattened, in engine.js.
 function cleanBubble(b) {
-  const jp = stripSlotBraces(b?.jp || '').trim();
+  const jp = String(b?.jp || '').trim();
   if (!jp) return null;
-  return { jp: jp.slice(0, 160), en: stripSlotBraces(b?.en || '').trim().slice(0, 200) };
+  return { jp: jp.slice(0, 160), en: String(b?.en || '').trim().slice(0, 200) };
 }
 
 function shape(data) {
@@ -155,8 +245,29 @@ export let lastError = null;
 export async function improvise({ settings, persona, state, stage, userText, direction }) {
   if (!llmReady(settings)) return null;
 
+  // Three gates, all before the request is built. Once the free tier says no
+  // for the day, she goes back to authored lines and stays there until the
+  // Pacific-midnight reset — no retry loop, no drip of doomed requests.
+  const quota = loadQuota();
+  if (quota.exhausted) {
+    lastError = 'free-tier daily quota reached — using authored replies';
+    return null;
+  }
+  if (quota.used >= (DAILY_CAP[settings.model] ?? DEFAULT_CAP)) {
+    lastError = 'local daily cap reached — using authored replies';
+    return null;
+  }
+  if (Date.now() < quota.blockedUntil) {
+    lastError = 'rate limit hit — using authored replies for a moment';
+    return null;
+  }
+  if (Date.now() - quota.lastCall < MIN_GAP_MS) {
+    lastError = 'rate-limited locally';
+    return null;
+  }
+
   const system = [
-    personaBlock(persona),
+    personaBlock(persona) + pastBlock(persona, state),
     memoryBlock(state, stage),
     RULES,
     directionBlock(direction),
@@ -172,6 +283,10 @@ export async function improvise({ settings, persona, state, stage, userText, dir
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
 
+  // Counted before the response comes back: a request that fails still
+  // consumed a slot, and over-counting is the safe direction to be wrong in.
+  saveQuota({ ...quota, used: quota.used + 1, lastCall: Date.now() });
+
   try {
     const res = await fetch(ENDPOINT(settings.model), {
       method: 'POST',
@@ -186,6 +301,10 @@ export async function improvise({ settings, persona, state, stage, userText, dir
         generationConfig: {
           temperature: 1.0,
           maxOutputTokens: 700,
+          // Chit-chat needs no reasoning budget, and thinking tokens are billed
+          // against the same output allowance — leaving it on burned ~200 extra
+          // tokens per turn and added a second of latency for no gain.
+          thinkingConfig: { thinkingLevel: 'low' },
           responseMimeType: 'application/json',
           responseSchema: SCHEMA,
         },
@@ -194,7 +313,20 @@ export async function improvise({ settings, persona, state, stage, userText, dir
 
     if (!res.ok) {
       const body = await res.text().catch(() => '');
-      lastError = `${res.status} ${body.slice(0, 200)}`;
+      const hit = classifyQuotaError(res.status, body);
+      if (hit) {
+        const q = loadQuota();
+        const strikes = hit.scope === 'unknown' ? q.strikes + 1 : 0;
+        if (hit.scope === 'day' || strikes >= 3) {
+          saveQuota({ ...q, exhausted: true, strikes });
+          lastError = 'free-tier daily quota reached — using authored replies';
+        } else {
+          saveQuota({ ...q, blockedUntil: Date.now() + hit.waitMs, strikes });
+          lastError = 'rate limit hit — using authored replies for a moment';
+        }
+      } else {
+        lastError = `${res.status} ${body.slice(0, 200)}`;
+      }
       return null;
     }
 

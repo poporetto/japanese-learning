@@ -22,6 +22,10 @@ export function pick(variants, state) {
     if (c.band && !c.band.includes(state._band)) return false;
     if (c.flag && !state.flags[c.flag]) return false;
     if (c.notFlag && state.flags[c.notFlag]) return false;
+    // Rarity dial. `pick` prefers least-seen, so an unseen line otherwise
+    // *wins* the draw — exactly backwards for something she should only bring
+    // up once in a while, like her ex.
+    if (c.chance != null && Math.random() > c.chance) return false;
     // Never offer a line — or a quick-reply chip — whose {slots} we can't fill.
     const text = [...(v.b || []), ...(v.sug || [])].map((x) => x.jp).join('');
     if (!slotsSatisfied(text, state)) return false;
@@ -117,6 +121,25 @@ export function direct(ctx) {
  * which reuses the deflect path so the follow-up thread works identically.
  */
 export function proactivePlan(state, dialogue, band) {
+  const pool = dialogue.proactive || [];
+
+  // Being ignored changes what she says — but only sometimes. Jumping the
+  // queue on every unanswered nudge made 「あれ、いない？」 the thing she says
+  // most, which reads as needy rather than as a person with her own evening.
+  // Two nudges of grace first, then it's a minority of draws even after that.
+  if ((state.unanswered || 0) >= 2 && Math.random() < 0.35) {
+    const nag = pick(pool.filter((p) => p.cond?.minUnanswered != null), state);
+    if (nag) return { kind: 'proactive', variant: nag };
+  }
+
+  // Every so often she leads with a question about him rather than a report
+  // about herself — otherwise proactive turns are all monologue and there's
+  // nothing to answer.
+  if (Math.random() < 0.3) {
+    const q = pick(pool.filter((p) => p.ask && (!p.cond?.band || p.cond.band.includes(band))), state);
+    if (q) return { kind: 'proactive', variant: q };
+  }
+
   const openTopic = state.turns > 0 && !state.pendingTopic && Math.random() < 0.3;
 
   if (openTopic) {
@@ -124,7 +147,15 @@ export function proactivePlan(state, dialogue, band) {
     if (topic) return { kind: 'deflect', variant: null, topic };
   }
 
-  const v = pick((dialogue.proactive || []).filter((p) => !p.cond?.band || p.cond.band.includes(band)), state);
+  const v = pick(
+    pool.filter(
+      (p) =>
+        p.cond?.minUnanswered == null &&
+        !p.ask &&
+        (!p.cond?.band || p.cond.band.includes(band))
+    ),
+    state
+  );
   if (v) return { kind: 'proactive', variant: v };
 
   // Nothing left unseen that fits — fall back to opening a topic rather than
@@ -188,10 +219,20 @@ export function teachPlan(state, grammar, ctx = {}) {
   if (state.turns < 3) return null;
   if (state.turns - state.lastTeachTurn < 4) return null;
 
-  const unseen = grammar.filter((g) => !state.learned.includes(g.id));
-  const pool = unseen.length ? unseen : grammar;
+  const unseen = grammar.filter(
+    (g) => !state.learned.includes(g.id) && !(g.cond?.minAff > state.affection)
+  );
+  const pool = unseen.length ? unseen : grammar.filter((g) => !(g.cond?.minAff > state.affection));
+  if (!pool.length) return null;
 
-  const relevant = pool.filter((g) => g.when?.intent?.includes(ctx.intentId));
+  // Topic matters as much as intent: most of the conversation happens inside
+  // her topic threads, where intentId is null and an intent-only match would
+  // fall through to a random card every time.
+  const relevant = pool.filter(
+    (g) =>
+      g.when?.intent?.includes(ctx.intentId) ||
+      g.when?.topic?.includes(ctx.topicId)
+  );
   const from = relevant.length ? relevant : pool;
   return from[Math.floor(Math.random() * from.length)];
 }

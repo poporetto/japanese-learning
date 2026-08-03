@@ -10,48 +10,359 @@
       "intent": [
         "tired",
         "work_talk"
+      ],
+      "topic": [
+        "t_work"
       ]
     }
   },
   {
-    "id": "n2_kkanenai",
-    "point": "〜かねない",
-    "en": "might well (something bad)",
-    "ex": "このペースだと体{からだ}を壊{こわ}しかねないよ。",
-    "exEn": "At this pace you might well ruin your health.",
-    "note": "Only for undesirable outcomes. Attaches to the verb ます-stem.",
+    "id": "n2_wake_dewanai",
+    "point": "〜わけではない",
+    "en": "it's not that / not necessarily",
+    "ex": "嫌{きら}いなわけじゃないよ。ただ、ちょっと苦手{にがて}なだけ。",
+    "exEn": "It's not that I hate it. It's just not really my thing.",
+    "note": "Softens a denial. She uses this constantly to walk something back.",
     "when": {
       "intent": [
-        "tired",
+        "deny",
+        "food_talk"
+      ]
+    }
+  },
+  {
+    "id": "n2_wake_ganai",
+    "point": "〜わけがない",
+    "en": "there's no way",
+    "ex": "あの人{ひと}が謝{あやま}るわけがない。",
+    "exEn": "There's no way that guy apologises.",
+    "note": "Strong logical denial — you're certain from the nature of the thing.",
+    "when": {
+      "intent": [
+        "deny"
+      ],
+      "topic": [
+        "t_boss"
+      ]
+    }
+  },
+  {
+    "id": "n2_wake_niwaikanai",
+    "point": "〜わけにはいかない",
+    "en": "can't afford to / mustn't",
+    "ex": "締{し}め切{き}り前{まえ}だから、休{やす}むわけにはいかない。",
+    "exEn": "It's right before the deadline, so I can't take a break.",
+    "note": "Can't, for social or moral reasons — not because it's impossible.",
+    "when": {
+      "intent": [
+        "work_talk",
+        "tired"
+      ],
+      "topic": [
+        "t_work"
+      ]
+    }
+  },
+  {
+    "id": "n2_okagede",
+    "point": "〜おかげで",
+    "en": "thanks to",
+    "ex": "{name}のおかげで、日本語{にほんご}の練習{れんしゅう}が楽{たの}しい。",
+    "exEn": "Thanks to you, practising Japanese is fun.",
+    "note": "Positive cause. Pairs with せいで, its negative twin.",
+    "when": {
+      "intent": [
+        "thanks",
+        "compliment"
+      ]
+    }
+  },
+  {
+    "id": "n2_seide",
+    "point": "〜せいで",
+    "en": "because of (something bad)",
+    "ex": "寝坊{ねぼう}したせいで、朝{あさ}ごはん抜{ぬ}きだった。",
+    "exEn": "Because I overslept, I skipped breakfast.",
+    "note": "Assigns blame. Never use it for something good.",
+    "when": {
+      "intent": [
+        "tired"
+      ],
+      "topic": [
+        "t_sleep"
+      ]
+    }
+  },
+  {
+    "id": "n2_seika",
+    "point": "〜せいか",
+    "en": "perhaps because",
+    "ex": "雨{あめ}のせいか、今日{きょう}は誰{だれ}も外{そと}に出{で}てない。",
+    "exEn": "Maybe because of the rain, nobody's outside today.",
+    "note": "Hedged cause — you suspect but aren't sure.",
+    "when": {
+      "intent": [
+        "weather"
+      ]
+    }
+  },
+  {
+    "id": "n2_karakoso",
+    "point": "〜からこそ",
+    "en": "precisely because",
+    "ex": "大事{だいじ}だからこそ、ちゃんと言{い}っておきたい。",
+    "exEn": "It's precisely because it matters that I want to say it properly.",
+    "note": "Emphatic reason. Warm and a little serious.",
+    "when": {
+      "intent": [
+        "confess"
+      ],
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 40
+    }
+  },
+  {
+    "id": "n2_ijou",
+    "point": "〜以上{いじょう}は",
+    "en": "since / now that",
+    "ex": "やると言{い}った以上{いじょう}は、最後{さいご}までやる。",
+    "exEn": "Now that I've said I'd do it, I'll see it through.",
+    "note": "Commitment follows from a fact. Slightly formal but common in speech.",
+    "when": {
+      "intent": [
         "work_talk"
       ]
     }
   },
   {
-    "id": "n2_bakarika",
-    "point": "〜ばかりか",
-    "en": "not only... but also",
-    "ex": "彼{かれ}は遅{おく}れたばかりか、連絡{れんらく}もしなかった。",
-    "exEn": "Not only was he late, he didn't even get in touch.",
-    "note": "Stronger and more written than 〜だけでなく, but shows up in spoken complaints.",
+    "id": "n2_karaniwa",
+    "point": "〜からには",
+    "en": "since / as long as",
+    "ex": "東京{とうきょう}に来{く}るからには、まるふく連{つ}れてくからね。",
+    "exEn": "If you're coming to Tokyo, I'm taking you to Marufuku.",
+    "note": "Like 以上は — a resolve that follows from a premise.",
+    "when": {
+      "topic": [
+        "t_travel"
+      ]
+    }
+  },
+  {
+    "id": "n2_monodakara",
+    "point": "〜ものだから",
+    "en": "because (excuse)",
+    "ex": "電車{でんしゃ}が遅{おく}れたものだから、遅刻{ちこく}しちゃった。",
+    "exEn": "The train was late, so I ended up being late.",
+    "note": "An excuse, delivered slightly apologetically.",
     "when": {
       "intent": [
-        "work_talk",
+        "sorry"
+      ]
+    }
+  },
+  {
+    "id": "n2_mono",
+    "point": "〜もん",
+    "en": "because (sulky)",
+    "ex": "だって、眠{ねむ}いんだもん。",
+    "exEn": "But I'm sleepy, okay.",
+    "note": "Childish and defensive. She uses it when she's caught out.",
+    "when": {
+      "intent": [
+        "tired"
+      ],
+      "topic": [
+        "t_sleep"
+      ]
+    }
+  },
+  {
+    "id": "n2_kotokara",
+    "point": "〜ことから",
+    "en": "from the fact that",
+    "ex": "毎日{まいにち}来{く}ることから、この猫{ねこ}は近所{きんじょ}の子{こ}だと分{わ}かった。",
+    "exEn": "From the fact he comes every day, I realised the cat lives nearby.",
+    "note": "Evidence to conclusion. Reads a bit written.",
+    "when": {
+      "topic": [
+        "t_cat"
+      ]
+    }
+  },
+  {
+    "id": "n2_dake_ni",
+    "point": "〜だけに",
+    "en": "precisely because / all the more",
+    "ex": "楽{たの}しみにしてただけに、中止{ちゅうし}はきつい。",
+    "exEn": "Precisely because I was looking forward to it, the cancellation stings.",
+    "note": "The reason intensifies the result.",
+    "when": {
+      "intent": [
         "sad"
       ]
     }
   },
   {
-    "id": "n2_ni_shitewa",
-    "point": "〜にしては",
-    "en": "for / considering that",
-    "ex": "初{はじ}めてにしては上手{じょうず}じゃない？",
-    "exEn": "For a first try, isn't that pretty good?",
-    "note": "Expectation vs reality. Great for praising someone's Japanese.",
+    "id": "n2_dakeatte",
+    "point": "〜だけあって",
+    "en": "as you'd expect from",
+    "ex": "毎日{まいにち}練習{れんしゅう}してるだけあって、発音{はつおん}きれいだね。",
+    "exEn": "As you'd expect from practising daily, your pronunciation is lovely.",
+    "note": "Praise that credits the cause. Very natural compliment.",
     "when": {
       "intent": [
-        "teach_request",
-        "hobby"
+        "compliment",
+        "teach_request"
+      ]
+    }
+  },
+  {
+    "id": "n2_bakarini",
+    "point": "〜ばかりに",
+    "en": "just because (regret)",
+    "ex": "一言{ひとこと}言{い}わなかったばかりに、こじれちゃった。",
+    "exEn": "Just because I didn't say one thing, it got complicated.",
+    "note": "Regret — a small cause, a bad outcome.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 40
+    }
+  },
+  {
+    "id": "n2_totan",
+    "point": "〜たとたん(に)",
+    "en": "the moment that",
+    "ex": "ドアを開{あ}けたとたん、猫{ねこ}が逃{に}げた。",
+    "exEn": "The moment I opened the door, the cat ran off.",
+    "note": "Sudden, unexpected, and always past tense.",
+    "when": {
+      "topic": [
+        "t_cat"
+      ]
+    }
+  },
+  {
+    "id": "n2_katoomouto",
+    "point": "〜かと思{おも}うと",
+    "en": "no sooner than",
+    "ex": "晴{は}れたかと思{おも}うと、また降{ふ}ってきた。",
+    "exEn": "No sooner had it cleared up than it started raining again.",
+    "note": "Two things in quick, often annoying succession.",
+    "when": {
+      "intent": [
+        "weather"
+      ]
+    }
+  },
+  {
+    "id": "n2_kanaikanouchini",
+    "point": "〜か〜ないかのうちに",
+    "en": "as soon as",
+    "ex": "座{すわ}るか座{すわ}らないかのうちに、電話{でんわ}が鳴{な}った。",
+    "exEn": "I'd barely sat down when the phone rang.",
+    "note": "Even faster than たとたん. Slightly dramatic.",
+    "when": {
+      "intent": [
+        "work_talk"
+      ]
+    }
+  },
+  {
+    "id": "n2_shidai",
+    "point": "〜次第{しだい}",
+    "en": "as soon as",
+    "ex": "現像{げんぞう}が上{あ}がり次第{しだい}、見{み}せるね。",
+    "exEn": "As soon as the film's developed, I'll show you.",
+    "note": "Formal-ish but common. Only for things you'll do, never past.",
+    "when": {
+      "topic": [
+        "t_camera"
+      ],
+      "intent": [
+        "ask_photo"
+      ]
+    }
+  },
+  {
+    "id": "n2_tabini",
+    "point": "〜たび(に)",
+    "en": "every time",
+    "ex": "この曲{きょく}を聞{き}くたびに、去年{きょねん}の秋{あき}を思{おも}い出{だ}す。",
+    "exEn": "Every time I hear this song I remember last autumn.",
+    "note": "Habitual trigger. Often nostalgic.",
+    "when": {
+      "topic": [
+        "t_music",
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 35
+    }
+  },
+  {
+    "id": "n2_teirai",
+    "point": "〜て以来{いらい}",
+    "en": "ever since",
+    "ex": "カメラ始{はじ}めて以来{いらい}、散歩{さんぽ}が長{なが}くなった。",
+    "exEn": "Ever since I started with the camera, my walks got longer.",
+    "note": "From a point in the past, continuing now.",
+    "when": {
+      "topic": [
+        "t_camera"
+      ]
+    }
+  },
+  {
+    "id": "n2_naiuchini",
+    "point": "〜ないうちに",
+    "en": "before it (changes)",
+    "ex": "冷{さ}めないうちに食{た}べて。",
+    "exEn": "Eat it before it gets cold.",
+    "note": "Do it while the state still holds.",
+    "when": {
+      "intent": [
+        "food_talk"
+      ],
+      "topic": [
+        "t_meals"
+      ]
+    }
+  },
+  {
+    "id": "n2_uchini",
+    "point": "〜うちに",
+    "en": "while",
+    "ex": "若{わか}いうちに、いろいろ行{い}っておきたい。",
+    "exEn": "While I'm young I want to go to lots of places.",
+    "note": "A window of opportunity.",
+    "when": {
+      "topic": [
+        "t_travel"
+      ]
+    }
+  },
+  {
+    "id": "n2_saichuuni",
+    "point": "〜最中{さいちゅう}に",
+    "en": "right in the middle of",
+    "ex": "打{う}ち合{あ}わせの最中{さいちゅう}にお腹{なか}が鳴{な}った。",
+    "exEn": "My stomach growled right in the middle of the meeting.",
+    "note": "Interruption at the worst moment.",
+    "when": {
+      "intent": [
+        "work_talk"
+      ],
+      "topic": [
+        "t_work"
       ]
     }
   },
@@ -59,55 +370,250 @@
     "id": "n2_tokoroni",
     "point": "〜たところに",
     "en": "just as / right when",
-    "ex": "出{で}ようとしたところに電話{でんわ}がかかってきた。",
-    "exEn": "Right as I was about to leave, the phone rang.",
-    "note": "Timing expression. Pairs with 〜ようとした for 'just about to'.",
+    "ex": "出{で}ようとしたところに、雨{あめ}が降{ふ}ってきた。",
+    "exEn": "Right as I was about to leave, it started raining.",
+    "note": "Timing collision. Very conversational.",
     "when": {
       "intent": [
-        "weekend",
+        "weather"
+      ]
+    }
+  },
+  {
+    "id": "n2_saini",
+    "point": "〜際{さい}に",
+    "en": "on the occasion of",
+    "ex": "引{ひ}っ越{こ}しの際{さい}に、写真{しゃしん}が大量{たいりょう}に出{で}てきた。",
+    "exEn": "When I moved, a huge pile of photos turned up.",
+    "note": "Formal 時. She uses it half-jokingly.",
+    "when": {
+      "topic": [
+        "t_home"
+      ]
+    }
+  },
+  {
+    "id": "n2_uede",
+    "point": "〜上{うえ}で",
+    "en": "after doing / upon",
+    "ex": "よく考{かんが}えた上{うえ}で決{き}めたことだから。",
+    "exEn": "It's something I decided after thinking it through.",
+    "note": "Sequence where step one informs step two.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 40
+    }
+  },
+  {
+    "id": "n2_tsuideni",
+    "point": "〜ついでに",
+    "en": "while you're at it",
+    "ex": "コンビニ行{い}くついでに、牛乳{ぎゅうにゅう}買{か}ってきて。",
+    "exEn": "While you're at the store, grab some milk.",
+    "note": "Secondary errand attached to a main one.",
+    "when": {
+      "topic": [
+        "t_home"
+      ]
+    }
+  },
+  {
+    "id": "n2_tekaradenaito",
+    "point": "〜てからでないと",
+    "en": "not until you first",
+    "ex": "食{た}べてからでないと、薬{くすり}は飲{の}めないよ。",
+    "exEn": "You can't take the medicine until you've eaten.",
+    "note": "A precondition. Almost always with a negative ending.",
+    "when": {
+      "intent": [
+        "food_talk"
+      ]
+    }
+  },
+  {
+    "id": "n2_tehajimete",
+    "point": "〜てはじめて",
+    "en": "only after / not until",
+    "ex": "一人{ひとり}になってはじめて、分{わ}かることもある。",
+    "exEn": "There are things you only understand once you're alone.",
+    "note": "Realisation that required the experience.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_kiri",
+    "point": "〜きり",
+    "en": "only / and nothing since",
+    "ex": "あれきり、連絡{れんらく}は来{こ}なかった。",
+    "exEn": "After that, no contact ever came.",
+    "note": "Something stopped there and never resumed.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_tsutsu",
+    "point": "〜つつ",
+    "en": "while / although",
+    "ex": "悪{わる}いと思{おも}いつつ、既読{きどく}のままにしてる。",
+    "exEn": "I feel bad about it, but I'm leaving it on 'read'.",
+    "note": "Two things at once, often contradictory. Written-leaning.",
+    "when": {
+      "intent": [
+        "sorry"
+      ]
+    }
+  },
+  {
+    "id": "n2_tsutsuaru",
+    "point": "〜つつある",
+    "en": "is in the process of",
+    "ex": "少{すこ}しずつ、元気{げんき}になりつつある。",
+    "exEn": "Bit by bit, I'm getting back on my feet.",
+    "note": "Gradual ongoing change.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_ippoude",
+    "point": "〜一方{いっぽう}で",
+    "en": "on the other hand",
+    "ex": "仕事{しごと}は好{す}きな一方{いっぽう}で、量{りょう}が多{おお}すぎる。",
+    "exEn": "I like the work, but on the other hand there's too much of it.",
+    "note": "Balanced contrast within one situation.",
+    "when": {
+      "intent": [
         "work_talk"
+      ],
+      "topic": [
+        "t_work"
       ]
     }
   },
   {
-    "id": "n2_wo_komete",
-    "point": "〜を込{こ}めて",
-    "en": "with (feeling) put into it",
-    "ex": "気持{きも}ちを込{こ}めて作{つく}ったんだから、味{あじ}は許{ゆる}して。",
-    "exEn": "I made it with real feeling, so forgive the taste.",
-    "note": "感謝・愛情・心 are the usual nouns before it.",
+    "id": "n2_ippouda",
+    "point": "〜一方{いっぽう}だ",
+    "en": "keeps getting more",
+    "ex": "仕事{しごと}は増{ふ}える一方{いっぽう}だ。",
+    "exEn": "The work just keeps piling up.",
+    "note": "A one-directional trend, usually a bad one.",
     "when": {
       "intent": [
-        "food_talk",
-        "compliment"
+        "work_talk"
+      ],
+      "topic": [
+        "t_work"
       ]
     }
   },
   {
-    "id": "n2_teshikatanai",
-    "point": "〜てしかたがない",
-    "en": "can't help feeling / unbearably",
-    "ex": "今日{きょう}は眠{ねむ}くてしかたがない。",
-    "exEn": "I'm unbearably sleepy today.",
-    "note": "Casual speech shortens it to 〜てしょうがない.",
+    "id": "n2_hanmen",
+    "point": "〜反面{はんめん}",
+    "en": "while on the other hand",
+    "ex": "便利{べんり}な反面{はんめん}、なんか味気{あじけ}ない。",
+    "exEn": "It's convenient, but on the flip side it feels a bit soulless.",
+    "note": "Two sides of the same thing.",
     "when": {
-      "intent": [
-        "tired",
-        "sad"
+      "topic": [
+        "t_camera"
       ]
     }
   },
   {
-    "id": "n2_kagiri",
-    "point": "〜限{かぎ}り",
-    "en": "as long as / as far as",
-    "ex": "私{わたし}が知{し}っている限{かぎ}り、あの店{みせ}はまだあるよ。",
-    "exEn": "As far as I know, that shop is still there.",
-    "note": "知っている限り and 見る限り are set phrases worth memorizing whole.",
+    "id": "n2_nagaramo",
+    "point": "〜ながら(も)",
+    "en": "even though",
+    "ex": "狭{せま}いながらも、気{き}に入{い}ってる部屋{へや}なんだ。",
+    "exEn": "Small as it is, I really like this room.",
+    "note": "Concession. Softer than けど.",
+    "when": {
+      "topic": [
+        "t_home"
+      ]
+    }
+  },
+  {
+    "id": "n2_monono",
+    "point": "〜ものの",
+    "en": "although",
+    "ex": "返事{へんじ}はしたものの、気{き}まずいままだった。",
+    "exEn": "I did reply, but it stayed awkward.",
+    "note": "Concedes then undercuts. Slightly literary.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 40
+    }
+  },
+  {
+    "id": "n2_kuseni",
+    "point": "〜くせに",
+    "en": "even though (accusing)",
+    "ex": "忙{いそが}しいって言{い}うくせに、ゲームはしてるじゃん。",
+    "exEn": "You say you're busy, but you're playing games.",
+    "note": "Reproachful. Only for people, and it always stings a bit.",
     "when": {
       "intent": [
-        "hobby",
-        "weekend"
+        "deny"
+      ],
+      "topic": [
+        "t_boss"
+      ]
+    }
+  },
+  {
+    "id": "n2_toittemo",
+    "point": "〜といっても",
+    "en": "although I say",
+    "ex": "料理{りょうり}したといっても、焦{こ}がしただけ。",
+    "exEn": "I say I cooked, but really I just burnt it.",
+    "note": "Deflates what you just claimed.",
+    "when": {
+      "intent": [
+        "food_talk"
+      ],
+      "topic": [
+        "t_meals"
+      ]
+    }
+  },
+  {
+    "id": "n2_toiuyori",
+    "point": "〜というより",
+    "en": "rather than",
+    "ex": "趣味{しゅみ}というより、逃{に}げ場{ば}かな。",
+    "exEn": "It's less a hobby than an escape, really.",
+    "note": "Corrects a characterisation.",
+    "when": {
+      "intent": [
+        "hobby"
+      ],
+      "topic": [
+        "t_camera"
       ]
     }
   },
@@ -116,11 +622,1315 @@
     "point": "〜どころか",
     "en": "far from / let alone",
     "ex": "休{やす}めるどころか、仕事{しごと}が増{ふ}えた。",
-    "exEn": "Far from getting to rest, my workload increased.",
-    "note": "Sets up a reversal that's stronger than the listener expected.",
+    "exEn": "Far from getting a rest, I got more work.",
+    "note": "Reality is the opposite of the expectation, and worse.",
     "when": {
       "intent": [
-        "work_talk",
+        "tired",
+        "work_talk"
+      ],
+      "topic": [
+        "t_work"
+      ]
+    }
+  },
+  {
+    "id": "n2_dokorodewanai",
+    "point": "〜どころではない",
+    "en": "not the time for",
+    "ex": "締{し}め切{き}り前{まえ}で、旅行{りょこう}どころじゃない。",
+    "exEn": "With the deadline coming, this is no time for travel.",
+    "note": "Circumstances rule it out entirely.",
+    "when": {
+      "topic": [
+        "t_travel",
+        "t_work"
+      ]
+    }
+  },
+  {
+    "id": "n2_nihanshite",
+    "point": "〜に反{はん}して",
+    "en": "contrary to",
+    "ex": "予想{よそう}に反{はん}して、上司{じょうし}が褒{ほ}めてくれた。",
+    "exEn": "Contrary to expectations, my boss praised me.",
+    "note": "Outcome defies the expectation. Formal-leaning.",
+    "when": {
+      "topic": [
+        "t_boss"
+      ]
+    }
+  },
+  {
+    "id": "n2_nitaishite",
+    "point": "〜に対{たい}して",
+    "en": "toward / in contrast to",
+    "ex": "わたしに対{たい}してだけ、態度{たいど}が違{ちが}うんだよね。",
+    "exEn": "His attitude is different only toward me.",
+    "note": "Direction of an attitude, or a contrast between two things.",
+    "when": {
+      "topic": [
+        "t_boss",
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 35
+    }
+  },
+  {
+    "id": "n2_warini",
+    "point": "〜割{わり}に(は)",
+    "en": "considering",
+    "ex": "値段{ねだん}の割{わり}に、おいしかった。",
+    "exEn": "For the price, it was good.",
+    "note": "Result doesn't match what the standard would predict.",
+    "when": {
+      "intent": [
+        "food_talk"
+      ],
+      "topic": [
+        "t_meals"
+      ]
+    }
+  },
+  {
+    "id": "n2_nishitewa",
+    "point": "〜にしては",
+    "en": "for / considering that",
+    "ex": "初{はじ}めてにしては上手{じょうず}じゃない？",
+    "exEn": "For a first try, isn't that pretty good?",
+    "note": "Expectation vs reality. Great for praising someone's Japanese.",
+    "when": {
+      "intent": [
+        "teach_request",
+        "hobby",
+        "compliment"
+      ]
+    }
+  },
+  {
+    "id": "n2_nikuraabete",
+    "point": "〜に比{くら}べて",
+    "en": "compared to",
+    "ex": "去年{きょねん}に比{くら}べて、ずいぶん話{はな}せるようになったね。",
+    "exEn": "Compared to last year, you can say so much more.",
+    "note": "Straight comparison.",
+    "when": {
+      "intent": [
+        "compliment",
+        "teach_request"
+      ]
+    }
+  },
+  {
+    "id": "n2_ueni",
+    "point": "〜上{うえ}に",
+    "en": "on top of that",
+    "ex": "道{みち}に迷{まよ}った上{うえ}に、雨{あめ}まで降{ふ}ってきた。",
+    "exEn": "On top of getting lost, it started raining.",
+    "note": "Piles a second thing on, same polarity as the first.",
+    "when": {
+      "intent": [
+        "weather"
+      ]
+    }
+  },
+  {
+    "id": "n2_bakarika",
+    "point": "〜ばかりか",
+    "en": "not only ... but even",
+    "ex": "彼{かれ}は謝{あやま}らないばかりか、笑{わら}ってた。",
+    "exEn": "Not only did he not apologise, he was laughing.",
+    "note": "Escalates. The second clause is more extreme than the first.",
+    "when": {
+      "intent": [
+        "sad"
+      ],
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 40
+    }
+  },
+  {
+    "id": "n2_nominarazu",
+    "point": "〜のみならず",
+    "en": "not only",
+    "ex": "本人{ほんにん}のみならず、周{まわ}りも困{こま}ってた。",
+    "exEn": "Not just him — everyone around him was troubled too.",
+    "note": "Formal ばかりか. Rare in speech, common in reading.",
+    "when": {
+      "topic": [
+        "t_boss"
+      ]
+    }
+  },
+  {
+    "id": "n2_wamochiron",
+    "point": "〜はもちろん",
+    "en": "not to mention",
+    "ex": "ラーメンはもちろん、餃子{ぎょうざ}も頼{たの}むよ。",
+    "exEn": "Ramen goes without saying — I get gyoza too.",
+    "note": "The first item is too obvious to need stating.",
+    "when": {
+      "intent": [
+        "food_talk"
+      ],
+      "topic": [
+        "t_meals"
+      ]
+    }
+  },
+  {
+    "id": "n2_nikuwaete",
+    "point": "〜に加{くわ}えて",
+    "en": "in addition to",
+    "ex": "残業{ざんぎょう}に加{くわ}えて、週末{しゅうまつ}も出勤{しゅっきん}だって。",
+    "exEn": "On top of overtime, they say I'm working the weekend.",
+    "note": "Additive and fairly formal.",
+    "when": {
+      "intent": [
+        "work_talk"
+      ],
+      "topic": [
+        "t_work"
+      ]
+    }
+  },
+  {
+    "id": "n2_sae",
+    "point": "〜さえ",
+    "en": "even",
+    "ex": "名前{なまえ}さえ、もう思{おも}い出{だ}したくない。",
+    "exEn": "I don't even want to remember his name.",
+    "note": "Extreme example. Stronger than も.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_saeba",
+    "point": "〜さえ〜ば",
+    "en": "if only",
+    "ex": "{name}が元気{げんき}でさえいれば、それでいいよ。",
+    "exEn": "As long as you're doing okay, that's enough for me.",
+    "note": "The single sufficient condition.",
+    "when": {
+      "intent": [
+        "howareyou"
+      ]
+    },
+    "cond": {
+      "minAff": 35
+    }
+  },
+  {
+    "id": "n2_koso",
+    "point": "〜こそ",
+    "en": "precisely / it is ... that",
+    "ex": "今年{ことし}こそ、ギター買{か}う。",
+    "exEn": "This year for sure, I'm buying that guitar.",
+    "note": "Emphasises the word before it. こちらこそ is the frozen form.",
+    "when": {
+      "intent": [
+        "thanks"
+      ]
+    }
+  },
+  {
+    "id": "n2_hodo",
+    "point": "〜ほど",
+    "en": "to the extent that",
+    "ex": "歩{ある}けないほど疲{つか}れた。",
+    "exEn": "I'm tired to the point I can't walk.",
+    "note": "Degree by comparison to a vivid example.",
+    "when": {
+      "intent": [
+        "tired"
+      ]
+    }
+  },
+  {
+    "id": "n2_bahodo",
+    "point": "〜ば〜ほど",
+    "en": "the more ... the more",
+    "ex": "考{かんが}えれば考{かんが}えるほど、分{わ}からなくなる。",
+    "exEn": "The more I think about it, the less I understand.",
+    "note": "Proportional change. Very common.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 35
+    }
+  },
+  {
+    "id": "n2_kurai",
+    "point": "〜くらい",
+    "en": "to the point of",
+    "ex": "泣{な}きたいくらい嬉{うれ}しかった。",
+    "exEn": "I was happy enough to cry.",
+    "note": "Like ほど but more casual and often smaller-scale.",
+    "when": {
+      "intent": [
+        "happy"
+      ]
+    }
+  },
+  {
+    "id": "n2_darake",
+    "point": "〜だらけ",
+    "en": "covered in / full of",
+    "ex": "机{つくえ}の上{うえ}、書類{しょるい}だらけ。",
+    "exEn": "My desk is buried in paperwork.",
+    "note": "Always negative, always messy.",
+    "when": {
+      "intent": [
+        "work_talk"
+      ],
+      "topic": [
+        "t_work"
+      ]
+    }
+  },
+  {
+    "id": "n2_gimi",
+    "point": "〜気味{ぎみ}",
+    "en": "a touch of",
+    "ex": "ちょっと風邪{かぜ}気味{ぎみ}かも。",
+    "exEn": "I might be coming down with something.",
+    "note": "A slight tendency, usually unwelcome.",
+    "when": {
+      "intent": [
+        "tired",
+        "howareyou"
+      ]
+    }
+  },
+  {
+    "id": "n2_gachi",
+    "point": "〜がち",
+    "en": "tends to",
+    "ex": "最近{さいきん}、夜更{よふ}かししがち。",
+    "exEn": "Lately I tend to stay up too late.",
+    "note": "Frequent tendency, usually a bad habit.",
+    "when": {
+      "topic": [
+        "t_sleep"
+      ]
+    }
+  },
+  {
+    "id": "n2_ge",
+    "point": "〜げ",
+    "en": "looking / seeming",
+    "ex": "嬉{うれ}しげな顔{かお}してるね。",
+    "exEn": "You've got a pleased look on your face.",
+    "note": "Visible appearance of a feeling.",
+    "when": {
+      "intent": [
+        "happy"
+      ]
+    }
+  },
+  {
+    "id": "n2_ppoi",
+    "point": "〜っぽい",
+    "en": "-ish / tends to",
+    "ex": "わたし、忘{わす}れっぽいんだよね。",
+    "exEn": "I'm pretty forgetful, honestly.",
+    "note": "Casual resemblance or tendency.",
+    "when": {
+      "intent": [
+        "about_her"
+      ]
+    }
+  },
+  {
+    "id": "n2_kanenai",
+    "point": "〜かねない",
+    "en": "might well (bad)",
+    "ex": "このままだと、また同{おな}じことになりかねない。",
+    "exEn": "At this rate the same thing could easily happen again.",
+    "note": "Only for undesirable outcomes.",
+    "when": {
+      "intent": [
+        "work_talk"
+      ],
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 35
+    }
+  },
+  {
+    "id": "n2_kaneru",
+    "point": "〜かねる",
+    "en": "can't quite bring oneself to",
+    "ex": "それは、ちょっと賛成{さんせい}しかねるな。",
+    "exEn": "I can't really agree with that one.",
+    "note": "Polite refusal — unable for reasons of feeling, not ability.",
+    "when": {
+      "intent": [
+        "deny"
+      ]
+    }
+  },
+  {
+    "id": "n2_uru",
+    "point": "〜得{え}る",
+    "en": "can / is possible",
+    "ex": "あり得{え}ないでしょ、それ。",
+    "exEn": "That can't be possible, surely.",
+    "note": "ありえない is by far the most common form in speech.",
+    "when": {
+      "intent": [
+        "deny"
+      ]
+    }
+  },
+  {
+    "id": "n2_kkonai",
+    "point": "〜っこない",
+    "en": "no way it'll happen",
+    "ex": "わたしに早起{はやお}きなんてできっこない。",
+    "exEn": "There's no way I'm getting up early.",
+    "note": "Casual, emphatic impossibility.",
+    "when": {
+      "topic": [
+        "t_sleep"
+      ]
+    }
+  },
+  {
+    "id": "n2_youganai",
+    "point": "〜ようがない",
+    "en": "there's no way to",
+    "ex": "連絡先{れんらくさき}も消{け}したし、もう会{あ}いようがない。",
+    "exEn": "I deleted his contact, so there's no way to meet him now.",
+    "note": "No method exists, however willing you are.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_zaruwoenai",
+    "point": "〜ざるを得{え}ない",
+    "en": "have no choice but to",
+    "ex": "そう言{い}われたら、認{みと}めざるを得{え}ない。",
+    "exEn": "Put like that, I have no choice but to admit it.",
+    "note": "Reluctant necessity. する becomes せざるを得ない.",
+    "when": {
+      "topic": [
+        "t_ex",
+        "t_work"
+      ]
+    },
+    "cond": {
+      "minAff": 40
+    }
+  },
+  {
+    "id": "n2_shikanai",
+    "point": "〜しかない",
+    "en": "nothing for it but",
+    "ex": "もう笑{わら}うしかないよ。",
+    "exEn": "There's nothing left to do but laugh.",
+    "note": "Only one option remains.",
+    "when": {
+      "intent": [
+        "sad"
+      ]
+    }
+  },
+  {
+    "id": "n2_hokanai",
+    "point": "〜ほかない",
+    "en": "no choice but",
+    "ex": "待{ま}つほかなかった。",
+    "exEn": "There was nothing to do but wait.",
+    "note": "Slightly more formal しかない.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 40
+    }
+  },
+  {
+    "id": "n2_bekida",
+    "point": "〜べきだ",
+    "en": "should",
+    "ex": "もっと早{はや}く言{い}うべきだった。",
+    "exEn": "I should have said something sooner.",
+    "note": "Moral obligation. する→すべき is the common exception.",
+    "when": {
+      "intent": [
+        "sorry"
+      ],
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 35
+    }
+  },
+  {
+    "id": "n2_kotoda",
+    "point": "〜ことだ",
+    "en": "you ought to",
+    "ex": "疲{つか}れてるなら、寝{ね}ることだよ。",
+    "exEn": "If you're tired, you should sleep.",
+    "note": "Direct advice. Warmer than べき, still a bit bossy.",
+    "when": {
+      "intent": [
+        "tired"
+      ],
+      "topic": [
+        "t_sleep"
+      ]
+    }
+  },
+  {
+    "id": "n2_kotohanai",
+    "point": "〜ことはない",
+    "en": "no need to",
+    "ex": "そんなに謝{あやま}ることないよ。",
+    "exEn": "There's no need to apologise that much.",
+    "note": "Reassurance — the action isn't necessary.",
+    "when": {
+      "intent": [
+        "sorry"
+      ]
+    }
+  },
+  {
+    "id": "n2_nikimatteiru",
+    "point": "〜に決{き}まっている",
+    "en": "bound to be",
+    "ex": "こんな時間{じかん}に食{た}べたら、太{ふと}るに決{き}まってる。",
+    "exEn": "Eating at this hour, of course I'll gain weight.",
+    "note": "Speaker's certainty, often exasperated.",
+    "when": {
+      "intent": [
+        "food_talk"
+      ]
+    }
+  },
+  {
+    "id": "n2_nichigainai",
+    "point": "〜に違{ちが}いない",
+    "en": "must be",
+    "ex": "あの様子{ようす}だと、何{なに}かあったに違{ちが}いない。",
+    "exEn": "From the look of it, something must have happened.",
+    "note": "Confident inference from evidence.",
+    "when": {
+      "intent": [
+        "howareyou"
+      ]
+    }
+  },
+  {
+    "id": "n2_hazuganai",
+    "point": "〜はずがない",
+    "en": "can't possibly",
+    "ex": "あの人{ひと}が覚{おぼ}えてるはずがない。",
+    "exEn": "There's no way he remembers.",
+    "note": "Logical impossibility from what you know.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 40
+    }
+  },
+  {
+    "id": "n2_nisuginai",
+    "point": "〜に過{す}ぎない",
+    "en": "merely",
+    "ex": "ただの言{い}い訳{わけ}に過{す}ぎなかった。",
+    "exEn": "It was nothing more than an excuse.",
+    "note": "Downgrades something to less than it claimed.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_mai",
+    "point": "〜まい",
+    "en": "won't / surely not",
+    "ex": "もう二度{にど}と同{おな}じ間違{まちが}いはするまい。",
+    "exEn": "I won't make the same mistake twice.",
+    "note": "Negative volition. Old-fashioned and a bit dramatic.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 50
+    }
+  },
+  {
+    "id": "n2_teshikataganai",
+    "point": "〜てしかたがない",
+    "en": "unbearably",
+    "ex": "眠{ねむ}くてしかたがない。",
+    "exEn": "I'm unbearably sleepy.",
+    "note": "The feeling is beyond your control. しょうがない in speech.",
+    "when": {
+      "intent": [
+        "tired"
+      ],
+      "topic": [
+        "t_sleep"
+      ]
+    }
+  },
+  {
+    "id": "n2_tetamaranai",
+    "point": "〜てたまらない",
+    "en": "can't stand how",
+    "ex": "会{あ}いたくてたまらない、なんて言{い}わないけど。",
+    "exEn": "I'm not going to say I miss you unbearably or anything.",
+    "note": "Intense physical or emotional feeling.",
+    "when": {
+      "intent": [
+        "confess"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_tenaranai",
+    "point": "〜てならない",
+    "en": "can't help feeling",
+    "ex": "なんだか気{き}になってならない。",
+    "exEn": "I just can't stop thinking about it.",
+    "note": "Feeling that wells up on its own. Slightly literary.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 40
+    }
+  },
+  {
+    "id": "n2_zunihairarenai",
+    "point": "〜ずにはいられない",
+    "en": "can't help but",
+    "ex": "この写真{しゃしん}、笑{わら}わずにはいられない。",
+    "exEn": "I can't look at this photo without laughing.",
+    "note": "Irresistible impulse. する→せずには.",
+    "when": {
+      "topic": [
+        "t_camera"
+      ]
+    }
+  },
+  {
+    "id": "n2_kotoka",
+    "point": "〜ことか",
+    "en": "how very ...!",
+    "ex": "どれだけ待{ま}ったことか。",
+    "exEn": "How long I waited, honestly.",
+    "note": "Exclamation of degree, usually with どれだけ / なんと.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_amari",
+    "point": "〜あまり",
+    "en": "so much that",
+    "ex": "嬉{うれ}しさのあまり、声{こえ}が出{で}なかった。",
+    "exEn": "I was so happy no sound came out.",
+    "note": "An excess of emotion causing a result.",
+    "when": {
+      "intent": [
+        "happy"
+      ]
+    }
+  },
+  {
+    "id": "n2_kotoni",
+    "point": "〜ことに",
+    "en": "to my (surprise)",
+    "ex": "驚{おどろ}いたことに、上司{じょうし}が謝{あやま}ってきた。",
+    "exEn": "To my surprise, my boss apologised to me.",
+    "note": "Speaker's reaction, fronted before the fact.",
+    "when": {
+      "topic": [
+        "t_boss"
+      ]
+    }
+  },
+  {
+    "id": "n2_monoka",
+    "point": "〜ものか",
+    "en": "as if I would",
+    "ex": "もう泣{な}くものか。",
+    "exEn": "As if I'd cry over it again.",
+    "note": "Defiant refusal. もんか in speech.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_monoda",
+    "point": "〜ものだ",
+    "en": "used to / that's how it is",
+    "ex": "昔{むかし}はよく、二人{ふたり}で歩{ある}いたものだ。",
+    "exEn": "We used to walk together a lot, back then.",
+    "note": "Nostalgic recollection, or a general truth.",
+    "when": {
+      "topic": [
+        "t_ex",
+        "t_childhood"
+      ]
+    },
+    "cond": {
+      "minAff": 35
+    }
+  },
+  {
+    "id": "n2_kanoyouda",
+    "point": "〜かのようだ",
+    "en": "as if",
+    "ex": "何{なに}もなかったかのように笑{わら}ってた。",
+    "exEn": "He smiled as if nothing had happened.",
+    "note": "A false appearance — explicitly not the case.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_nitotte",
+    "point": "〜にとって",
+    "en": "for / to",
+    "ex": "わたしにとっては、大{おお}きいことだった。",
+    "exEn": "For me, it was a big deal.",
+    "note": "Whose viewpoint the judgement belongs to.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 35
+    }
+  },
+  {
+    "id": "n2_toshite",
+    "point": "〜として",
+    "en": "as (a role)",
+    "ex": "友達{ともだち}として言{い}うけど、無理{むり}しすぎだよ。",
+    "exEn": "Speaking as a friend, you're pushing yourself too hard.",
+    "note": "In the capacity of.",
+    "when": {
+      "intent": [
+        "tired"
+      ]
+    }
+  },
+  {
+    "id": "n2_nikanshite",
+    "point": "〜に関{かん}して",
+    "en": "regarding",
+    "ex": "その件{けん}に関{かん}しては、もう話{はな}したくない。",
+    "exEn": "Regarding that matter, I don't want to talk about it any more.",
+    "note": "Formal について.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 40
+    }
+  },
+  {
+    "id": "n2_nitsuite",
+    "point": "〜について",
+    "en": "about",
+    "ex": "日本{にほん}の音楽{おんがく}について、聞{き}いてもいい？",
+    "exEn": "Can I ask you about Japanese music?",
+    "note": "The everyday 'about'.",
+    "when": {
+      "topic": [
+        "t_music"
+      ]
+    }
+  },
+  {
+    "id": "n2_nikaketewa",
+    "point": "〜にかけては",
+    "en": "when it comes to",
+    "ex": "寝坊{ねぼう}にかけては、誰{だれ}にも負{ま}けない。",
+    "exEn": "When it comes to oversleeping, I'm unbeatable.",
+    "note": "Boasting about a strength. Positive only.",
+    "when": {
+      "topic": [
+        "t_sleep"
+      ]
+    }
+  },
+  {
+    "id": "n2_karaiuto",
+    "point": "〜から言{い}うと",
+    "en": "from the standpoint of",
+    "ex": "経験{けいけん}から言{い}うと、それは早{はや}すぎる。",
+    "exEn": "From experience, that's too fast.",
+    "note": "States the basis for the judgement.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 35
+    }
+  },
+  {
+    "id": "n2_karashite",
+    "point": "〜からして",
+    "en": "judging from",
+    "ex": "目{め}つきからして、機嫌{きげん}が悪{わる}かった。",
+    "exEn": "Judging from his eyes alone, he was in a bad mood.",
+    "note": "One representative detail implies the whole.",
+    "when": {
+      "topic": [
+        "t_boss"
+      ]
+    }
+  },
+  {
+    "id": "n2_kagiri",
+    "point": "〜限{かぎ}り",
+    "en": "as long as / as far as",
+    "ex": "わたしが知{し}る限{かぎ}り、そんな話{はなし}はなかった。",
+    "exEn": "As far as I know, there was no such thing.",
+    "note": "Boundary of knowledge, time, or condition.",
+    "when": {
+      "intent": [
+        "meaning_question"
+      ]
+    }
+  },
+  {
+    "id": "n2_nikakawarazu",
+    "point": "〜にかかわらず",
+    "en": "regardless of",
+    "ex": "天気{てんき}にかかわらず、毎朝{まいあさ}あの猫{ねこ}はいる。",
+    "exEn": "Regardless of the weather, that cat is there every morning.",
+    "note": "The condition makes no difference.",
+    "when": {
+      "topic": [
+        "t_cat"
+      ],
+      "intent": [
+        "weather"
+      ]
+    }
+  },
+  {
+    "id": "n2_nimokakawarazu",
+    "point": "〜にもかかわらず",
+    "en": "despite",
+    "ex": "雨{あめ}にもかかわらず、待{ま}っててくれた。",
+    "exEn": "Despite the rain, he waited for me.",
+    "note": "Strong 'even though'. Formal.",
+    "when": {
+      "intent": [
+        "weather"
+      ]
+    }
+  },
+  {
+    "id": "n2_niyotte",
+    "point": "〜によって",
+    "en": "depending on / by",
+    "ex": "人{ひと}によって感{かん}じ方{かた}は違{ちが}うよ。",
+    "exEn": "How people feel about it varies from person to person.",
+    "note": "Variation, agent, or means.",
+    "when": {
+      "intent": [
+        "meaning_question"
+      ]
+    }
+  },
+  {
+    "id": "n2_niyoruto",
+    "point": "〜によると",
+    "en": "according to",
+    "ex": "天気予報{てんきよほう}によると、明日{あした}は晴{は}れるって。",
+    "exEn": "According to the forecast, tomorrow's clear.",
+    "note": "Cites a source. Usually paired with そうだ / らしい.",
+    "when": {
+      "intent": [
+        "weather"
+      ]
+    }
+  },
+  {
+    "id": "n2_nioujite",
+    "point": "〜に応{おう}じて",
+    "en": "in accordance with",
+    "ex": "気分{きぶん}に応{おう}じて、聞{き}く曲{きょく}を変{か}えてる。",
+    "exEn": "I change what I listen to according to my mood.",
+    "note": "Adjusts flexibly to a variable.",
+    "when": {
+      "topic": [
+        "t_music"
+      ]
+    }
+  },
+  {
+    "id": "n2_nishitagatte",
+    "point": "〜にしたがって",
+    "en": "as / in accordance with",
+    "ex": "暗{くら}くなるにしたがって、川{かわ}沿{ぞ}いが静{しず}かになる。",
+    "exEn": "As it gets darker, the riverside goes quiet.",
+    "note": "Two things changing together.",
+    "when": {
+      "topic": [
+        "t_home"
+      ]
+    }
+  },
+  {
+    "id": "n2_nitsurete",
+    "point": "〜につれて",
+    "en": "as (gradual change)",
+    "ex": "話{はな}すにつれて、緊張{きんちょう}がとけてきた。",
+    "exEn": "As we talked, the nervousness wore off.",
+    "note": "Gradual parallel change. Very close to にしたがって.",
+    "when": {
+      "intent": [
+        "howareyou"
+      ]
+    }
+  },
+  {
+    "id": "n2_nitomonatte",
+    "point": "〜に伴{ともな}って",
+    "en": "along with",
+    "ex": "気温{きおん}が上{あ}がるに伴{ともな}って、人{ひと}が増{ふ}えてきた。",
+    "exEn": "As the temperature rose, more people came out.",
+    "note": "Formal accompaniment of change.",
+    "when": {
+      "intent": [
+        "weather"
+      ]
+    }
+  },
+  {
+    "id": "n2_totomoni",
+    "point": "〜とともに",
+    "en": "together with / as",
+    "ex": "時間{じかん}とともに、平気{へいき}になっていった。",
+    "exEn": "With time, it stopped hurting.",
+    "note": "Simultaneous change, or literal accompaniment.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_womegutte",
+    "point": "〜をめぐって",
+    "en": "concerning (a dispute)",
+    "ex": "その一言{ひとこと}をめぐって、ずっと喧嘩{けんか}してた。",
+    "exEn": "We fought endlessly over that one remark.",
+    "note": "A contested point. Usually conflict.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_wotsuujite",
+    "point": "〜を通{つう}じて",
+    "en": "through / throughout",
+    "ex": "友達{ともだち}を通{つう}じて、あとから聞{き}いた。",
+    "exEn": "I heard about it later through a friend.",
+    "note": "Medium, intermediary, or a whole span of time.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_wohajime",
+    "point": "〜をはじめ",
+    "en": "starting with",
+    "ex": "みなみをはじめ、みんな心配{しんぱい}してくれた。",
+    "exEn": "Minami and everyone else worried about me.",
+    "note": "Names the leading example of a group.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 40
+    }
+  },
+  {
+    "id": "n2_womotoni",
+    "point": "〜をもとに",
+    "en": "based on",
+    "ex": "実話{じつわ}をもとにした映画{えいが}なんだって。",
+    "exEn": "Apparently it's a film based on a true story.",
+    "note": "Source material.",
+    "when": {
+      "intent": [
+        "hobby"
+      ]
+    }
+  },
+  {
+    "id": "n2_nimotozuite",
+    "point": "〜に基{もと}づいて",
+    "en": "based on (rules/data)",
+    "ex": "データに基{もと}づいて決{き}めたい。",
+    "exEn": "I want to decide based on the data.",
+    "note": "Formal basis — rules, evidence, principles.",
+    "when": {
+      "intent": [
+        "work_talk"
+      ]
+    }
+  },
+  {
+    "id": "n2_nioite",
+    "point": "〜において",
+    "en": "in / at (formal)",
+    "ex": "この業界{ぎょうかい}においては、よくあることらしい。",
+    "exEn": "In this industry it's apparently common.",
+    "note": "Formal setting marker. Written Japanese.",
+    "when": {
+      "topic": [
+        "t_work"
+      ]
+    }
+  },
+  {
+    "id": "n2_nokatawara",
+    "point": "〜のもとで",
+    "en": "under (someone)",
+    "ex": "あの人{ひと}のもとで、三年{さんねん}働{はたら}いた。",
+    "exEn": "I worked under him for three years.",
+    "note": "Under someone's supervision or influence.",
+    "when": {
+      "topic": [
+        "t_boss"
+      ]
+    }
+  },
+  {
+    "id": "n2_niwatatte",
+    "point": "〜にわたって",
+    "en": "spanning",
+    "ex": "二年{にねん}にわたって、ずっとそうだった。",
+    "exEn": "For two whole years, that's how it was.",
+    "note": "A span of time or space, emphasised as long.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_nisakidatte",
+    "point": "〜に先立{さきだ}って",
+    "en": "prior to",
+    "ex": "発表{はっぴょう}に先立{さきだ}って、資料{しりょう}を配{くば}った。",
+    "exEn": "Prior to the presentation, we handed out materials.",
+    "note": "Formal 'before'. Business Japanese.",
+    "when": {
+      "topic": [
+        "t_work"
+      ]
+    }
+  },
+  {
+    "id": "n2_nisaishite",
+    "point": "〜に際{さい}して",
+    "en": "on the occasion of",
+    "ex": "入社{にゅうしゃ}に際{さい}して、挨拶{あいさつ}をさせられた。",
+    "exEn": "On joining the company, I was made to give a greeting.",
+    "note": "Formal ceremony-adjacent 'when'.",
+    "when": {
+      "topic": [
+        "t_work"
+      ]
+    }
+  },
+  {
+    "id": "n2_nikawatte",
+    "point": "〜に代{か}わって",
+    "en": "in place of",
+    "ex": "部長{ぶちょう}に代{か}わって、わたしが説明{せつめい}した。",
+    "exEn": "In place of the manager, I gave the explanation.",
+    "note": "Substitution for a person or thing.",
+    "when": {
+      "topic": [
+        "t_boss",
+        "t_work"
+      ]
+    }
+  },
+  {
+    "id": "n2_kawarini",
+    "point": "〜代{か}わりに",
+    "en": "instead of / in return",
+    "ex": "手伝{てつだ}う代{か}わりに、ごはんおごってよ。",
+    "exEn": "I'll help, but you're buying me dinner in return.",
+    "note": "Exchange or substitution. Very common in speech.",
+    "when": {
+      "intent": [
+        "food_talk"
+      ]
+    }
+  },
+  {
+    "id": "n2_nikotaete",
+    "point": "〜に応{こた}えて",
+    "en": "in response to",
+    "ex": "期待{きたい}に応{こた}えたくて、無理{むり}しすぎた。",
+    "exEn": "I pushed myself too hard trying to live up to expectations.",
+    "note": "Meeting a request, hope, or expectation.",
+    "when": {
+      "topic": [
+        "t_ex",
+        "t_work"
+      ]
+    },
+    "cond": {
+      "minAff": 40
+    }
+  },
+  {
+    "id": "n2_muke",
+    "point": "〜向{む}け",
+    "en": "aimed at",
+    "ex": "初心者{しょしんしゃ}向{む}けの本{ほん}から始{はじ}めたら？",
+    "exEn": "Why not start with a book aimed at beginners?",
+    "note": "Deliberately targeted at that audience.",
+    "when": {
+      "intent": [
+        "teach_request"
+      ]
+    }
+  },
+  {
+    "id": "n2_muki",
+    "point": "〜向{む}き",
+    "en": "suited to",
+    "ex": "この部屋{へや}、南向{みなみむ}きだから明{あか}るいんだ。",
+    "exEn": "This room faces south, so it's bright.",
+    "note": "Suitability or physical orientation.",
+    "when": {
+      "topic": [
+        "t_home"
+      ]
+    }
+  },
+  {
+    "id": "n2_nitsuki",
+    "point": "〜につき",
+    "en": "due to / per",
+    "ex": "工事中{こうじちゅう}につき、こっちの道{みち}は通{とお}れない。",
+    "exEn": "Due to construction, you can't use this road.",
+    "note": "Signboard Japanese. Also 'per unit'.",
+    "when": {
+      "topic": [
+        "t_home"
+      ]
+    }
+  },
+  {
+    "id": "n2_toshitara",
+    "point": "〜としたら",
+    "en": "supposing that",
+    "ex": "もし日本{にほん}に住{す}むとしたら、どこがいい？",
+    "exEn": "If you were to live in Japan, where would you pick?",
+    "note": "Hypothetical premise.",
+    "when": {
+      "topic": [
+        "t_travel"
+      ]
+    }
+  },
+  {
+    "id": "n2_naikotoniwa",
+    "point": "〜ないことには",
+    "en": "unless you first",
+    "ex": "やってみないことには、分{わ}からないよ。",
+    "exEn": "You won't know unless you try.",
+    "note": "Without X, Y can't happen. Always negative.",
+    "when": {
+      "intent": [
+        "teach_request"
+      ]
+    }
+  },
+  {
+    "id": "n2_saeba2",
+    "point": "〜さえすれば",
+    "en": "if you just",
+    "ex": "毎日{まいにち}少{すこ}しやりさえすれば、伸{の}びるよ。",
+    "exEn": "If you just do a little every day, you'll improve.",
+    "note": "One sufficient action.",
+    "when": {
+      "intent": [
+        "teach_request"
+      ]
+    }
+  },
+  {
+    "id": "n2_shidaida",
+    "point": "〜次第{しだい}だ",
+    "en": "depends on",
+    "ex": "行{い}くかどうかは、天気{てんき}次第{しだい}。",
+    "exEn": "Whether we go depends on the weather.",
+    "note": "Outcome hinges on that factor.",
+    "when": {
+      "intent": [
+        "weekend",
+        "weather"
+      ],
+      "topic": [
+        "t_weekend"
+      ]
+    }
+  },
+  {
+    "id": "n2_moshinaraba",
+    "point": "〜も〜ば〜も",
+    "en": "both ... and",
+    "ex": "雨{あめ}も降{ふ}れば、風{かぜ}も強{つよ}い。",
+    "exEn": "It's raining and the wind is strong too.",
+    "note": "Lists two parallel facts, same polarity.",
+    "when": {
+      "intent": [
+        "weather"
+      ]
+    }
+  },
+  {
+    "id": "n2_yarayara",
+    "point": "〜やら〜やら",
+    "en": "what with ... and ...",
+    "ex": "仕事{しごと}やら締{し}め切{き}りやらで、ばたばたしてる。",
+    "exEn": "What with work and deadlines, everything's hectic.",
+    "note": "A jumble of things, usually overwhelming.",
+    "when": {
+      "intent": [
+        "work_talk"
+      ],
+      "topic": [
+        "t_work"
+      ]
+    }
+  },
+  {
+    "id": "n2_nante",
+    "point": "〜なんて",
+    "en": "something like (dismissive)",
+    "ex": "わたしなんて、まだまだだよ。",
+    "exEn": "Someone like me? I've got a long way to go.",
+    "note": "Belittles the thing before it — sometimes yourself.",
+    "when": {
+      "intent": [
+        "compliment"
+      ]
+    }
+  },
+  {
+    "id": "n2_kke",
+    "point": "〜っけ",
+    "en": "what was it again",
+    "ex": "あれ、名前{なまえ}なんだったっけ。",
+    "exEn": "Wait, what was the name again?",
+    "note": "Fishing for something you half-remember. Casual only.",
+    "when": {
+      "intent": [
+        "ask_name"
+      ]
+    }
+  },
+  {
+    "id": "n2_tokoroda",
+    "point": "〜ところだった",
+    "en": "almost / very nearly",
+    "ex": "もう少{すこ}しで乗{の}り過{す}ごすところだった。",
+    "exEn": "I very nearly missed my stop.",
+    "note": "A near miss that didn't happen.",
+    "when": {
+      "intent": [
         "tired"
       ]
     }
@@ -128,40 +1938,329 @@
   {
     "id": "n2_ppanashi",
     "point": "〜っぱなし",
-    "en": "leaving something as it is",
+    "en": "left as is",
     "ex": "電気{でんき}つけっぱなしで寝{ね}ちゃった。",
     "exEn": "I fell asleep with the lights left on.",
-    "note": "Usually carries mild criticism or self-reproach. Verb ます-stem + っぱなし.",
+    "note": "A state left uncorrected, usually carelessly.",
+    "when": {
+      "topic": [
+        "t_sleep",
+        "t_home"
+      ]
+    }
+  },
+  {
+    "id": "n2_kake",
+    "point": "〜かけ",
+    "en": "half-done",
+    "ex": "読{よ}みかけの本{ほん}が三冊{さんさつ}ある。",
+    "exEn": "I've got three half-read books lying around.",
+    "note": "Started and not finished.",
     "when": {
       "intent": [
-        "tired",
+        "hobby"
+      ]
+    }
+  },
+  {
+    "id": "n2_kiru",
+    "point": "〜切{き}る",
+    "en": "do completely",
+    "ex": "一日{いちにち}で読{よ}み切{き}っちゃった。",
+    "exEn": "I finished the whole thing in a day.",
+    "note": "Carry through to the very end.",
+    "when": {
+      "intent": [
+        "hobby"
+      ]
+    }
+  },
+  {
+    "id": "n2_kirenai",
+    "point": "〜切{き}れない",
+    "en": "can't finish",
+    "ex": "多{おお}すぎて、食{た}べ切{き}れない。",
+    "exEn": "It's too much — I can't finish it.",
+    "note": "Exceeds your capacity.",
+    "when": {
+      "intent": [
+        "food_talk"
+      ],
+      "topic": [
+        "t_meals"
+      ]
+    }
+  },
+  {
+    "id": "n2_nuku",
+    "point": "〜抜{ぬ}く",
+    "en": "see it through",
+    "ex": "つらくても、最後{さいご}までやり抜{ぬ}きたい。",
+    "exEn": "Even if it's hard, I want to see it through.",
+    "note": "Persevere to the end despite difficulty.",
+    "when": {
+      "intent": [
         "work_talk"
       ]
     }
   },
   {
-    "id": "n2_kkkeni",
-    "point": "〜だけに",
-    "en": "precisely because",
-    "ex": "楽{たの}しみにしていただけに、中止{ちゅうし}はショックだった。",
-    "exEn": "Precisely because I'd looked forward to it, the cancellation was a shock.",
+    "id": "n2_nuki",
+    "point": "〜抜{ぬ}きで",
+    "en": "without",
+    "ex": "前置{まえお}き抜{ぬ}きで言{い}うね。",
+    "exEn": "I'll say it without any preamble.",
+    "note": "Omitting something normally included.",
     "when": {
       "intent": [
-        "sad",
-        "happy"
+        "confess"
       ]
     }
   },
   {
-    "id": "n2_saichuu",
-    "point": "〜最中{さいちゅう}に",
-    "en": "right in the middle of",
-    "ex": "会議{かいぎ}の最中{さいちゅう}にお腹{なか}が鳴{な}った。最悪{さいあく}。",
-    "exEn": "My stomach growled right in the middle of the meeting. The worst.",
+    "id": "n2_kotoninatteiru",
+    "point": "〜ことになっている",
+    "en": "the rule is",
+    "ex": "うちは金曜{きんよう}、早{はや}く帰{かえ}っていいことになってる。",
+    "exEn": "At my place the rule is we can leave early on Fridays.",
+    "note": "An established rule or arrangement.",
+    "when": {
+      "topic": [
+        "t_work"
+      ]
+    }
+  },
+  {
+    "id": "n2_kotobakari",
+    "point": "〜てばかりいる",
+    "en": "does nothing but",
+    "ex": "最近{さいきん}、寝{ね}てばかりいる。",
+    "exEn": "Lately I do nothing but sleep.",
+    "note": "Repetitive to a fault. Mildly critical.",
+    "when": {
+      "topic": [
+        "t_sleep"
+      ]
+    }
+  },
+  {
+    "id": "n2_toori",
+    "point": "〜とおり(に)",
+    "en": "just as",
+    "ex": "言{い}われたとおりにやったのに、直{なお}された。",
+    "exEn": "I did it exactly as told and it still got changed.",
+    "note": "Matching an instruction or expectation.",
+    "when": {
+      "topic": [
+        "t_boss",
+        "t_work"
+      ]
+    }
+  },
+  {
+    "id": "n2_toiukoto",
+    "point": "〜ということだ",
+    "en": "I hear / it means",
+    "ex": "つまり、もう終{お}わったということだね。",
+    "exEn": "So what you mean is, it's over.",
+    "note": "Either reported speech or a restatement.",
     "when": {
       "intent": [
-        "work_talk",
+        "meaning_question"
+      ]
+    }
+  },
+  {
+    "id": "n2_kotohaaruga",
+    "point": "〜ことは〜が",
+    "en": "it is ... but",
+    "ex": "おいしいことはおいしいけど、高{たか}い。",
+    "exEn": "It's tasty enough, but it's expensive.",
+    "note": "Concedes the point before objecting.",
+    "when": {
+      "intent": [
         "food_talk"
+      ],
+      "topic": [
+        "t_meals"
+      ]
+    }
+  },
+  {
+    "id": "n2_yotta",
+    "point": "〜(よ)うとしない",
+    "en": "refuses to",
+    "ex": "何度{なんど}聞{き}いても、答{こた}えようとしなかった。",
+    "exEn": "However often I asked, he wouldn't answer.",
+    "note": "Someone's persistent unwillingness.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_youdewanaika",
+    "point": "〜(よ)うではないか",
+    "en": "let's",
+    "ex": "たまには、ぱっと使{つか}おうではないか。",
+    "exEn": "Let's splash out for once, shall we.",
+    "note": "Rousing suggestion. She uses it as a joke.",
+    "when": {
+      "intent": [
+        "weekend"
+      ]
+    }
+  },
+  {
+    "id": "n2_youni",
+    "point": "〜ように",
+    "en": "so that",
+    "ex": "忘{わす}れないように、メモしとく。",
+    "exEn": "I'll write it down so I don't forget.",
+    "note": "Purpose with a non-volitional verb.",
+    "when": {
+      "intent": [
+        "teach_request"
+      ]
+    }
+  },
+  {
+    "id": "n2_wokomete",
+    "point": "〜を込{こ}めて",
+    "en": "with (feeling) put into it",
+    "ex": "心{こころ}を込{こ}めて作{つく}ったんだよ。",
+    "exEn": "I made it with real care.",
+    "note": "Feeling deliberately poured into an action.",
+    "when": {
+      "intent": [
+        "thanks"
+      ],
+      "topic": [
+        "t_meals"
+      ]
+    }
+  },
+  {
+    "id": "n2_dokkoi",
+    "point": "〜あっての",
+    "en": "only exists because of",
+    "ex": "あなたあっての毎日{まいにち}、なんてね。",
+    "exEn": "My days only work because of you — kidding, kidding.",
+    "note": "X couldn't exist without Y. Quite emotional.",
+    "when": {
+      "intent": [
+        "confess"
+      ]
+    },
+    "cond": {
+      "minAff": 55
+    }
+  },
+  {
+    "id": "n2_dakemashi",
+    "point": "〜だけましだ",
+    "en": "at least it's better than",
+    "ex": "雨{あめ}だけど、寒{さむ}くないだけましか。",
+    "exEn": "It's raining, but at least it isn't cold.",
+    "note": "Finding the small mercy in a bad situation.",
+    "when": {
+      "intent": [
+        "weather"
+      ]
+    }
+  },
+  {
+    "id": "n2_koto_nakute",
+    "point": "〜ことなく",
+    "en": "without ever",
+    "ex": "一度{いちど}も振{ふ}り返{かえ}ることなく、行{い}っちゃった。",
+    "exEn": "He left without looking back even once.",
+    "note": "Formal 〜ないで. Often final-sounding.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 45
+    }
+  },
+  {
+    "id": "n2_mo_douzen",
+    "point": "〜も同然{どうぜん}",
+    "en": "as good as",
+    "ex": "あれはもう、別{わか}れたも同然{どうぜん}だった。",
+    "exEn": "At that point we'd as good as broken up.",
+    "note": "Practically equivalent, if not formally so.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 50
+    }
+  },
+  {
+    "id": "n2_ttara",
+    "point": "〜ったら",
+    "en": "honestly, you",
+    "ex": "{name}ったら、また無理{むり}してる。",
+    "exEn": "Honestly, you're overdoing it again.",
+    "note": "Affectionate exasperation at someone.",
+    "when": {
+      "intent": [
+        "tired"
+      ]
+    },
+    "cond": {
+      "minAff": 30
+    }
+  },
+  {
+    "id": "n2_toka",
+    "point": "〜とか",
+    "en": "things like / I heard",
+    "ex": "なんか、忙{いそが}しいとか言{い}ってたよ。",
+    "exEn": "He said something about being busy, apparently.",
+    "note": "Vague quotation. Softens and distances.",
+    "when": {
+      "topic": [
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 35
+    }
+  },
+  {
+    "id": "n2_datte",
+    "point": "〜だって",
+    "en": "even / they say",
+    "ex": "子{こ}どもだって、それくらい分{わ}かるよ。",
+    "exEn": "Even a child would understand that much.",
+    "note": "Either 'even' or casual hearsay, from context.",
+    "when": {
+      "intent": [
+        "meaning_question"
+      ]
+    }
+  },
+  {
+    "id": "n2_njanai",
+    "point": "〜んじゃない",
+    "en": "isn't it / I'd say",
+    "ex": "それ、けっこう上手{じょうず}なんじゃない？",
+    "exEn": "That's pretty good, I'd say?",
+    "note": "Soft opinion dressed as a question. Extremely common.",
+    "when": {
+      "intent": [
+        "compliment",
+        "teach_request"
       ]
     }
   }

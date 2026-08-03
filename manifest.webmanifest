@@ -1,0 +1,21 @@
+{
+  "name": "kaiwassap",
+  "short_name": "kaiwassap",
+  "description": "A personal Japanese companion chat",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#12101a",
+  "theme_color": "#0878f9",
+  "icons": [
+    {
+      "src": "assets/icons/kaiwassap-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/kaiwassap-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
