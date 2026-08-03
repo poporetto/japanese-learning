@@ -2,7 +2,7 @@
 // This is the difference between a lookup table and a character with pacing.
 
 import { recall, callbackCandidates, slotsSatisfied } from './memory.js';
-import { stageOf } from './state.js';
+import { stageOf, localDate } from './state.js';
 
 /** Filter authored variants by their conditions, then prefer unseen ones. */
 export function pick(variants, state) {
@@ -112,6 +112,39 @@ export function direct(ctx) {
   const topic = pick(gapTopics, state) || pick(dialogue.topics, state);
   const deflect = ctx.justLearned ? null : pick(dialogue.deflect, state);
   return { kind: 'deflect', variant: deflect, topic };
+}
+
+/**
+ * Messages pinned to the clock rather than to idle time — おはよう at 6,
+ * meals, おやすみ at 23.
+ *
+ * Each slot fires at most once per local day. A slot also expires: opening the
+ * app at 9pm should not deliver a stale "good morning", so a slot is only
+ * delivered within `window` minutes of its time. That grace period is what
+ * makes it work at all, since the tab isn't open at 06:00 most days — you get
+ * the message when you show up, provided you show up soon enough.
+ */
+export function scheduledPlan(state, dialogue, now = new Date()) {
+  const today = localDate(now);
+  const mins = now.getHours() * 60 + now.getMinutes();
+  const fired = state.scheduled || {};
+
+  const due = (dialogue.scheduled || []).filter((e) => {
+    if (fired[e.at] === today) return false;
+    const [h, m] = e.at.split(':').map(Number);
+    const late = mins - (h * 60 + m);
+    return late >= 0 && late <= (e.window ?? 90);
+  });
+  if (!due.length) return null;
+
+  // Several can come due at once — after a long absence, or when two slots sit
+  // close together. Deliver the most recent and retire the rest, rather than
+  // working through a backlog that's no longer true.
+  const latest = due.reduce((a, b) => (a.at > b.at ? a : b)).at;
+  const v = pick(due.filter((e) => e.at === latest), state);
+  if (!v) return null;
+
+  return { kind: 'scheduled', variant: v, slots: [...new Set(due.map((e) => e.at))], day: today };
 }
 
 /**

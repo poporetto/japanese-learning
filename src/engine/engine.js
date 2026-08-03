@@ -9,7 +9,7 @@ import { detectScript } from './normalize.js';
 import { analyze, reactionBucket } from './analyze.js';
 import { matchIntent } from './match.js';
 import { ingest, fillSlots, recall } from './memory.js';
-import { direct, pick, photoPlan, teachPlan, proactivePlan } from './director.js';
+import { direct, pick, photoPlan, teachPlan, proactivePlan, scheduledPlan } from './director.js';
 import { bumpAffection, timeBand, touchDay, stageOf, pushHistory, loadSettings } from './state.js';
 import { improvise, llmReady } from './llm.js';
 
@@ -92,6 +92,29 @@ export class Companion {
     if (!plan) return null;
 
     state.lastProactiveTurn = state.turns;
+    state.unanswered = (state.unanswered || 0) + 1;
+    return this._compose(plan, state, {
+      newMemories: [],
+      script: 'jp',
+      band: state._band,
+      noLLM: true,
+    });
+  }
+
+  /**
+   * Clock-driven message. Like `proactive`, authored only — it fires on a
+   * timer, and 「おやすみ」 at 23:00 shouldn't cost a free-tier request.
+   */
+  async scheduled(state) {
+    state._band = timeBand();
+    const plan = scheduledPlan(state, this.dialogue, new Date());
+    if (!plan) return null;
+
+    // Retire every slot that came due, not just the one delivered, so a
+    // backlog can't dribble out over the following minutes.
+    state.scheduled = { ...(state.scheduled || {}) };
+    for (const at of plan.slots) state.scheduled[at] = plan.day;
+
     state.unanswered = (state.unanswered || 0) + 1;
     return this._compose(plan, state, {
       newMemories: [],
@@ -274,7 +297,7 @@ export class Companion {
       if (open.q) direction.askAbout = open.q;
     } else if (plan.kind === 'topic_follow') {
       state.pendingTopic = null;
-    } else if (plan.kind !== 'greet' && plan.kind !== 'proactive') {
+    } else if (plan.kind !== 'greet' && plan.kind !== 'proactive' && plan.kind !== 'scheduled') {
       // A proactive nudge is her talking into silence — it must not wipe the
       // thread she's still waiting on an answer for.
       state.pendingTopic = null;

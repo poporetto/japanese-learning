@@ -32,7 +32,13 @@ function fresh() {
     lastProactiveTurn: -99,
     unanswered: 0,       // proactive messages sent since he last replied
     history: [],         // recent turns, verbatim — the LLM's short-term memory
+    scheduled: {},       // "HH:MM" -> the date it last fired, so once per day
   };
+}
+
+/** Local calendar date. Scheduled messages key off this, never UTC. */
+export function localDate(d = new Date()) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
 export function load() {
@@ -60,6 +66,7 @@ const DEFAULT_SETTINGS = {
   model: 'gemini-flash-latest',
   llm: true,          // use the API when a key is present
   proactive: true,    // she messages first when the conversation goes quiet
+  scheduled: true,    // おはよう at 6, おやすみ at 23, meals in between
   notify: true,       // browser notification when the tab isn't focused
 };
 
