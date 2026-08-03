@@ -231,25 +231,57 @@ she'd send it:
 - A photo with no `when` only appears on the low-probability random path.
 - Ask too often and she deflects (`photoDeny`) rather than spamming.
 
-Currently 41 photos: konbini hauls, ramen, gyoza, her desk at work and at home,
-the empty office floor, the train window, the shopping street at dusk, the
-konbini at 1am, the sky, rain, umbrellas, laundry, Nakameguro station, the
-Meguro river in spring, the neighbourhood cat, her film camera, undeveloped
-rolls, prints, her brother's CDs, the guitar she keeps not buying, her room,
-burnt home cooking — plus eight selfies gated at affection
-25/35/45/60/72/80/88/96.
+Currently **56 photos — 33 scenes and 23 selfies.** The scenes are her
+surroundings: konbini hauls, ramen, gyoza, her desk at work and at home, the
+empty office floor, the train window, the shopping street at dusk, the konbini
+at 1am, the sky, rain, umbrellas, laundry, Nakameguro station, the Meguro river
+in spring, the neighbourhood cat, her film camera, undeveloped rolls, prints,
+her brother's CDs, the guitar she keeps not buying, her room, burnt home
+cooking. The selfies run from affection 18 to 96.
 
 A missing file shows a dashed placeholder with the path it expects, so entries
 are authored before the images exist — drop a file in with the right name and it
-appears with no code change. **18 are still needed:** `cafe-window`,
-`office-empty`, `train-window`, `shotengai`, `konbini-night`, `desk-home`,
-`umbrella`, `bento`, `gyoza`, `sakura`, `shippo-close`, `film-rolls`, `records`,
-`guitar-shop`, `laundry`, `breakfast`, `deadline`, `old-photos` — all `.jpg` in
-`assets/photos/`.
+appears with no code change.
+
+**Scenes still needed (12):** `umbrella`, `bento`, `gyoza`, `sakura`,
+`shippo-close`, `film-rolls`, `records`, `guitar-shop`, `laundry`, `breakfast`,
+`deadline`, `old-photos`.
 
 Most arrive through the `t_showme` topic (「今どこにいるか、当ててみて」) and the
 `p_where*` proactive lines, so they read as her showing you where she is rather
 than as a random drop.
+
+### "How do I look?" selfies
+
+Fifteen events where she wants you to see her and asks what you think. Unlike
+the ambient photos, each carries its own `sug` chips, so her question is
+actually answerable — tap 「似合ってる」 rather than typing into a dead end.
+The `t_outfit` topic is how she leads in, and its three follows react to
+whichever way you answered, including you being unhelpfully honest.
+
+**Selfies still needed (15)**, all `.jpg` in `assets/photos/`:
+
+| file | affection | moment |
+|---|---|---|
+| `ponytail` | 18 | tying her hair up, asking up or down |
+| `glasses` | 20 | her glasses at home, rarely shown |
+| `cafe-selfie` | 22 | the window seat, good light |
+| `shoes-new` | 24 | new sneakers, shot from above |
+| `cap-casual` | 25 | a cap, hiding bed-hair |
+| `coat-winter` | 26 | bundled up, survival over cuteness |
+| `gym-pink` | 28 | pink gym clothes, ponytail, all motivation |
+| `dress-new` | 30 | new dress, second-guessing the fitting room |
+| `hoodie-home` | 32 | oversized hoodie on the sofa |
+| `haircut` | 35 | three centimetres off — did you notice? |
+| `makeup` | 38 | makeup done properly, twice-a-month rare |
+| `hair-down` | 40 | just taken down, debating cutting it |
+| `earrings` | 42 | small new earrings nobody notices |
+| `yukata` | 45 | is the obi crooked? |
+| `dressed-up` | 55 | nowhere to go, just wanted you to see |
+
+Emotions are spread across the set rather than defaulting to 照れ — excited for
+the gym clothes and the new shoes, sleepy for the hoodie, surprised for the
+haircut, shy for the dress and the last one.
 
 ## N2 grammar
 
