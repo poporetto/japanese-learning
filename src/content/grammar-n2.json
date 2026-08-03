@@ -5,7 +5,13 @@
     "en": "no wonder / that's why",
     "ex": "残業{ざんぎょう}続{つづ}きだったんだ。疲{つか}れてるわけだ。",
     "exEn": "You've had overtime nonstop. No wonder you're tired.",
-    "note": "Presents a logical conclusion from what was just said. Very common in casual explanation."
+    "note": "Presents a logical conclusion from what was just said. Very common in casual explanation.",
+    "when": {
+      "intent": [
+        "tired",
+        "work_talk"
+      ]
+    }
   },
   {
     "id": "n2_kkanenai",
@@ -13,7 +19,13 @@
     "en": "might well (something bad)",
     "ex": "このペースだと体{からだ}を壊{こわ}しかねないよ。",
     "exEn": "At this pace you might well ruin your health.",
-    "note": "Only for undesirable outcomes. Attaches to the verb ます-stem."
+    "note": "Only for undesirable outcomes. Attaches to the verb ます-stem.",
+    "when": {
+      "intent": [
+        "tired",
+        "work_talk"
+      ]
+    }
   },
   {
     "id": "n2_bakarika",
@@ -21,7 +33,13 @@
     "en": "not only... but also",
     "ex": "彼{かれ}は遅{おく}れたばかりか、連絡{れんらく}もしなかった。",
     "exEn": "Not only was he late, he didn't even get in touch.",
-    "note": "Stronger and more written than 〜だけでなく, but shows up in spoken complaints."
+    "note": "Stronger and more written than 〜だけでなく, but shows up in spoken complaints.",
+    "when": {
+      "intent": [
+        "work_talk",
+        "sad"
+      ]
+    }
   },
   {
     "id": "n2_ni_shitewa",
@@ -29,7 +47,13 @@
     "en": "for / considering that",
     "ex": "初{はじ}めてにしては上手{じょうず}じゃない？",
     "exEn": "For a first try, isn't that pretty good?",
-    "note": "Expectation vs reality. Great for praising someone's Japanese."
+    "note": "Expectation vs reality. Great for praising someone's Japanese.",
+    "when": {
+      "intent": [
+        "teach_request",
+        "hobby"
+      ]
+    }
   },
   {
     "id": "n2_tokoroni",
@@ -37,7 +61,13 @@
     "en": "just as / right when",
     "ex": "出{で}ようとしたところに電話{でんわ}がかかってきた。",
     "exEn": "Right as I was about to leave, the phone rang.",
-    "note": "Timing expression. Pairs with 〜ようとした for 'just about to'."
+    "note": "Timing expression. Pairs with 〜ようとした for 'just about to'.",
+    "when": {
+      "intent": [
+        "weekend",
+        "work_talk"
+      ]
+    }
   },
   {
     "id": "n2_wo_komete",
@@ -45,7 +75,13 @@
     "en": "with (feeling) put into it",
     "ex": "気持{きも}ちを込{こ}めて作{つく}ったんだから、味{あじ}は許{ゆる}して。",
     "exEn": "I made it with real feeling, so forgive the taste.",
-    "note": "感謝・愛情・心 are the usual nouns before it."
+    "note": "感謝・愛情・心 are the usual nouns before it.",
+    "when": {
+      "intent": [
+        "food_talk",
+        "compliment"
+      ]
+    }
   },
   {
     "id": "n2_teshikatanai",
@@ -53,7 +89,13 @@
     "en": "can't help feeling / unbearably",
     "ex": "今日{きょう}は眠{ねむ}くてしかたがない。",
     "exEn": "I'm unbearably sleepy today.",
-    "note": "Casual speech shortens it to 〜てしょうがない."
+    "note": "Casual speech shortens it to 〜てしょうがない.",
+    "when": {
+      "intent": [
+        "tired",
+        "sad"
+      ]
+    }
   },
   {
     "id": "n2_kagiri",
@@ -61,7 +103,13 @@
     "en": "as long as / as far as",
     "ex": "私{わたし}が知{し}っている限{かぎ}り、あの店{みせ}はまだあるよ。",
     "exEn": "As far as I know, that shop is still there.",
-    "note": "知っている限り and 見る限り are set phrases worth memorizing whole."
+    "note": "知っている限り and 見る限り are set phrases worth memorizing whole.",
+    "when": {
+      "intent": [
+        "hobby",
+        "weekend"
+      ]
+    }
   },
   {
     "id": "n2_dokoroka",
@@ -69,7 +117,13 @@
     "en": "far from / let alone",
     "ex": "休{やす}めるどころか、仕事{しごと}が増{ふ}えた。",
     "exEn": "Far from getting to rest, my workload increased.",
-    "note": "Sets up a reversal that's stronger than the listener expected."
+    "note": "Sets up a reversal that's stronger than the listener expected.",
+    "when": {
+      "intent": [
+        "work_talk",
+        "tired"
+      ]
+    }
   },
   {
     "id": "n2_ppanashi",
@@ -77,20 +131,38 @@
     "en": "leaving something as it is",
     "ex": "電気{でんき}つけっぱなしで寝{ね}ちゃった。",
     "exEn": "I fell asleep with the lights left on.",
-    "note": "Usually carries mild criticism or self-reproach. Verb ます-stem + っぱなし."
+    "note": "Usually carries mild criticism or self-reproach. Verb ます-stem + っぱなし.",
+    "when": {
+      "intent": [
+        "tired",
+        "work_talk"
+      ]
+    }
   },
   {
     "id": "n2_kkkeni",
     "point": "〜だけに",
     "en": "precisely because",
     "ex": "楽{たの}しみにしていただけに、中止{ちゅうし}はショックだった。",
-    "exEn": "Precisely because I'd looked forward to it, the cancellation was a shock."
+    "exEn": "Precisely because I'd looked forward to it, the cancellation was a shock.",
+    "when": {
+      "intent": [
+        "sad",
+        "happy"
+      ]
+    }
   },
   {
     "id": "n2_saichuu",
     "point": "〜最中{さいちゅう}に",
     "en": "right in the middle of",
     "ex": "会議{かいぎ}の最中{さいちゅう}にお腹{なか}が鳴{な}った。最悪{さいあく}。",
-    "exEn": "My stomach growled right in the middle of the meeting. The worst."
+    "exEn": "My stomach growled right in the middle of the meeting. The worst.",
+    "when": {
+      "intent": [
+        "work_talk",
+        "food_talk"
+      ]
+    }
   }
 ]

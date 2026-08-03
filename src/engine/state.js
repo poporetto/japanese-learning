@@ -2,6 +2,10 @@
 
 const KEY = 'yui.state.v1';
 
+// Settings live under their OWN key on purpose: ↺ wipes who she thinks you are,
+// not your API key. Re-typing the key after every reset would be miserable.
+const SETTINGS_KEY = 'yui.settings.v1';
+
 export const STAGES = [
   { id: 'stranger', min: 0, jp: '知り合い', en: 'Acquaintance' },
   { id: 'friend', min: 15, jp: '友達', en: 'Friend' },
@@ -21,9 +25,13 @@ function fresh() {
     lastPhotoTurn: -99,
     lastTeachTurn: -99,
     lastCallbackTurn: -99,
+    lastRegisterTurn: -99,
     lastSeenDate: null,
     streak: 0,
     learned: [],         // grammar point ids surfaced so far
+    lastProactiveTurn: -99,
+    unanswered: 0,       // proactive messages sent since he last replied
+    history: [],         // recent turns, verbatim — the LLM's short-term memory
   };
 }
 
@@ -43,6 +51,41 @@ export function save(state) {
 
 export function reset() {
   localStorage.removeItem(KEY);
+}
+
+/* ---------- settings (survive a memory reset) ---------- */
+
+const DEFAULT_SETTINGS = {
+  apiKey: '',
+  model: 'gemini-2.5-flash',
+  llm: true,          // use the API when a key is present
+  proactive: true,    // she messages first when the conversation goes quiet
+  notify: false,      // browser notification when the tab isn't focused
+};
+
+export function loadSettings() {
+  try {
+    const raw = localStorage.getItem(SETTINGS_KEY);
+    return { ...DEFAULT_SETTINGS, ...(raw ? JSON.parse(raw) : {}) };
+  } catch {
+    return { ...DEFAULT_SETTINGS };
+  }
+}
+
+export function saveSettings(s) {
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
+}
+
+/**
+ * Rolling transcript handed to the LLM. Capped hard — free-tier tokens-per-minute
+ * is the binding constraint, and she has `memory` for anything that matters long
+ * term, so old turns are genuinely disposable.
+ */
+const HISTORY_MAX = 16;
+
+export function pushHistory(state, role, text) {
+  if (!text) return;
+  state.history = [...(state.history || []), { role, text }].slice(-HISTORY_MAX);
 }
 
 export function stageOf(state) {

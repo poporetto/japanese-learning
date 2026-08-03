@@ -1,11 +1,17 @@
-// Public surface. Everything the UI needs is behind respond() / openSession().
-// Swapping in a local LLM later means replacing only the `deflect` branch.
+// Public surface. Everything the UI needs is behind respond() / openSession() /
+// proactive(). All three are async because the optional Gemini leg is.
+//
+// The authored engine runs in full whether or not an API key is set. The LLM
+// rewrites the words of a turn the director already planned; it never decides
+// what kind of turn it is, never touches memory, and never gates the app.
 
 import { detectScript } from './normalize.js';
+import { analyze, reactionBucket } from './analyze.js';
 import { matchIntent } from './match.js';
 import { ingest, fillSlots, recall } from './memory.js';
-import { direct, pick, photoPlan, teachPlan } from './director.js';
-import { bumpAffection, timeBand, touchDay, stageOf } from './state.js';
+import { direct, pick, photoPlan, teachPlan, proactivePlan } from './director.js';
+import { bumpAffection, timeBand, touchDay, stageOf, pushHistory, loadSettings } from './state.js';
+import { improvise, llmReady } from './llm.js';
 
 // Intents where a lexicon word is part of the request, not a fact about him.
 const SCAN_BLOCKING = ['ask_photo', 'meaning_question', 'teach_request'];
@@ -13,6 +19,29 @@ const SCAN_BLOCKING = ['ask_photo', 'meaning_question', 'teach_request'];
 // Authored bubbles are templates and get reused forever. Slot-filling must
 // never write back into the loaded JSON, so every turn works on copies.
 const clone = (bubbles) => bubbles.map((b) => ({ ...b }));
+
+// What the director's turn kinds mean, phrased as stage directions for the API.
+const GOALS = {
+  greet: '会話を切り出す。時間帯に合った軽い挨拶から。',
+  qa: '自分について聞かれたので、素直に答えて、ついでに相手にも聞き返す。',
+  intent: '相手の言ったことに自然に反応する。',
+  topic_follow: '今の話題を掘り下げる。',
+  callback: '前に相手が話してくれたことを思い出して、そこに触れる。',
+  deflect: '話題を自分から切り替える。',
+  default: '自然に会話を続ける。',
+};
+
+// A pendingSlot is a machine word; the API needs it as a thing to ask about.
+const SLOT_JP = {
+  name: '名前（なんて呼べばいいか）',
+  food: '好きな食べ物',
+  hobby: '趣味',
+  job: '仕事',
+  place: '住んでいるところ',
+  drink: '飲み物の好み',
+  weekend: '週末の予定',
+  music: '好きな音楽',
+};
 
 export class Companion {
   constructor(content) {
@@ -22,11 +51,13 @@ export class Companion {
     this.grammar = content.grammar;
     this.lexicon = content.lexicon;
     this.sprites = content.sprites;
+    this.qa = content.qa.entries;
   }
 
   /** First turn of a session: she speaks first, unprompted. */
-  openSession(state) {
+  async openSession(state) {
     const { gapDays } = touchDay(state);
+    state._band = timeBand();
     // A question she asked last session isn't pending anymore. Without this,
     // a restored pendingSlot swallows the first thing said on return.
     state.pendingSlot = null;
@@ -46,16 +77,50 @@ export class Companion {
     });
   }
 
-  /** Main entry: user said something. */
-  respond(raw, state) {
-    state.turns += 1;
+  /**
+   * She messages first, unprompted — the idle timer in app.js drives this.
+   * Deliberately authored-only: it fires on a clock rather than on user input,
+   * so routing it through the API would burn free-tier quota on nobody.
+   */
+  async proactive(state) {
+    state._band = timeBand();
+    const plan = proactivePlan(state, this.dialogue, timeBand());
+    if (!plan) return null;
 
+    state.lastProactiveTurn = state.turns;
+    state.unanswered = (state.unanswered || 0) + 1;
+    return this._compose(plan, state, {
+      newMemories: [],
+      script: 'jp',
+      band: state._band,
+      noLLM: true,
+    });
+  }
+
+  /** Main entry: user said something. */
+  async respond(raw, state) {
+    state.turns += 1;
+    state.unanswered = 0;
+    pushHistory(state, 'me', raw);
+
+    state._band = timeBand();
     const script = detectScript(raw);
+    const a = analyze(raw);
+
     // Match before ingesting: the intent tells us whether a lexicon word is
     // really a fact about him (「写真が趣味」) or part of a request (「写真見せて」).
     const match = matchIntent(raw, this.intents);
+
+    // Questions aimed at her are scored separately. A question wins ties —
+    // 「趣味は写真？」 is her being asked, not him volunteering a hobby.
+    const qaHit = matchIntent(raw, this.qa);
+    const qaWins =
+      qaHit && (!match || qaHit.score * (a.question ? 1.6 : 1) >= match.score);
+    const qaEntry = qaWins ? this.qa.find((e) => e.id === qaHit.id) : null;
+
     const newMemories = ingest(state, raw, this.lexicon, {
-      skipScan: match && SCAN_BLOCKING.includes(match.id),
+      // 「ラーメン好き？」 asked OF her must not file ramen as HIS favourite.
+      skipScan: !!qaEntry || (match && SCAN_BLOCKING.includes(match.id)),
       intentId: match?.id ?? null,
     });
 
@@ -68,9 +133,10 @@ export class Companion {
       state,
       dialogue: this.dialogue,
       intentId: match?.id ?? null,
+      qaEntry,
       sessionStart: false,
       gapDays: 0,
-      band: timeBand(),
+      band: state._band,
       justLearned: newMemories.length > 0,
     });
 
@@ -78,16 +144,25 @@ export class Companion {
     return this._compose(plan, state, {
       newMemories,
       script,
+      analysis: a,
       intentId: match?.id ?? null,
-      band: timeBand(),
+      band: state._band,
+      userText: raw,
     });
   }
 
-  _compose(plan, state, meta) {
+  async _compose(plan, state, meta) {
     const bubbles = [];
     let sprite = 'neutral';
     let photo = null;
     let suggestions = [];
+
+    // Notes accumulated while assembling the authored turn. If the API leg is
+    // on, these become stage directions instead of being spoken verbatim — so
+    // an improvised reply still acknowledges what she just learned, still
+    // asks the question the director wanted asked, and still lands on the
+    // topic the director chose.
+    const direction = { goal: [], refs: [], askAbout: null };
 
     // Acknowledge anything she just learned about him — before her own line.
     for (const mem of meta.newMemories.slice(0, 1)) {
@@ -98,12 +173,33 @@ export class Companion {
         sprite = ack.s || sprite;
         state.seen[ack.id] = (state.seen[ack.id] || 0) + 1;
       }
+      direction.goal.push(
+        `相手について今「${mem.slot} = ${mem.value}」と知ったところ。まずそこに反応する。`
+      );
     }
 
     // He wrote in English — a nudge, not a scolding, and only occasionally.
     if (meta.script === 'en' && state.turns % 3 === 1) {
       const nudge = pick(this.dialogue.nudges, state);
       if (nudge) bubbles.push(...clone(nudge.b));
+    }
+
+    // Polite form to a friend is the most common thing an N2 learner overdoes,
+    // and she's already established she dislikes it. Rate-limited hard, or
+    // 「そうです」 would trigger it every other turn.
+    if (
+      meta.analysis?.polite &&
+      state.turns - state.lastRegisterTurn > 8 &&
+      state.affection >= 8
+    ) {
+      const reg = pick(this.dialogue.registerNudges, state);
+      if (reg) {
+        bubbles.push(...clone(reg.b));
+        sprite = reg.s || sprite;
+        state.lastRegisterTurn = state.turns;
+        state.seen[reg.id] = (state.seen[reg.id] || 0) + 1;
+      }
+      direction.goal.push('相手が敬語で話しているので、軽くからかってタメ口を促す。');
     }
 
     if (plan.kind === 'photo_request') {
@@ -124,7 +220,24 @@ export class Companion {
       }
     }
 
-    const v = plan.variant;
+    // Nothing matched — but if a noun could be pulled out of what he wrote,
+    // quoting it back reads as listening, where a generic line reads as a miss.
+    // Extraction is heuristic, so this only engages when it produced something
+    // that passed the validator; otherwise the authored deflect stands.
+    let echo = null;
+    if (plan.kind === 'deflect' && meta.analysis?.topic) {
+      const rx = pick(this.dialogue.reactions[reactionBucket(meta.analysis)], state);
+      if (rx) {
+        echo = meta.analysis.topic;
+        bubbles.push(...clone(rx.b));
+        sprite = rx.s || sprite;
+        suggestions = rx.sug || suggestions;
+        bumpAffection(state, rx.aff ?? 0);
+        state.seen[rx.id] = (state.seen[rx.id] || 0) + 1;
+      }
+    }
+
+    const v = echo ? null : plan.variant;
     if (v) {
       bubbles.push(...clone(v.b));
       sprite = v.s || sprite;
@@ -134,10 +247,12 @@ export class Companion {
       if (v.q) state.pendingSlot = v.q;
       if (v.setFlag) state.flags[v.setFlag] = true;
       if (plan.kind === 'callback') state.lastCallbackTurn = state.turns;
+      direction.refs.push(v.b.map((b) => b.jp).join(' '));
+      if (v.q) direction.askAbout = v.q;
     }
 
     // Deflect turns chain into a fresh topic so the conversation never stalls.
-    if (plan.kind === 'deflect' && plan.topic) {
+    if (plan.kind === 'deflect' && plan.topic && !echo) {
       const open = pick([plan.topic.open], state) || plan.topic.open;
       bubbles.push(...clone(open.b));
       sprite = open.s || sprite;
@@ -147,10 +262,55 @@ export class Companion {
       // Count the topic too — that's the key repeat-avoidance picks topics on.
       state.seen[plan.topic.id] = (state.seen[plan.topic.id] || 0) + 1;
       state.seen[plan.topic.open.id] = (state.seen[plan.topic.open.id] || 0) + 1;
+      direction.goal.push('相手の話にうまく乗れなかったので、自分から新しい話題を出す。');
+      direction.refs.push(open.b.map((b) => b.jp).join(' '));
+      if (open.q) direction.askAbout = open.q;
     } else if (plan.kind === 'topic_follow') {
       state.pendingTopic = null;
-    } else if (plan.kind !== 'greet') {
+    } else if (plan.kind !== 'greet' && plan.kind !== 'proactive') {
+      // A proactive nudge is her talking into silence — it must not wipe the
+      // thread she's still waiting on an answer for.
       state.pendingTopic = null;
+    }
+
+    // ---- optional: let Gemini say it in her own words instead ----
+    //
+    // Everything above already happened: memory written, affection moved,
+    // pendingSlot/pendingTopic set, repeat counters bumped. Only the text is
+    // replaced, and only if the call succeeds. `photo_request` is excluded —
+    // an improvised line about a photo she isn't actually sending would lie.
+    const settings = loadSettings();
+    const swappable =
+      !meta.noLLM &&
+      bubbles.length &&
+      plan.kind !== 'photo_request' &&
+      llmReady(settings);
+
+    if (swappable) {
+      const out = await improvise({
+        settings,
+        persona: this.persona,
+        state,
+        stage: stageOf(state),
+        userText: meta.userText,
+        direction: {
+          goal: direction.goal.length
+            ? direction.goal.join(' ')
+            : GOALS[plan.kind] || GOALS.default,
+          reference: direction.refs.join(' / ') || null,
+          askAbout: direction.askAbout ? SLOT_JP[direction.askAbout] || direction.askAbout : null,
+        },
+      });
+
+      if (out) {
+        bubbles.length = 0;
+        bubbles.push(...out.bubbles);
+        if (out.sprite) sprite = out.sprite;
+        if (out.suggestions.length) suggestions = out.suggestions;
+        // Authored deflects carry no affection, so a conversation carried
+        // mostly by the API would otherwise never advance a stage.
+        if (plan.kind === 'deflect') bumpAffection(state, 1);
+      }
     }
 
     // Unsolicited photo, on her own initiative — usually because the photo
@@ -172,21 +332,26 @@ export class Companion {
 
     // Teaching rides along as a side note, never as the main message.
     let teach = null;
-    const g = teachPlan(state, this.grammar);
+    const g = teachPlan(state, this.grammar, meta);
     if (g && bubbles.length) {
       teach = g;
       state.lastTeachTurn = state.turns;
       if (!state.learned.includes(g.id)) state.learned.push(g.id);
     }
 
+    const extras = echo ? { echo } : {};
     for (const b of bubbles) {
-      b.jp = fillSlots(b.jp, state);
-      if (b.en) b.en = fillSlots(b.en, state);
+      b.jp = fillSlots(b.jp, state, extras);
+      if (b.en) b.en = fillSlots(b.en, state, extras);
     }
     suggestions = suggestions.map((s) => ({
-      jp: fillSlots(s.jp, state),
+      jp: fillSlots(s.jp, state, extras),
       en: s.en,
     }));
+
+    // Her side of the transcript, ruby markup stripped — the API shouldn't be
+    // shown furigana braces as if they were part of normal Japanese.
+    pushHistory(state, 'her', bubbles.map((b) => b.jp).join(' ').replace(/\{[ぁ-んー]+\}/g, ''));
 
     return {
       bubbles,

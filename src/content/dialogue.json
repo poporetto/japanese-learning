@@ -556,6 +556,108 @@
     }
   ],
 
+  "_reactionsNote": "Used when nothing else matched but a topic noun could be pulled out of the input. {echo} is that noun. If extraction fails or looks unsafe, she falls back to `deflect` instead — a wrong echo is far worse than a generic line.",
+
+  "reactions": {
+    "past": [
+      {
+        "id": "rx_past_1",
+        "s": "smile",
+        "b": [
+          { "jp": "え、{echo}？　いいなあ、それ。", "en": "Huh, {echo}? That sounds nice." },
+          { "jp": "もうちょっと詳{くわ}しく聞{き}かせてよ。", "en": "Tell me a bit more about it." }
+        ]
+      },
+      {
+        "id": "rx_past_2",
+        "s": "excited",
+        "b": [{ "jp": "{echo}か〜。私{わたし}も久{ひさ}しぶりにそういうのしたいな。", "en": "{echo}, huh~. I'd like to do something like that again too." }]
+      },
+      {
+        "id": "rx_past_3",
+        "s": "neutral",
+        "b": [
+          { "jp": "へえ、{echo}ね。どうだった？", "en": "Huh, {echo}. How was it?" }
+        ],
+        "sug": [{ "jp": "よかったよ", "en": "It was good" }, { "jp": "微妙だった", "en": "It was so-so" }]
+      }
+    ],
+    "negative": [
+      {
+        "id": "rx_neg_1",
+        "s": "concerned",
+        "b": [
+          { "jp": "{echo}、だめだったんだ。", "en": "{echo} didn't work out, huh." },
+          { "jp": "まあそういう日{ひ}もあるよ。私{わたし}なんて週{しゅう}三{さん}でそう。", "en": "Well, some days are like that. Mine are like that three times a week." }
+        ]
+      },
+      {
+        "id": "rx_neg_2",
+        "s": "neutral",
+        "b": [{ "jp": "{echo}はナシか。じゃあ何{なに}ならいいの？", "en": "So {echo} is a no. Then what would work?" }]
+      }
+    ],
+    "question": [
+      {
+        "id": "rx_q_1",
+        "s": "surprised",
+        "b": [
+          { "jp": "{echo}のこと？　うーん、どうだろう。", "en": "About {echo}? Hmm, I wonder." },
+          { "jp": "正直{しょうじき}あんまり詳{くわ}しくないんだ。{name}のほうが知{し}ってそう。", "en": "Honestly I don't know much about it. You'd know more, {name}." }
+        ],
+        "cond": { "needSlot": "name" }
+      },
+      {
+        "id": "rx_q_2",
+        "s": "smile",
+        "b": [
+          { "jp": "{echo}か〜。難{むずか}しい質問{しつもん}するなあ。", "en": "{echo}, huh~. You ask difficult questions." },
+          { "jp": "そっちはどう思{おも}ってるの？先{さき}に聞{き}かせて。", "en": "What do you think about it? You tell me first." }
+        ]
+      }
+    ],
+    "plain": [
+      {
+        "id": "rx_plain_1",
+        "s": "smile",
+        "b": [{ "jp": "{echo}ねえ。なんかいいね、その感{かん}じ。", "en": "{echo}, huh. That's kind of nice." }]
+      },
+      {
+        "id": "rx_plain_2",
+        "s": "neutral",
+        "b": [
+          { "jp": "{echo}か。うん、覚{おぼ}えとく。", "en": "{echo}. Mm, I'll remember that." },
+          { "jp": "そういう話{はなし}、もっと聞{き}きたい。", "en": "I want to hear more of that kind of thing." }
+        ],
+        "aff": 1
+      },
+      {
+        "id": "rx_plain_3",
+        "s": "excited",
+        "b": [{ "jp": "え、{echo}って言{い}った？　急{きゅう}に気{き}になるじゃん。", "en": "Wait, did you say {echo}? Now I'm suddenly curious." }]
+      }
+    ]
+  },
+
+  "registerNudges": [
+    {
+      "id": "reg_1",
+      "s": "pout",
+      "b": [
+        { "jp": "ちょっと、なんで敬語{けいご}なの。", "en": "Hey, why the formal speech?" },
+        { "jp": "友達{ともだち}なんだからタメ口{ぐち}でいいって。「です」とか要{い}らないから。", "en": "We're friends, so casual is fine. You don't need the 'desu'." }
+      ]
+    },
+    {
+      "id": "reg_2",
+      "s": "smile",
+      "b": [
+        { "jp": "また丁寧{ていねい}になってる。癖{くせ}なんだろうけどさ。", "en": "You've gone polite again. It's probably a habit." },
+        { "jp": "「食{た}べました」じゃなくて「食{た}べた」でいいの。それだけで距離{きょり}縮{ちぢ}まるから。", "en": "Not 'tabemashita', just 'tabeta'. That alone closes the distance." }
+      ]
+    }
+  ],
+
   "deflect": [
     { "id": "d_1", "s": "surprised", "b": [{ "jp": "ん？ごめん、ちょっと意味{いみ}うまく取{と}れなかったかも。", "en": "Hm? Sorry, I might not have caught your meaning." }] },
     { "id": "d_2", "s": "smile", "b": [{ "jp": "へえー。…って、ちゃんと分{わ}かってないのバレるな、これ。", "en": "Huhh. ...Okay, you can tell I didn't fully get that, huh." }] },
@@ -760,8 +862,8 @@
       "id": "ph_room",
       "kind": "scene",
       "minAffection": 25,
-      "file": "assets/photos/room.jpg",
-      "alt": "A corner of her apartment at night",
+      "file": "assets/photos/room.png",
+      "alt": "Aya relaxing in her apartment at night",
       "s": "smile",
       "when": { "band": ["night"] },
       "b": [
@@ -774,8 +876,8 @@
       "id": "ph_cooking",
       "kind": "scene",
       "minAffection": 18,
-      "file": "assets/photos/cooking.jpg",
-      "alt": "A slightly burnt home-cooked dinner",
+      "file": "assets/photos/cooking.png",
+      "alt": "Aya cooking dinner at home",
       "s": "shy",
       "when": { "intent": ["food_talk"], "topic": ["t_meals"] },
       "b": [
@@ -788,8 +890,8 @@
       "id": "ph_selfie_work",
       "kind": "selfie",
       "minAffection": 25,
-      "file": "assets/photos/selfie-work.jpg",
-      "alt": "Yui at her desk, lanyard on",
+      "file": "assets/photos/selfie-work.png",
+      "alt": "Aya taking a late-night selfie at her desk",
       "s": "tired",
       "when": { "intent": ["work_talk", "tired"], "topic": ["t_work"] },
       "b": [
@@ -815,8 +917,8 @@
       "id": "ph_selfie_out",
       "kind": "selfie",
       "minAffection": 45,
-      "file": "assets/photos/selfie-out.jpg",
-      "alt": "Yui outside, before going out",
+      "file": "assets/photos/selfie-out.png",
+      "alt": "Aya dressed up before going out",
       "s": "happy_shy",
       "when": { "intent": ["weekend", "compliment"], "topic": ["t_weekend"] },
       "b": [

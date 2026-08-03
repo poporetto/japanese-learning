@@ -17,6 +17,15 @@ function cleanSlotAnswer(raw) {
     .trim();
 }
 
+// A free-text answer is a bare noun, not a sentence. Case-marking particles or
+// a verb ending mean they answered with a whole clause — 「昨日は美術館に行った」
+// is a story about their day, not their name.
+const RE_SENTENCEY = /[はをにへとでもがや]|から|まで|(った|てる|ます|ない|だった)$/;
+
+function looksLikeBareNoun(value) {
+  return value.length >= 1 && value.length <= 10 && !RE_SENTENCEY.test(value);
+}
+
 export function remember(state, slot, value, label) {
   state.memory[slot] = { value, label: label ?? value, turn: state.turns };
 }
@@ -42,7 +51,7 @@ export function ingest(state, raw, lexicon, opts = {}) {
     // this, answering 「こんにちは」 to 「なんて呼べばいい？」 names you Konnichiwa.
     if (!lexicon[slot] && !opts.intentId) {
       const val = cleanSlotAnswer(raw);
-      if (val && val.length <= 24 && !/[?？]/.test(raw)) {
+      if (val && looksLikeBareNoun(val) && !/[?？]/.test(raw)) {
         remember(state, slot, val);
         filled.push({ slot, value: val, fromPrompt: true });
       }
@@ -70,10 +79,16 @@ export function callbackCandidates(state) {
     .map(([slot, v]) => ({ slot, ...v }));
 }
 
-/** Fill {name} / {food} style slots in authored text. */
-export function fillSlots(text, state) {
+/**
+ * Slots supplied per-turn rather than from memory, so `pick` must not reject a
+ * line for referencing them. The caller guarantees a value before rendering.
+ */
+const TRANSIENT_SLOTS = new Set(['echo']);
+
+/** Fill {name} / {food} / {echo} style slots in authored text. */
+export function fillSlots(text, state, extras = {}) {
   return text.replace(/\{(\w+)\}/g, (m, slot) => {
-    if (slot === 'stage') return '';
+    if (slot in extras) return extras[slot];
     return recall(state, slot) ?? m;
   });
 }
@@ -81,5 +96,5 @@ export function fillSlots(text, state) {
 /** A line is usable only if every slot it references is known. */
 export function slotsSatisfied(text, state) {
   const needed = [...text.matchAll(/\{(\w+)\}/g)].map((m) => m[1]);
-  return needed.every((s) => recall(state, s) !== null);
+  return needed.every((s) => TRANSIENT_SLOTS.has(s) || recall(state, s) !== null);
 }

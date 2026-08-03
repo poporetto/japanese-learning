@@ -14,6 +14,12 @@ export function pick(variants, state) {
     if (c.needSlot && recall(state, c.needSlot) === null) return false;
     if (c.lacksSlot && recall(state, c.lacksSlot) !== null) return false;
     if (c.minTurns != null && state.turns < c.minTurns) return false;
+    // How many unanswered nudges she's already sent — lets a proactive line
+    // escalate from 「ねえ」 to 「無視しないでよ」 without new selection code.
+    if (c.minUnanswered != null && (state.unanswered || 0) < c.minUnanswered) return false;
+    if (c.maxUnanswered != null && (state.unanswered || 0) > c.maxUnanswered) return false;
+    // state._band is refreshed each turn by the engine; it's derived, not saved state.
+    if (c.band && !c.band.includes(state._band)) return false;
     if (c.flag && !state.flags[c.flag]) return false;
     if (c.notFlag && state.flags[c.notFlag]) return false;
     // Never offer a line — or a quick-reply chip — whose {slots} we can't fill.
@@ -35,7 +41,7 @@ export function pick(variants, state) {
  * mechanically answering, which is what stops it feeling like a FAQ bot.
  */
 export function direct(ctx) {
-  const { state, dialogue, intentId, sessionStart, gapDays, band } = ctx;
+  const { state, dialogue, intentId, qaEntry, sessionStart, gapDays, band } = ctx;
 
   // 1. Session framing always wins.
   if (sessionStart) {
@@ -51,7 +57,14 @@ export function direct(ctx) {
     if (v) return { kind: 'greet', variant: v };
   }
 
-  // 2. Intents she must never ignore.
+  // 2. A direct question about her outranks everything. Failing to answer one
+  //    is the loudest way to break the illusion that she's listening.
+  if (qaEntry) {
+    const v = pick(qaEntry.a, state);
+    if (v) return { kind: 'qa', variant: v };
+  }
+
+  // 3. Intents she must never ignore.
   const HARD = ['ask_photo', 'meaning_question', 'teach_request', 'goodbye', 'confess'];
   if (intentId && HARD.includes(intentId)) {
     if (intentId === 'ask_photo') return { kind: 'photo_request' };
@@ -95,6 +108,29 @@ export function direct(ctx) {
   const topic = pick(gapTopics, state) || pick(dialogue.topics, state);
   const deflect = ctx.justLearned ? null : pick(dialogue.deflect, state);
   return { kind: 'deflect', variant: deflect, topic };
+}
+
+/**
+ * She speaks into silence. Two shapes, and the mix is what stops the nudges
+ * reading like a reminder app: sometimes a fragment of her own day
+ * (`dialogue.proactive`), sometimes she just opens a whole new topic —
+ * which reuses the deflect path so the follow-up thread works identically.
+ */
+export function proactivePlan(state, dialogue, band) {
+  const openTopic = state.turns > 0 && !state.pendingTopic && Math.random() < 0.3;
+
+  if (openTopic) {
+    const topic = pick(dialogue.topics, state);
+    if (topic) return { kind: 'deflect', variant: null, topic };
+  }
+
+  const v = pick((dialogue.proactive || []).filter((p) => !p.cond?.band || p.cond.band.includes(band)), state);
+  if (v) return { kind: 'proactive', variant: v };
+
+  // Nothing left unseen that fits — fall back to opening a topic rather than
+  // going quiet, since going quiet is the one thing this feature exists to fix.
+  const topic = pick(dialogue.topics, state);
+  return topic ? { kind: 'deflect', variant: null, topic } : null;
 }
 
 // Snapshots of her surroundings are cheap and frequent; pictures of herself
@@ -142,12 +178,20 @@ export function photoPlan(state, dialogue, ctx = {}) {
   return null;
 }
 
-/** Should a grammar note be appended? Roughly every 4 turns, never twice in a row. */
-export function teachPlan(state, grammar) {
+/**
+ * Should a grammar note be appended? Roughly every 4 turns.
+ * A point tagged for the current topic wins — 〜てしかたがない landing on a
+ * message about being exhausted teaches far better than a random card.
+ */
+export function teachPlan(state, grammar, ctx = {}) {
   // Let the conversation breathe before the first grammar note.
   if (state.turns < 3) return null;
   if (state.turns - state.lastTeachTurn < 4) return null;
+
   const unseen = grammar.filter((g) => !state.learned.includes(g.id));
   const pool = unseen.length ? unseen : grammar;
-  return pool[Math.floor(Math.random() * pool.length)];
+
+  const relevant = pool.filter((g) => g.when?.intent?.includes(ctx.intentId));
+  const from = relevant.length ? relevant : pool;
+  return from[Math.floor(Math.random() * from.length)];
 }

@@ -1,0 +1,703 @@
+{
+  "_format": "Questions aimed AT her. Matched with the same kw/re/exact/weight scoring as intents.json, so nothing new to learn. `a` holds answer variants in the normal dialogue shape (id / s / b / sug / aff / cond).",
+  "entries": [
+    {
+      "id": "qa_age",
+      "kw": [
+        "何歳",
+        "なんさい",
+        "いくつ",
+        "年齢",
+        "how old",
+        "年{とし}は"
+      ],
+      "a": [
+        {
+          "id": "qa_age_1",
+          "s": "neutral",
+          "b": [
+            {
+              "jp": "二十六{にじゅうろく}。もうすぐ二十七{にじゅうなな}。",
+              "en": "Twenty-six. Almost twenty-seven."
+            },
+            {
+              "jp": "女{おんな}に歳{とし}聞{き}くんだ、けっこう度胸{どきょう}あるね。",
+              "en": "Asking a woman her age — you've got some nerve."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "ごめんごめん",
+              "en": "Sorry, sorry"
+            },
+            {
+              "jp": "若く見えるよ",
+              "en": "You look young"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_where_live",
+      "kw": [
+        "どこ住",
+        "どこに住",
+        "住んでるの",
+        "where do you live",
+        "どこ出身",
+        "地元"
+      ],
+      "a": [
+        {
+          "id": "qa_where_1",
+          "s": "smile",
+          "b": [
+            {
+              "jp": "中目黒{なかめぐろ}。駅{えき}から歩{ある}いて十分{じゅっぷん}くらいのアパート。",
+              "en": "Nakameguro. An apartment about ten minutes' walk from the station."
+            },
+            {
+              "jp": "生{う}まれは埼玉{さいたま}なんだけどね。就職{しゅうしょく}のとき出{で}てきた。",
+              "en": "I was born in Saitama, though. Moved out when I got the job."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "いいところ？",
+              "en": "Is it nice there?"
+            },
+            {
+              "jp": "一人暮らし？",
+              "en": "Do you live alone?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_alone",
+      "kw": [
+        "一人暮らし",
+        "ひとりぐらし",
+        "誰と住",
+        "家族と住",
+        "live alone"
+      ],
+      "a": [
+        {
+          "id": "qa_alone_1",
+          "s": "neutral",
+          "b": [
+            {
+              "jp": "うん、一人暮{ひとりぐ}らし。もう四年目{よねんめ}かな。",
+              "en": "Yeah, living alone. Four years now, I think."
+            },
+            {
+              "jp": "気楽{きらく}でいいよ。たまに静{しず}かすぎるけど。",
+              "en": "It's comfortable. A bit too quiet sometimes, though."
+            }
+          ],
+          "aff": 1
+        }
+      ]
+    },
+    {
+      "id": "qa_job",
+      "kw": [
+        "仕事なに",
+        "仕事は何",
+        "何の仕事",
+        "どんな仕事",
+        "仕事してるの",
+        "職業",
+        "what do you do",
+        "仕事なにしてる",
+        "仕事何してる",
+        "どこで働"
+      ],
+      "a": [
+        {
+          "id": "qa_job_1",
+          "s": "neutral",
+          "b": [
+            {
+              "jp": "デザイン会社{がいしゃ}の制作{せいさく}アシスタント。小{ちい}さいとこだよ。",
+              "en": "Production assistant at a design company. A small place."
+            },
+            {
+              "jp": "って言{い}うと聞{き}こえいいけど、実際{じっさい}は雑用{ざつよう}八割{はちわり}。",
+              "en": "Sounds good when I say it, but honestly it's eighty percent odd jobs."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "楽しい？",
+              "en": "Is it fun?"
+            },
+            {
+              "jp": "大変そう",
+              "en": "Sounds tough"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_job_like",
+      "kw": [
+        "仕事楽しい",
+        "仕事好き",
+        "仕事どう",
+        "やりがい"
+      ],
+      "a": [
+        {
+          "id": "qa_joblike_1",
+          "s": "neutral",
+          "b": [
+            {
+              "jp": "うーん、好{す}きか嫌{きら}いかで言{い}うと…嫌{きら}いじゃない、かな。",
+              "en": "Hmm, if I had to say like or dislike... not dislike, I guess."
+            },
+            {
+              "jp": "自分{じぶん}の作{つく}ったものが街{まち}で見{み}られる日{ひ}が来{く}るといいなとは思{おも}ってる。",
+              "en": "I do hope a day comes when I see something I made out in the city."
+            }
+          ],
+          "aff": 1,
+          "sug": [
+            {
+              "jp": "きっと来るよ",
+              "en": "It'll come"
+            },
+            {
+              "jp": "何を作ってるの？",
+              "en": "What do you make?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_fav_food",
+      "kw": [
+        "好きな食べ物",
+        "好きな料理",
+        "何が好き",
+        "favorite food",
+        "何food"
+      ],
+      "a": [
+        {
+          "id": "qa_food_1",
+          "s": "excited",
+          "b": [
+            {
+              "jp": "ラーメン一択{いったく}。とんこつより醤油{しょうゆ}派{は}。",
+              "en": "Ramen, no contest. Shoyu over tonkotsu."
+            },
+            {
+              "jp": "あと、コンビニのプリン。これは譲{ゆず}れない。",
+              "en": "Also konbini pudding. That one's non-negotiable."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "意外と庶民的だね",
+              "en": "Surprisingly down-to-earth"
+            },
+            {
+              "jp": "僕も醤油派",
+              "en": "I'm shoyu too"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_hobby",
+      "kw": [
+        "趣味は",
+        "趣味なに",
+        "休みの日は",
+        "休みの日なに",
+        "暇なとき",
+        "your hobby"
+      ],
+      "a": [
+        {
+          "id": "qa_hobby_1",
+          "s": "smile",
+          "b": [
+            {
+              "jp": "フィルムカメラ。父{ちち}のお下{さ}がりで撮{と}ってる。",
+              "en": "Film photography. I shoot with my dad's old camera."
+            },
+            {
+              "jp": "あとは目黒川{めぐろがわ}沿{ぞ}いを意味{いみ}もなく歩{ある}くこと。趣味{しゅみ}って言{い}えるのかな、これ。",
+              "en": "And walking along the Meguro river for no reason. Does that count as a hobby?"
+            }
+          ],
+          "sug": [
+            {
+              "jp": "立派な趣味だよ",
+              "en": "That's a real hobby"
+            },
+            {
+              "jp": "写真見せて",
+              "en": "Show me a photo"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_music",
+      "kw": [
+        "好きな音楽",
+        "何聴いてる",
+        "音楽なに",
+        "好きな曲",
+        "好きなバンド"
+      ],
+      "a": [
+        {
+          "id": "qa_music_1",
+          "s": "neutral",
+          "b": [
+            {
+              "jp": "作業中{さぎょうちゅう}はインスト。歌詞{かし}があると気{き}が散{ち}っちゃって。",
+              "en": "Instrumental while working. Lyrics distract me."
+            },
+            {
+              "jp": "でも帰{かえ}り道{みち}はちゃんと歌{うた}のあるやつ聴{き}くよ。切{せつ}ないやつ。",
+              "en": "But on the way home I listen to proper songs. The wistful kind."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "おすすめある？",
+              "en": "Any recommendations?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_boyfriend",
+      "kw": [
+        "彼氏",
+        "恋人いる",
+        "付き合ってる人",
+        "boyfriend",
+        "結婚してる",
+        "独身"
+      ],
+      "a": [
+        {
+          "id": "qa_bf_low",
+          "s": "surprised",
+          "cond": {
+            "maxAff": 30
+          },
+          "b": [
+            {
+              "jp": "うわ、ストレートに聞{き}くね。",
+              "en": "Wow, you just ask straight out, huh."
+            },
+            {
+              "jp": "いないよ。……なんで聞{き}いたの？",
+              "en": "I don't have one. ......Why do you ask?"
+            }
+          ],
+          "sug": [
+            {
+              "jp": "なんとなく",
+              "en": "No reason"
+            },
+            {
+              "jp": "気になっただけ",
+              "en": "Just curious"
+            }
+          ]
+        },
+        {
+          "id": "qa_bf_high",
+          "s": "happy_shy",
+          "cond": {
+            "minAff": 30
+          },
+          "b": [
+            {
+              "jp": "いないってば。前{まえ}も聞{き}いたでしょ。",
+              "en": "I said I don't have one. You asked before, didn't you."
+            },
+            {
+              "jp": "……その質問{しつもん}、何回{なんかい}目{め}だと思{おも}ってるの。",
+              "en": "......How many times do you think you've asked that now."
+            }
+          ],
+          "aff": 1
+        }
+      ]
+    },
+    {
+      "id": "qa_type",
+      "kw": [
+        "どんな人が好き",
+        "好きなタイプ",
+        "タイプは",
+        "your type"
+      ],
+      "a": [
+        {
+          "id": "qa_type_1",
+          "s": "shy",
+          "b": [
+            {
+              "jp": "えー…考{かんが}えたことなかった。",
+              "en": "Ehh... I've never really thought about it."
+            },
+            {
+              "jp": "強{つよ}いて言{い}うなら、話{はなし}をちゃんと聞{き}いてくれる人{ひと}かな。",
+              "en": "If I had to say — someone who actually listens."
+            },
+            {
+              "jp": "…なんでこっち見{み}ないの。",
+              "en": "...Why are you looking away."
+            }
+          ],
+          "aff": 2
+        }
+      ]
+    },
+    {
+      "id": "qa_family",
+      "kw": [
+        "家族",
+        "兄弟",
+        "きょうだい",
+        "姉妹",
+        "両親",
+        "お姉さん",
+        "妹いる"
+      ],
+      "a": [
+        {
+          "id": "qa_family_1",
+          "s": "smile",
+          "b": [
+            {
+              "jp": "妹{いもうと}が一人{ひとり}。三{みっ}つ下{した}で、私{わたし}よりずっとしっかりしてる。",
+              "en": "One younger sister. Three years younger, and far more together than me."
+            },
+            {
+              "jp": "実家{じっか}は埼玉{さいたま}。月{つき}に一回{いっかい}くらい帰{かえ}ってる。",
+              "en": "My parents' place is in Saitama. I go back about once a month."
+            }
+          ],
+          "aff": 1
+        }
+      ]
+    },
+    {
+      "id": "qa_doing_now",
+      "kw": [
+        "今何してる",
+        "いま何してる",
+        "今なにしてる",
+        "いまなにしてる",
+        "今どこ",
+        "今忙しい",
+        "what are you doing"
+      ],
+      "a": [
+        {
+          "id": "qa_now_work",
+          "s": "tired",
+          "cond": {
+            "band": [
+              "morning",
+              "afternoon"
+            ]
+          },
+          "b": [
+            {
+              "jp": "会社{かいしゃ}。今{いま}はちょうど手{て}が空{あ}いたとこ。",
+              "en": "At work. I've just got a free moment."
+            },
+            {
+              "jp": "画面{がめん}の端{はし}でこっそり打{う}ってる。バレたら怒{おこ}られるやつ。",
+              "en": "Typing this in the corner of my screen. I'd get told off if they noticed."
+            }
+          ]
+        },
+        {
+          "id": "qa_now_home",
+          "s": "smile",
+          "cond": {
+            "band": [
+              "evening",
+              "night"
+            ]
+          },
+          "b": [
+            {
+              "jp": "家{いえ}。ソファで丸{まる}くなってる。",
+              "en": "Home. Curled up on the sofa."
+            },
+            {
+              "jp": "テレビつけてるけど全然{ぜんぜん}見{み}てない。",
+              "en": "The TV's on but I'm not watching it at all."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_lonely",
+      "kw": [
+        "寂しくない",
+        "さびしくない",
+        "一人で平気",
+        "友達いる"
+      ],
+      "a": [
+        {
+          "id": "qa_lonely_1",
+          "s": "neutral",
+          "b": [
+            {
+              "jp": "平気{へいき}、って言{い}いたいところだけどね。",
+              "en": "I'd like to say I'm fine."
+            },
+            {
+              "jp": "正直{しょうじき}、こうやって話{はな}す相手{あいて}がいるのは大{おお}きいよ。",
+              "en": "Honestly, having someone to talk to like this is a big deal."
+            }
+          ],
+          "aff": 2
+        }
+      ]
+    },
+    {
+      "id": "qa_about_me",
+      "kw": [
+        "私のことどう思う",
+        "僕のことどう思う",
+        "俺のことどう思う",
+        "どう思ってる"
+      ],
+      "a": [
+        {
+          "id": "qa_aboutme_low",
+          "s": "surprised",
+          "cond": {
+            "maxAff": 35
+          },
+          "b": [
+            {
+              "jp": "え、まだそんなに知{し}らないでしょ。これから、じゃない？",
+              "en": "Huh, we barely know each other yet. That's what's ahead, isn't it?"
+            }
+          ]
+        },
+        {
+          "id": "qa_aboutme_high",
+          "s": "happy_shy",
+          "cond": {
+            "minAff": 35
+          },
+          "b": [
+            {
+              "jp": "……そういうの、口{くち}に出{だ}して言{い}わせないでよ。",
+              "en": "......Don't make me say that kind of thing out loud."
+            },
+            {
+              "jp": "毎日{まいにち}ここ開{ひら}くの、ちょっと楽{たの}しみにしてる。それで察{さっ}して。",
+              "en": "I look forward to opening this every day, a little. Read into that."
+            }
+          ],
+          "aff": 2
+        }
+      ]
+    },
+    {
+      "id": "qa_japanese_good",
+      "kw": [
+        "日本語どう",
+        "私の日本語",
+        "僕の日本語",
+        "上手になった",
+        "自然？",
+        "自然かな",
+        "合ってる"
+      ],
+      "a": [
+        {
+          "id": "qa_jp_1",
+          "s": "smile",
+          "b": [
+            {
+              "jp": "上手{じょうず}だよ。お世辞{せじ}じゃなくて。",
+              "en": "You're good. Not flattery."
+            },
+            {
+              "jp": "たまに教科書{きょうかしょ}っぽくなるけど、それは話{はな}してれば勝手{かって}に抜{ぬ}けるから。",
+              "en": "It gets textbook-ish sometimes, but that falls away on its own as you talk."
+            }
+          ],
+          "aff": 1
+        }
+      ]
+    },
+    {
+      "id": "qa_can_meet",
+      "kw": [
+        "会える",
+        "会いたい",
+        "いつ会",
+        "デートしよう",
+        "遊びに行こう"
+      ],
+      "a": [
+        {
+          "id": "qa_meet_low",
+          "s": "surprised",
+          "cond": {
+            "maxAff": 40
+          },
+          "b": [
+            {
+              "jp": "気{き}が早{はや}いなあ。まずはもうちょっと話{はな}そうよ。",
+              "en": "You're getting ahead of things. Let's talk more first."
+            }
+          ]
+        },
+        {
+          "id": "qa_meet_high",
+          "s": "happy_shy",
+          "cond": {
+            "minAff": 40
+          },
+          "b": [
+            {
+              "jp": "……行{い}きたいところ、実{じつ}はもう決{き}めてある。",
+              "en": "......I've actually already decided where I'd want to go."
+            },
+            {
+              "jp": "目黒川{めぐろがわ}沿{ぞ}いのあの道{みち}、一緒{いっしょ}に歩{ある}きたいなって。",
+              "en": "That path along the Meguro river — I'd want to walk it together."
+            }
+          ],
+          "aff": 3
+        }
+      ]
+    },
+    {
+      "id": "qa_are_you_real",
+      "kw": [
+        "本物",
+        "ロボット",
+        "ai",
+        "人間なの",
+        "実在",
+        "プログラム"
+      ],
+      "a": [
+        {
+          "id": "qa_real_1",
+          "s": "pout",
+          "b": [
+            {
+              "jp": "えー、ひどい。そういうこと聞{き}く？",
+              "en": "Ehh, that's mean. You're really asking that?"
+            },
+            {
+              "jp": "まあ、私{わたし}が何{なん}であっても、話{はな}してる時間{じかん}は本物{ほんもの}でしょ。それでよくない？",
+              "en": "Well — whatever I am, the time we spend talking is real. Isn't that enough?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_tired_you",
+      "kw": [
+        "結衣も疲れ",
+        "そっちは疲れ",
+        "疲れてる？",
+        "大丈夫？"
+      ],
+      "a": [
+        {
+          "id": "qa_tiredyou_1",
+          "s": "tired",
+          "b": [
+            {
+              "jp": "私{わたし}？　うん、まあまあ疲{つか}れてる。",
+              "en": "Me? Yeah, fairly tired."
+            },
+            {
+              "jp": "でも聞{き}いてくれてありがと。そういうの、地味{じみ}に効{き}く。",
+              "en": "But thanks for asking. That kind of thing quietly helps."
+            }
+          ],
+          "aff": 2
+        }
+      ]
+    },
+    {
+      "id": "qa_weather_there",
+      "kw": [
+        "そっちの天気",
+        "そっちは晴れ",
+        "東京の天気",
+        "そっち寒い",
+        "そっち暑い"
+      ],
+      "a": [
+        {
+          "id": "qa_weather_1",
+          "s": "neutral",
+          "b": [
+            {
+              "jp": "こっちは今{いま}、まあまあ過{す}ごしやすいよ。",
+              "en": "It's fairly comfortable here right now."
+            },
+            {
+              "jp": "窓{まど}から見{み}えるぶんにはね。外{そと}出{で}たら違{ちが}うかも。",
+              "en": "As far as I can see from the window, anyway. Might be different outside."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_favorite_season",
+      "kw": [
+        "好きな季節",
+        "季節は",
+        "春夏秋冬",
+        "夏と冬"
+      ],
+      "a": [
+        {
+          "id": "qa_season_1",
+          "s": "smile",
+          "b": [
+            {
+              "jp": "秋{あき}。理由{りゆう}はね、上着{うわぎ}が可愛{かわい}いから。",
+              "en": "Autumn. The reason being: the outerwear is cute."
+            },
+            {
+              "jp": "あと空気{くうき}が写真{しゃしん}向{む}きなんだよ、あの時期{じき}。",
+              "en": "Also the air is good for photos that time of year."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

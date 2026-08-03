@@ -195,6 +195,7 @@ async function loadContent() {
     persona: 'src/content/persona.json',
     intents: 'src/content/intents.json',
     dialogue: 'src/content/dialogue.json',
+    qa: 'src/content/qa.json',
     grammar: 'src/content/grammar-n2.json',
     lexicon: 'src/content/lexicon.json',
     sprites: 'src/content/sprites.json',
