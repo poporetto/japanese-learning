@@ -54,14 +54,29 @@ export class Companion {
     this.qa = content.qa.entries;
   }
 
-  /** First turn of a session: she speaks first, unprompted. */
-  async openSession(state) {
+  /**
+   * Session housekeeping, split out from the greeting so the caller can open
+   * with a clock-pinned message instead. Composing a greeting and then throwing
+   * it away would still burn its repeat counter and possibly a photo cooldown.
+   */
+  startSession(state) {
     const { gapDays } = touchDay(state);
     state._band = timeBand();
     // A question she asked last session isn't pending anymore. Without this,
     // a restored pendingSlot swallows the first thing said on return.
     state.pendingSlot = null;
     state.pendingTopic = null;
+    return { gapDays };
+  }
+
+  /** Is a clock-pinned message due right now? Pure — composes nothing. */
+  hasScheduled(state) {
+    return !!scheduledPlan(state, this.dialogue, new Date());
+  }
+
+  /** First turn of a session: she speaks first, unprompted. */
+  async openSession(state) {
+    const { gapDays } = this.startSession(state);
     const plan = direct({
       state,
       dialogue: this.dialogue,
@@ -270,6 +285,7 @@ export class Companion {
     const v = echo ? null : plan.variant;
     if (v) {
       bubbles.push(...clone(v.b));
+      if (v.file) photo = { file: v.file, alt: v.alt || '' };
       sprite = v.s || sprite;
       suggestions = v.sug || suggestions;
       bumpAffection(state, v.aff ?? 0);

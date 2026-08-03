@@ -5566,5 +5566,566 @@
       ],
       "aff": 2
     }
+  ],
+  "scheduled": [
+    {
+      "id": "sc_morn_1",
+      "file": "assets/photos/scheduled-morning-sleepy.jpg",
+      "alt": "A sleepy early-morning selfie with a warm mug",
+      "at": "06:00",
+      "window": 150,
+      "s": "sleepy",
+      "b": [
+        {
+          "jp": "おはよ。まだ半分{はんぶん}寝{ね}てる。",
+          "en": "Morning. Still half asleep."
+        },
+        {
+          "jp": "そっちは？ちゃんと起{お}きた？",
+          "en": "And you? Actually up?"
+        }
+      ],
+      "sug": [
+        {
+          "jp": "起{お}きたよ",
+          "en": "I'm up"
+        },
+        {
+          "jp": "まだ眠{ねむ}い",
+          "en": "Still sleepy"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "sc_morn_2",
+      "at": "06:00",
+      "window": 150,
+      "s": "tired",
+      "b": [
+        {
+          "jp": "六時{ろくじ}。世{よ}の中{なか}、こんなに静{しず}かなんだね。",
+          "en": "Six o'clock. The world's this quiet, apparently."
+        },
+        {
+          "jp": "二度寝{にどね}したい気持{きも}ちと戦{たたか}ってる。",
+          "en": "Fighting the urge to go back to sleep."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "寝{ね}ちゃえ",
+          "en": "Go back to sleep"
+        },
+        {
+          "jp": "頑張{がんば}って",
+          "en": "Hang in there"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "sc_morn_3",
+      "file": "assets/photos/scheduled-morning-hair.jpg",
+      "alt": "A morning mirror selfie while tying her hair",
+      "at": "06:00",
+      "window": 150,
+      "s": "smile",
+      "b": [
+        {
+          "jp": "おはよう、{name}。今日{きょう}もよろしくね。",
+          "en": "Morning, {name}. Here's to today."
+        },
+        {
+          "jp": "わたしはこれから、髪{かみ}と格闘{かくとう}する。",
+          "en": "I'm about to go fight with my hair."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "おはよう",
+          "en": "Morning"
+        },
+        {
+          "jp": "いってらっしゃい",
+          "en": "Have a good day"
+        }
+      ],
+      "aff": 1,
+      "cond": {
+        "minAff": 20
+      }
+    },
+    {
+      "id": "sc_leave_1",
+      "at": "07:30",
+      "window": 90,
+      "s": "tired",
+      "b": [
+        {
+          "jp": "行{い}ってきます。今日{きょう}も日比谷線{ひびやせん}と戦{たたか}ってくる。",
+          "en": "Heading out. Off to battle the Hibiya line again."
+        },
+        {
+          "jp": "朝{あさ}ごはん、ちゃんと食{た}べてね。わたしは無理{むり}だった。",
+          "en": "Eat properly, okay. I didn't manage it."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "いってらっしゃい",
+          "en": "Take care"
+        },
+        {
+          "jp": "食{た}べたよ",
+          "en": "I ate"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "sc_leave_2",
+      "file": "assets/photos/scheduled-running-late.jpg",
+      "alt": "A hurried selfie while running toward the station",
+      "at": "07:30",
+      "window": 90,
+      "s": "surprised",
+      "b": [
+        {
+          "jp": "やば、時間{じかん}。走{はし}る。",
+          "en": "Oh no, the time. Running."
+        },
+        {
+          "jp": "また後{あと}でね！",
+          "en": "Talk later!"
+        }
+      ],
+      "sug": [
+        {
+          "jp": "気{き}をつけて",
+          "en": "Be careful"
+        },
+        {
+          "jp": "走{はし}って！",
+          "en": "Run!"
+        }
+      ],
+      "aff": 0
+    },
+    {
+      "id": "sc_lunch_1",
+      "at": "12:00",
+      "window": 90,
+      "s": "smile",
+      "b": [
+        {
+          "jp": "お昼{ひる}の時間{じかん}。今日{きょう}は何{なに}食{た}べる？",
+          "en": "Lunchtime. What are you having?"
+        },
+        {
+          "jp": "わたしはたぶん、またコンビニ。",
+          "en": "Me, probably the konbini again."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "まだ決{き}めてない",
+          "en": "Haven't decided"
+        },
+        {
+          "jp": "もう食{た}べた",
+          "en": "Already ate"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "sc_lunch_2",
+      "file": "assets/photos/scheduled-spicy-lunch.jpg",
+      "alt": "A flushed selfie over a very spicy lunch",
+      "at": "12:00",
+      "window": 90,
+      "s": "excited",
+      "b": [
+        {
+          "jp": "さくらに連{つ}れられて、また辛{から}い店{みせ}に来{き}てる。",
+          "en": "Sakura's dragged me to another spicy place."
+        },
+        {
+          "jp": "ちゃんと食{た}べてる？抜{ぬ}いちゃだめだよ。",
+          "en": "Are you eating properly? Don't skip it."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "食{た}べてるよ",
+          "en": "I am"
+        },
+        {
+          "jp": "抜{ぬ}いちゃった",
+          "en": "I skipped it"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "sc_lunch_3",
+      "at": "12:00",
+      "window": 90,
+      "s": "neutral",
+      "b": [
+        {
+          "jp": "デスクでおにぎり。今日{きょう}は外{そと}に出{で}る元気{げんき}がなかった。",
+          "en": "Onigiri at my desk. No energy to go out today."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "お疲{つか}れさま",
+          "en": "You're working hard"
+        },
+        {
+          "jp": "休{やす}みなよ",
+          "en": "Take a break"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "sc_three_1",
+      "file": "assets/photos/scheduled-coffee-break.jpg",
+      "alt": "A sleepy afternoon coffee-break selfie",
+      "at": "15:00",
+      "window": 90,
+      "s": "sleepy",
+      "b": [
+        {
+          "jp": "三時{さんじ}。いちばん眠{ねむ}い時間{じかん}。",
+          "en": "Three o'clock. Peak sleepiness."
+        },
+        {
+          "jp": "コーヒー飲{の}んでくる。{name}も休憩{きゅうけい}したら？",
+          "en": "Getting a coffee. You should take a break too."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "休憩{きゅうけい}する",
+          "en": "I'll take one"
+        },
+        {
+          "jp": "まだ無理{むり}",
+          "en": "Can't yet"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "sc_three_2",
+      "at": "15:00",
+      "window": 90,
+      "s": "excited",
+      "b": [
+        {
+          "jp": "おやつ発見{はっけん}。誰{だれ}かの差{さ}し入{い}れ。",
+          "en": "Snack discovered. Someone brought them in."
+        },
+        {
+          "jp": "こういう小{ちい}さいことで、午後{ごご}が持{も}ち直{なお}す。",
+          "en": "Small things like this rescue the afternoon."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "いいなあ",
+          "en": "Lucky"
+        },
+        {
+          "jp": "よかったね",
+          "en": "Nice"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "sc_dinner_1",
+      "at": "19:00",
+      "window": 90,
+      "s": "smile",
+      "b": [
+        {
+          "jp": "ごはんの時間{じかん}。今日{きょう}は何{なに}にする？",
+          "en": "Dinner time. What are you having?"
+        },
+        {
+          "jp": "わたしは商店街{しょうてんがい}で何{なに}か買{か}って帰{かえ}る。",
+          "en": "I'll grab something on the shopping street."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "まだ決{き}めてない",
+          "en": "Not decided"
+        },
+        {
+          "jp": "もう食{た}べた",
+          "en": "Already ate"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "sc_dinner_2",
+      "at": "19:00",
+      "window": 90,
+      "s": "tired",
+      "b": [
+        {
+          "jp": "お腹{なか}すいた。今日{きょう}はもう、作{つく}る気力{きりょく}がない。",
+          "en": "I'm starving. No energy to cook tonight."
+        },
+        {
+          "jp": "ちゃんと食{た}べた？聞{き}くまで信{しん}じないからね。",
+          "en": "Did you eat properly? I won't believe it till you say so."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "食{た}べたよ",
+          "en": "I ate"
+        },
+        {
+          "jp": "これから",
+          "en": "About to"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "sc_dinner_3",
+      "file": "assets/photos/scheduled-cooked-dinner.jpg",
+      "alt": "A proud selfie with her slightly overcooked dinner",
+      "at": "19:00",
+      "window": 90,
+      "s": "excited",
+      "b": [
+        {
+          "jp": "今日{きょう}は自炊{じすい}した。褒{ほ}めて。",
+          "en": "I cooked tonight. Praise me."
+        },
+        {
+          "jp": "……ちょっと焦{こ}げたけど、食{た}べられる。",
+          "en": "…It's a bit burnt, but edible."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "すごい",
+          "en": "Impressive"
+        },
+        {
+          "jp": "大丈夫{だいじょうぶ}？",
+          "en": "Are you sure?"
+        }
+      ],
+      "aff": 2,
+      "cond": {
+        "minAff": 15
+      }
+    },
+    {
+      "id": "sc_wind_1",
+      "at": "22:00",
+      "window": 60,
+      "s": "neutral",
+      "b": [
+        {
+          "jp": "そろそろ一日{いちにち}が終{お}わるね。今日{きょう}はどうだった？",
+          "en": "The day's nearly over. How was yours?"
+        }
+      ],
+      "sug": [
+        {
+          "jp": "いい一日{いちにち}だった",
+          "en": "It was good"
+        },
+        {
+          "jp": "疲{つか}れた",
+          "en": "Tiring"
+        }
+      ],
+      "aff": 1,
+      "q": "today"
+    },
+    {
+      "id": "sc_wind_2",
+      "file": "assets/photos/scheduled-hair-drying.jpg",
+      "alt": "A bedtime selfie while drying her long hair",
+      "at": "22:00",
+      "window": 60,
+      "s": "sleepy",
+      "b": [
+        {
+          "jp": "お風呂{ふろ}上{あ}がり。髪{かみ}乾{かわ}かすのが毎晩{まいばん}の敵{てき}。",
+          "en": "Out of the bath. Drying my hair is my nightly nemesis."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "お疲{つか}れさま",
+          "en": "Good work today"
+        },
+        {
+          "jp": "早{はや}く寝{ね}なよ",
+          "en": "Sleep soon"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "sc_night_1",
+      "at": "00:03",
+      "window": 55,
+      "s": "sleepy",
+      "b": [
+        {
+          "jp": "おやすみ、{name}。",
+          "en": "Good night, {name}."
+        },
+        {
+          "jp": "ちゃんと寝{ね}てね。わたしは……たぶんもう少{すこ}し起{お}きてる。",
+          "en": "Sleep properly, okay. Me, I'll… probably stay up a bit longer."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "おやすみ",
+          "en": "Good night"
+        },
+        {
+          "jp": "早{はや}く寝{ね}なよ",
+          "en": "You sleep too"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "sc_night_2",
+      "at": "00:03",
+      "window": 55,
+      "s": "neutral",
+      "b": [
+        {
+          "jp": "十一時{じゅういちじ}。そろそろ画面{がめん}を閉{と}じる時間{じかん}だよ。",
+          "en": "Eleven. Time to close the screen."
+        },
+        {
+          "jp": "明日{あした}も話{はな}そうね。",
+          "en": "Let's talk again tomorrow."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "おやすみ",
+          "en": "Night"
+        },
+        {
+          "jp": "また明日{あした}",
+          "en": "See you tomorrow"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "sc_night_3",
+      "file": "assets/photos/scheduled-goodnight.jpg",
+      "alt": "A warm goodnight selfie with a small wave",
+      "at": "00:03",
+      "window": 55,
+      "s": "happy_shy",
+      "b": [
+        {
+          "jp": "おやすみ。",
+          "en": "Good night."
+        },
+        {
+          "jp": "……今日{きょう}、{name}と話{はな}せてよかった。それだけ。",
+          "en": "…I'm glad I got to talk to you today. That's all."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "わたしも",
+          "en": "Me too"
+        },
+        {
+          "jp": "おやすみ",
+          "en": "Night"
+        }
+      ],
+      "aff": 2,
+      "cond": {
+        "minAff": 35
+      }
+    },
+    {
+      "id": "sc_late_1",
+      "at": "01:00",
+      "window": 120,
+      "s": "surprised",
+      "b": [
+        {
+          "jp": "え、まだ起{お}きてるの？",
+          "en": "Wait, you're still up?"
+        },
+        {
+          "jp": "人{ひと}のこと言{い}えないけどさ。",
+          "en": "Not that I can talk."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "眠{ねむ}れない",
+          "en": "Can't sleep"
+        },
+        {
+          "jp": "そっちこそ",
+          "en": "Look who's talking"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "sc_late_2",
+      "file": "assets/photos/scheduled-insomnia.jpg",
+      "alt": "A late-night selfie over herbal tea",
+      "at": "01:00",
+      "window": 120,
+      "s": "sleepy",
+      "b": [
+        {
+          "jp": "こんな時間{じかん}に起{お}きてる者{もの}同士{どうし}、仲間{なかま}だね。",
+          "en": "Fellow insomniacs, you and I."
+        },
+        {
+          "jp": "でも、そろそろ寝{ね}よう。ね？",
+          "en": "But let's sleep soon. Yeah?"
+        }
+      ],
+      "sug": [
+        {
+          "jp": "寝{ね}る",
+          "en": "I'll sleep"
+        },
+        {
+          "jp": "まだ寝{ね}ない",
+          "en": "Not yet"
+        }
+      ],
+      "aff": 1,
+      "cond": {
+        "minAff": 25
+      }
+    }
   ]
 }

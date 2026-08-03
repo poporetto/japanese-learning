@@ -241,6 +241,33 @@ async function fireProactive() {
   scheduleProactive();
 }
 
+/* ---------- clock-pinned messages ---------- */
+
+let clockTimer = null;
+
+/**
+ * Checked every 30s and on every return to the tab. A slot that came due while
+ * the tab was closed is delivered on arrival, provided it's still inside its
+ * window — that's what makes a 06:00 message work when nobody's watching at 6.
+ */
+async function tickScheduled() {
+  if (busy || !settings.scheduled) return false;
+  busy = true;
+  const turn = await yui.scheduled(state);
+  busy = false;
+  if (!turn) return false;
+
+  await play(turn);
+  notify(turn);
+  scheduleProactive();
+  return true;
+}
+
+function startClock() {
+  clearInterval(clockTimer);
+  clockTimer = setInterval(tickScheduled, 30000);
+}
+
 function notify(turn) {
   if (!settings.notify || !document.hidden) return;
   if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
@@ -271,6 +298,21 @@ async function ensureNotifyPermission() {
 }
 
 /* ---------- boot ---------- */
+
+/**
+ * Arriving at 08:00 should open with her morning message, not with a generic
+ * greeting followed immediately by one — a due slot replaces the opener rather
+ * than stacking on top of it.
+ */
+async function playOpening() {
+  if (settings.scheduled && yui.hasScheduled(state)) {
+    yui.startSession(state);
+    await play(await yui.scheduled(state));
+  } else {
+    await play(await yui.openSession(state));
+  }
+}
+
 
 async function loadContent() {
   const files = {
@@ -308,8 +350,9 @@ async function boot() {
   state = State.load();
   setMeter();
   buildSettings();
-  await play(await yui.openSession(state));
+  await playOpening();
   scheduleProactive();
+  startClock();
 }
 
 /* ---------- settings ---------- */
@@ -327,6 +370,7 @@ function syncSettingsForm() {
   $('#set-model').value = settings.model;
   $('#set-llm').checked = settings.llm;
   $('#set-proactive').checked = settings.proactive;
+  $('#set-scheduled').checked = settings.scheduled;
   $('#set-notify').checked = settings.notify;
   const q = quotaStatus(settings);
   $('#llm-status').textContent = !llmReady(settings)
@@ -350,6 +394,7 @@ $('#set-save').addEventListener('click', async (e) => {
     model: $('#set-model').value,
     llm: $('#set-llm').checked,
     proactive: $('#set-proactive').checked,
+    scheduled: $('#set-scheduled').checked,
     notify: $('#set-notify').checked,
   };
 
@@ -375,8 +420,9 @@ $('#reset').addEventListener('click', async () => {
   log.innerHTML = '';
   state = State.load();
   setMeter();
-  await play(await yui.openSession(state));
+  await playOpening();
   scheduleProactive();
+  startClock();
 });
 
 $('#debug').addEventListener('click', () => {
@@ -394,7 +440,9 @@ $('#debug').addEventListener('click', () => {
 
 // Coming back to the tab shouldn't trigger an instant backlog of nudges.
 document.addEventListener('visibilitychange', () => {
-  if (!document.hidden) scheduleProactive();
+  if (document.hidden) return;
+  scheduleProactive();
+  tickScheduled();
 });
 
 settings = State.loadSettings();
