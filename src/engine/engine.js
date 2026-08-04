@@ -10,7 +10,7 @@ import { analyze, reactionBucket } from './analyze.js';
 import { matchIntent } from './match.js';
 import { ingest, fillSlots, recall } from './memory.js';
 import { direct, pick, photoPlan, teachPlan, proactivePlan, scheduledPlan } from './director.js';
-import { bumpAffection, timeBand, touchDay, stageOf, pushHistory, loadSettings } from './state.js';
+import { bumpAffection, timeBand, touchDay, stageOf, pushHistory, loadSettings, markUsed } from './state.js';
 import { improvise, llmReady } from './llm.js';
 
 // Intents where a lexicon word is part of the request, not a fact about him.
@@ -27,7 +27,7 @@ const GOALS = {
   intent: '相手の言ったことに自然に反応する。',
   topic_follow: '今の話題を掘り下げる。',
   callback: '前に相手が話してくれたことを思い出して、そこに触れる。',
-  deflect: '話題を自分から切り替える。',
+  deflect: '相手の話にちゃんと乗る。分からないふりや話題転換はしない。',
   default: '自然に会話を続ける。',
 };
 
@@ -213,7 +213,7 @@ export class Companion {
       if (ack) {
         bubbles.push(...clone(ack.b));
         sprite = ack.s || sprite;
-        state.seen[ack.id] = (state.seen[ack.id] || 0) + 1;
+        markUsed(state, ack.id);
       }
       direction.goal.push(
         `相手について今「${mem.slot} = ${mem.value}」と知ったところ。まずそこに反応する。`
@@ -239,7 +239,7 @@ export class Companion {
         bubbles.push(...clone(reg.b));
         sprite = reg.s || sprite;
         state.lastRegisterTurn = state.turns;
-        state.seen[reg.id] = (state.seen[reg.id] || 0) + 1;
+        markUsed(state, reg.id);
       }
       direction.goal.push('相手が敬語で話しているので、軽くからかってタメ口を促す。');
     }
@@ -251,7 +251,7 @@ export class Companion {
         photo = { file: p.file, alt: p.alt };
         sprite = p.s || 'shy';
         state.lastPhotoTurn = state.turns;
-        state.seen[p.id] = (state.seen[p.id] || 0) + 1;
+        markUsed(state, p.id);
         bumpAffection(state, p.aff ?? 1);
         // A photo that asks you something needs chips to answer it with.
         if (p.sug) suggestions = p.sug;
@@ -278,7 +278,7 @@ export class Companion {
         sprite = rx.s || sprite;
         suggestions = rx.sug || suggestions;
         bumpAffection(state, rx.aff ?? 0);
-        state.seen[rx.id] = (state.seen[rx.id] || 0) + 1;
+        markUsed(state, rx.id);
       }
     }
 
@@ -289,11 +289,11 @@ export class Companion {
       sprite = v.s || sprite;
       suggestions = v.sug || suggestions;
       bumpAffection(state, v.aff ?? 0);
-      state.seen[v.id] = (state.seen[v.id] || 0) + 1;
+      markUsed(state, v.id);
       if (v.q) state.pendingSlot = v.q;
       if (v.setFlag) state.flags[v.setFlag] = true;
       if (plan.kind === 'callback') state.lastCallbackTurn = state.turns;
-      direction.refs.push(v.b.map((b) => b.jp).join(' '));
+      if (plan.kind !== 'deflect') direction.refs.push(v.b.map((b) => b.jp).join(' '));
       if (v.q) direction.askAbout = v.q;
     }
 
@@ -306,9 +306,9 @@ export class Companion {
       if (open.q) state.pendingSlot = open.q;
       state.pendingTopic = plan.topic.id;
       // Count the topic too — that's the key repeat-avoidance picks topics on.
-      state.seen[plan.topic.id] = (state.seen[plan.topic.id] || 0) + 1;
-      state.seen[plan.topic.open.id] = (state.seen[plan.topic.open.id] || 0) + 1;
-      direction.goal.push('相手の話にうまく乗れなかったので、自分から新しい話題を出す。');
+      markUsed(state, plan.topic.id);
+      markUsed(state, plan.topic.open.id);
+      direction.goal.push('相手の話に反応したあと、自分からも話題を少し広げる。');
       direction.refs.push(open.b.map((b) => b.jp).join(' '));
       if (open.q) direction.askAbout = open.q;
     } else if (plan.kind === 'topic_follow') {
@@ -326,6 +326,7 @@ export class Companion {
     // replaced, and only if the call succeeds. `photo_request` is excluded —
     // an improvised line about a photo she isn't actually sending would lie.
     const settings = loadSettings();
+    let llmHandled = false;
     const swappable =
       !meta.noLLM &&
       bubbles.length &&
@@ -349,13 +350,22 @@ export class Companion {
       });
 
       if (out) {
+        llmHandled = true;
         bubbles.length = 0;
         bubbles.push(...out.bubbles);
         if (out.sprite) sprite = out.sprite;
         if (out.suggestions.length) suggestions = out.suggestions;
         // Authored deflects carry no affection, so a conversation carried
         // mostly by the API would otherwise never advance a stage.
-        if (plan.kind === 'deflect') bumpAffection(state, 1);
+        if (plan.kind === 'deflect') {
+          bumpAffection(state, 1);
+          // The authored deflect chains into a scripted topic to stop the
+          // conversation stalling. The API just engaged with what he actually
+          // said, so leaving that thread pending would drag the *next* turn
+          // back onto a script he never asked for.
+          state.pendingTopic = null;
+          state.pendingSlot = null;
+        }
       }
     }
 
@@ -365,13 +375,14 @@ export class Companion {
       const p = photoPlan(state, this.dialogue, {
         ...meta,
         topicId: plan.topic?.id ?? state.pendingTopic ?? null,
+        contextualOnly: llmHandled,
       });
       if (p) {
         bubbles.push(...clone(p.b));
         photo = { file: p.file, alt: p.alt };
         sprite = p.s || sprite;
         state.lastPhotoTurn = state.turns;
-        state.seen[p.id] = (state.seen[p.id] || 0) + 1;
+        markUsed(state, p.id);
         bumpAffection(state, p.aff ?? 0);
         // She asked what you think — her question outranks whatever chips the
         // turn's own line offered, since the photo is what's on screen now.

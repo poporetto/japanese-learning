@@ -34,8 +34,14 @@ export function pick(variants, state) {
 
   if (!usable.length) return null;
 
-  const min = Math.min(...usable.map((v) => state.seen[v.id] || 0));
-  const freshest = usable.filter((v) => (state.seen[v.id] || 0) === min);
+  // Anything said in the last ~30 picks is off the table while an alternative
+  // exists. Falls back to the full set for pools too small to honour it.
+  const recent = new Set(state.recent || []);
+  const pool = usable.filter((v) => !recent.has(v.id));
+  const from = pool.length ? pool : usable;
+
+  const min = Math.min(...from.map((v) => state.seen[v.id] || 0));
+  const freshest = from.filter((v) => (state.seen[v.id] || 0) === min);
   return freshest[Math.floor(Math.random() * freshest.length)];
 }
 
@@ -235,10 +241,14 @@ export function photoPlan(state, dialogue, ctx = {}) {
   }
 
   const relevant = eligible.filter((p) => fitsContext(p, ctx));
-  if (relevant.length && Math.random() < 0.5) return pick(relevant, state);
+  if (relevant.length && Math.random() < 0.65) return pick(relevant, state);
 
   // Otherwise, occasionally, unprompted — she just felt like sharing.
-  if (Math.random() < 0.15) return pick(eligible, state);
+  // Not when the API wrote the turn, though: an improvised reply about your
+  // new cat followed by an authored caption reading 「朝ごはん、立ったまま」
+  // reads as her not listening, which is the exact failure the API is there
+  // to fix. Contextual photos still fire; only the random drop is suppressed.
+  if (!ctx.contextualOnly && Math.random() < 0.15) return pick(eligible, state);
   return null;
 }
 

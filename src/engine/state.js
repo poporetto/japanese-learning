@@ -35,6 +35,7 @@ function fresh() {
     scheduled: {},       // "HH:MM" -> the date it last fired, so once per day
     transcript: [],      // rendered chat log, so you can scroll back after a reload
     gallery: [],         // every photo she's sent, deduped
+    recent: [],          // variant ids used lately — short-term repeat guard
   };
 }
 
@@ -95,6 +96,20 @@ const HISTORY_MAX = 16;
 export function pushHistory(state, role, text) {
   if (!text) return;
   state.history = [...(state.history || []), { role, text }].slice(-HISTORY_MAX);
+}
+
+/**
+ * `seen` counts forever, so once every line in a pool has been used once they
+ * all tie and selection goes uniformly random — which is how you get the same
+ * line twice in three turns. `recent` is the short-term guard: a line that just
+ * ran is skipped entirely while any alternative exists.
+ */
+const RECENT_MAX = 30;
+
+export function markUsed(state, id) {
+  if (!id) return;
+  state.seen[id] = (state.seen[id] || 0) + 1;
+  state.recent = [...(state.recent || []).filter((x) => x !== id), id].slice(-RECENT_MAX);
 }
 
 export function stageOf(state) {

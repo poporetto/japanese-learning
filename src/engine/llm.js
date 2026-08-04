@@ -163,17 +163,33 @@ const RULES = `【出力ルール】
 - JLPT N2 レベル。難しすぎる語彙や文語は避ける。
 - 吹き出しは1〜3個。1つは20〜45文字くらい。長い説教はしない。
 - 漢字には必ずふりがなを「漢字{かんじ}」の形式で付ける。ひらがな・カタカナには付けない。
+- かっこは必ず半角の { } を使う。全角の｛｝は使わない。
+- 読みは必ずひらがなで書く。カタカナやローマ字の読みは書かない。
+- ふりがなは漢字の直後にだけ置く。送り仮名を含めない（○ 落{お}ち着{つ}く／× 落ち着{おちつ}く）。
 - この波かっこ形式はふりがな専用。{name} のような変数や英単語のかっこは絶対に書かない。
 - en には自然な英訳を書く。ローマ字は使わない。
 - suggestions は相手（日本語学習者）が返しそうな短い日本語を1〜3個。相手の立場のセリフであって、あなたのセリフではない。
 - 相手を質問攻めにしない。自分の話も混ぜる。
 - 相手の日本語が少し不自然でも指摘しすぎない。会話を優先する。`;
 
-function directionBlock(direction) {
+function directionBlock(direction, userText) {
   if (!direction) return '';
-  const bits = [`このターンの狙い: ${direction.goal}`];
-  if (direction.reference) bits.push(`参考にする台本（言い換えてよい）: ${direction.reference}`);
-  if (direction.askAbout) bits.push(`最後は「${direction.askAbout}」について相手に質問して終わる。`);
+  const bits = [];
+
+  // This comes first on purpose. The director's plan is about pacing; it is not
+  // a licence to ignore what he just wrote. Leading with the goal instead —
+  // which for unmatched input reads "change the subject" — is what made her
+  // answer beside the point.
+  if (userText) {
+    bits.push(
+      `相手の直前のメッセージ: 「${userText}」`,
+      'まずこの内容に具体的に反応すること。相手が話した固有名詞や出来事に触れる。',
+      '一般的な相槌だけで済ませない。話を勝手にすり替えない。'
+    );
+  }
+  bits.push(`そのうえでの狙い: ${direction.goal}`);
+  if (direction.reference) bits.push(`口調の参考（内容ではなく雰囲気だけ真似る）: ${direction.reference}`);
+  if (direction.askAbout) bits.push(`余裕があれば「${direction.askAbout}」についても聞く。`);
   return `\n【演出指示】\n${bits.join('\n')}`;
 }
 
@@ -261,24 +277,46 @@ export async function improvise({ settings, persona, state, stage, userText, dir
     lastError = 'rate limit hit — using authored replies for a moment';
     return null;
   }
-  if (Date.now() - quota.lastCall < MIN_GAP_MS) {
-    lastError = 'rate-limited locally';
-    return null;
+  // Wait out the per-minute spacing rather than giving up on the turn. Bailing
+  // here is what made her look deaf: at conversational typing speed most turns
+  // fell inside the gap and silently dropped to an authored deflect.
+  const gap = MIN_GAP_MS - (Date.now() - quota.lastCall);
+  if (gap > 0) {
+    if (gap > MIN_GAP_MS) {           // clock skew — don't hang on it
+      lastError = 'rate-limited locally';
+      return null;
+    }
+    await new Promise((r) => setTimeout(r, gap));
   }
 
   const system = [
     personaBlock(persona) + pastBlock(persona, state),
     memoryBlock(state, stage),
     RULES,
-    directionBlock(direction),
+    directionBlock(direction, userText),
   ].join('\n\n');
 
-  const contents = (state.history || []).map((h) => ({
+  // History already ends with the user's latest message — respond() pushes it
+  // before composing. Appending `userText` again sent it twice, and the model
+  // noticed: 「え、2回言った！？」.
+  const turns = (state.history || []).map((h) => ({
     role: h.role === 'her' ? 'model' : 'user',
     parts: [{ text: h.text }],
   }));
-  if (userText) contents.push({ role: 'user', parts: [{ text: userText }] });
-  if (!contents.length) contents.push({ role: 'user', parts: [{ text: '(会話を始めて)' }] });
+
+  // Proactive and scheduled messages put several of her turns back to back,
+  // and a session opens on her line. Collapse same-role runs and drop any
+  // leading model turns so the transcript alternates the way chat APIs expect.
+  const contents = [];
+  for (const t of turns) {
+    if (!contents.length && t.role === 'model') continue;
+    const prev = contents[contents.length - 1];
+    if (prev && prev.role === t.role) prev.parts[0].text += '\n' + t.parts[0].text;
+    else contents.push(t);
+  }
+  if (!contents.length) {
+    contents.push({ role: 'user', parts: [{ text: userText || '(会話を始めて)' }] });
+  }
 
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);

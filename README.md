@@ -122,8 +122,27 @@ Author them in `dialogue.proactive`, same shape as everything else:
 those lines jump the queue — otherwise 「無視してる？」 would lose the random
 draw against 60 ordinary ones and never appear.
 
-Currently 65 proactive lines: time-banded slices of her day, 14 questions aimed
+Currently 71 proactive lines: time-banded slices of her day, 14 questions aimed
 at you, ignored-escalation, and affection-gated ones.
+
+## Story arcs
+
+Seven multi-beat threads that develop as you keep talking, gated on turns and
+affection so they unfold rather than dump:
+
+| arc | what happens |
+|---|---|
+| `t_deadline` | the brochure gets sent back to square one, and eventually shipped |
+| `t_cat_gone` | しっぽ stops showing up; she detours home looking, then finds him |
+| `t_minami` | her best friend is moving to Tokyo — and has heard about you |
+| `t_film_fail` | a whole roll comes back blank because she left the back open |
+| `t_promotion` | more accounts offered; she's pleased and frightened, then accepts |
+| `t_swap` | she asks you to teach her English in exchange |
+| `t_rainy` | a whole day indoors, and why she can't quite hate the rain |
+
+Later beats gate behind earlier ones via `minTurns`, so `t_deadline_f3`
+(「終わってはじめて、どれだけ疲れてたか分かった」) can't arrive before the
+complaint that sets it up. Three proactive lines continue the arcs unprompted.
 
 ## Timed messages
 
@@ -350,6 +369,28 @@ would always fall through to a random card.
 Examples are written in her voice and set in her life — 田中さん's vague edits,
 the ramen place, the film she hasn't developed — so a card reads as an aside
 from the conversation rather than a page from a textbook.
+
+**Her lines use the grammar, and so do your reply chips.** 41 of the 80 topic
+chips are built on an N2 pattern, and the chip's English names it:
+
+```
+[ 怒らざるを得ないよ ]              [ 探してみないことには分からないね ]
+  You've no choice but to be         You won't know unless you look
+  angry — 〜ざるを得ない               — 〜ないことには
+```
+
+Tapping one is production practice you don't notice doing, which is the half
+that reading cards alone never gives you.
+
+### Furigana rendering
+
+Authored readings are always `漢字{かんじ}`, but Gemini writes its own and
+doesn't always match: katakana readings, a numeral base (`1人{ひとり}`),
+full-width `｛｝`. Those used to reach the screen as literal braces. `ruby()`
+now normalises full-width braces, accepts numerals in the base and katakana in
+the reading, and sweeps any unpaired `{...}` away — losing a reading is fine,
+showing punctuation as text is not. The prompt also asks for half-width braces
+and hiragana readings so most pair properly in the first place.
 
 ```jsonc
 {

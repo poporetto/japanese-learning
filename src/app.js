@@ -13,16 +13,26 @@ function esc(s) {
   return s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 }
 
+// Authored furigana is always 漢字{かんじ}, but Gemini improvises the wording of
+// her replies and writes readings its own way — katakana readings, a numeral
+// as the base (1人{ひとり}), full-width braces. Anything the pattern misses used
+// to reach the user as literal { }, so the base is widened and there's a
+// final sweep: better to lose a reading than to show punctuation as text.
+const RUBY_PAIR = /([一-鿿々ヶ〇0-9０-９]+)\{([ぁ-ゖァ-ヴーゝゞ・]+)\}/g;
+const ANY_BRACE = /\{[^{}]*\}/g;
+
+const normalizeBraces = (s) => s.replace(/[｛]/g, '{').replace(/[｝]/g, '}');
+
 /** 漢字{かんじ} -> <ruby>漢字<rt>かんじ</rt></ruby> */
 function ruby(text) {
-  return esc(text).replace(
-    /([一-鿿々ヶ]+)\{([ぁ-んー]+)\}/g,
-    '<ruby>$1<rt>$2</rt></ruby>'
-  );
+  return esc(normalizeBraces(text))
+    .replace(RUBY_PAIR, '<ruby>$1<rt>$2</rt></ruby>')
+    .replace(ANY_BRACE, '');
 }
 
+/** Plain text: chips, clipboard, notification bodies. */
 function stripRuby(text) {
-  return text.replace(/\{[ぁ-んー]+\}/g, '');
+  return normalizeBraces(text).replace(ANY_BRACE, '');
 }
 
 function scrollDown() {
@@ -247,8 +257,17 @@ async function send(text) {
   ensureNotifyPermission();
   // Held from here so a slow API call can't be raced by the idle timer.
   busy = true;
-  const turn = await yui.respond(value, state);
-  busy = false;
+  // The API round trip — plus any wait for the per-minute gap — happens before
+  // play() draws anything, so without this the screen sits dead for seconds and
+  // reads as her ignoring you. Show she's typing for the whole wait.
+  const waiting = typingIndicator();
+  let turn;
+  try {
+    turn = await yui.respond(value, state);
+  } finally {
+    waiting.remove();
+    busy = false;
+  }
   await play(turn);
   // Rescheduled only now: respond() zeroes `unanswered`, and scheduling before
   // that read the pre-reply value — which at 5 meant she'd given up and
