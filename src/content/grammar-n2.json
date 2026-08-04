@@ -27,6 +27,10 @@
       "intent": [
         "deny",
         "food_talk"
+      ],
+      "topic": [
+        "t_ex_things",
+        "t_highschool"
       ]
     }
   },
@@ -229,7 +233,8 @@
     "note": "Regret — a small cause, a bad outcome.",
     "when": {
       "topic": [
-        "t_ex"
+        "t_ex",
+        "t_ex_things"
       ]
     },
     "cond": {
@@ -301,7 +306,8 @@
     "when": {
       "topic": [
         "t_music",
-        "t_ex"
+        "t_ex",
+        "t_highschool"
       ]
     },
     "cond": {
@@ -317,6 +323,7 @@
     "note": "From a point in the past, continuing now.",
     "when": {
       "topic": [
+        "t_highschool",
         "t_camera"
       ]
     }
@@ -443,7 +450,8 @@
     "note": "Realisation that required the experience.",
     "when": {
       "topic": [
-        "t_ex"
+        "t_ex",
+        "t_highschool"
       ]
     },
     "cond": {
@@ -459,7 +467,8 @@
     "note": "Something stopped there and never resumed.",
     "when": {
       "topic": [
-        "t_ex"
+        "t_ex",
+        "t_ex_things"
       ]
     },
     "cond": {
@@ -630,7 +639,8 @@
         "work_talk"
       ],
       "topic": [
-        "t_work"
+        "t_work",
+        "t_deadline"
       ]
     }
   },
@@ -1268,6 +1278,7 @@
     "note": "Exclamation of degree, usually with どれだけ / なんと.",
     "when": {
       "topic": [
+        "t_highschool",
         "t_ex"
       ]
     },
@@ -1326,7 +1337,8 @@
     "note": "Nostalgic recollection, or a general truth.",
     "when": {
       "topic": [
-        "t_ex",
+        "t_highschool",
+        "t_album",
         "t_childhood"
       ]
     },
@@ -1579,7 +1591,8 @@
     "note": "Simultaneous change, or literal accompaniment.",
     "when": {
       "topic": [
-        "t_ex"
+        "t_ex",
+        "t_ex_things"
       ]
     },
     "cond": {
@@ -2182,7 +2195,8 @@
     "note": "Formal 〜ないで. Often final-sounding.",
     "when": {
       "topic": [
-        "t_ex"
+        "t_ex",
+        "t_ex_things"
       ]
     },
     "cond": {
@@ -2261,6 +2275,100 @@
       "intent": [
         "compliment",
         "teach_request"
+      ]
+    }
+  },
+  {
+    "id": "n2_ta_monoda",
+    "point": "〜たものだ",
+    "en": "used to (nostalgic)",
+    "ex": "放課後{ほうかご}、屋上{おくじょう}でよくだべったものだ。",
+    "exEn": "We used to sit around talking on the roof after school.",
+    "note": "Fond recollection of a repeated past habit. The nostalgia is the whole point — plain 〜た is neutral.",
+    "when": {
+      "topic": [
+        "t_highschool",
+        "t_album",
+        "t_childhood"
+      ]
+    }
+  },
+  {
+    "id": "n2_ta_kiri",
+    "point": "〜たきり",
+    "en": "and not since",
+    "ex": "卒業{そつぎょう}してから、あの子{こ}とは会{あ}ってないきり。",
+    "exEn": "I haven't seen her once since we graduated.",
+    "note": "Something happened once and the expected follow-up never came.",
+    "when": {
+      "topic": [
+        "t_highschool",
+        "t_ex_things",
+        "t_cat_gone"
+      ]
+    }
+  },
+  {
+    "id": "n2_toiuto",
+    "point": "〜というと",
+    "en": "speaking of / when you say",
+    "ex": "高校{こうこう}というと、まず自転車{じてんしゃ}を思{おも}い出{だ}す。",
+    "exEn": "When I think high school, the first thing is the bicycle.",
+    "note": "Picks a topic up and runs with the first association.",
+    "when": {
+      "topic": [
+        "t_highschool",
+        "t_album"
+      ]
+    }
+  },
+  {
+    "id": "n2_ni_shitemo",
+    "point": "〜にしても",
+    "en": "even so / even if",
+    "ex": "忘{わす}れたにしても、あの言{い}い方{かた}はないと思{おも}う。",
+    "exEn": "Even if he forgot, that was no way to say it.",
+    "note": "Concedes the excuse and objects anyway. Useful when she's being fair to someone who wasn't.",
+    "when": {
+      "topic": [
+        "t_ex",
+        "t_ex_things",
+        "t_boss"
+      ]
+    },
+    "cond": {
+      "minAff": 40
+    }
+  },
+  {
+    "id": "n2_kara_toitte",
+    "point": "〜からといって",
+    "en": "just because ... doesn't mean",
+    "ex": "楽{たの}しい思{おも}い出{で}があるからといって、戻{もど}りたいわけじゃない。",
+    "exEn": "Just because there are happy memories doesn't mean I want to go back.",
+    "note": "Blocks an inference someone might draw. Almost always paired with a negative.",
+    "when": {
+      "topic": [
+        "t_ex",
+        "t_ex_things",
+        "t_highschool"
+      ]
+    },
+    "cond": {
+      "minAff": 40
+    }
+  },
+  {
+    "id": "n2_omoeba",
+    "point": "〜ば〜ほど",
+    "en": "the more ... the more",
+    "ex": "思{おも}い出{だ}せば思{おも}い出{だ}すほど、細{こま}かいことまで蘇{よみがえ}る。",
+    "exEn": "The more I remember, the more the small details come back.",
+    "note": "Already in the set as 〜ば〜ほど; this variant is tagged to the memory threads.",
+    "when": {
+      "topic": [
+        "t_highschool",
+        "t_album"
       ]
     }
   }

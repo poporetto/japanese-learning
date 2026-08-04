@@ -19,20 +19,30 @@ function esc(s) {
 // to reach the user as literal { }, so the base is widened and there's a
 // final sweep: better to lose a reading than to show punctuation as text.
 const RUBY_PAIR = /([一-鿿々ヶ〇0-9０-９]+)\{([ぁ-ゖァ-ヴーゝゞ・]+)\}/g;
-const ANY_BRACE = /\{[^{}]*\}/g;
+
+// A brace group holding nothing but kana is a reading we failed to pair with a
+// base — safe to drop. ANYTHING else keeps its contents: an earlier version
+// deleted whole groups, so one stray brace from the model turned
+// 「お一緒{いっしょ}に{お寿司{すし}を食{た}}べに行{い}こう」 into
+// 「お一緒にべに行こう」 — silently eating the kanji. In a language-learning
+// app, corrupting her Japanese is far worse than showing a stray character.
+const LEFTOVER_READING = /\{[ぁ-ゖァ-ヴーゝゞ・]*\}/g;
+const STRAY_BRACE = /[{}]/g;
 
 const normalizeBraces = (s) => s.replace(/[｛]/g, '{').replace(/[｝]/g, '}');
 
+const tidyBraces = (s) => s.replace(LEFTOVER_READING, '').replace(STRAY_BRACE, '');
+
 /** 漢字{かんじ} -> <ruby>漢字<rt>かんじ</rt></ruby> */
 function ruby(text) {
-  return esc(normalizeBraces(text))
-    .replace(RUBY_PAIR, '<ruby>$1<rt>$2</rt></ruby>')
-    .replace(ANY_BRACE, '');
+  return tidyBraces(
+    esc(normalizeBraces(text)).replace(RUBY_PAIR, '<ruby>$1<rt>$2</rt></ruby>')
+  );
 }
 
 /** Plain text: chips, clipboard, notification bodies. */
 function stripRuby(text) {
-  return normalizeBraces(text).replace(ANY_BRACE, '');
+  return tidyBraces(normalizeBraces(text));
 }
 
 function scrollDown() {
