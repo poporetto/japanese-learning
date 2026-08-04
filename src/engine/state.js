@@ -33,6 +33,8 @@ function fresh() {
     unanswered: 0,       // proactive messages sent since he last replied
     history: [],         // recent turns, verbatim — the LLM's short-term memory
     scheduled: {},       // "HH:MM" -> the date it last fired, so once per day
+    transcript: [],      // rendered chat log, so you can scroll back after a reload
+    gallery: [],         // every photo she's sent, deduped
   };
 }
 

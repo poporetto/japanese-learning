@@ -30,6 +30,7 @@
       </div>
       <div class="tools">
         <span class="emo" id="sprite-label"></span>
+        <button id="gallery" title="Photos she's sent">🖼</button>
         <button id="settings" title="Settings">⚙</button>
         <button id="debug" title="Inspect state">ⓘ</button>
         <button id="reset" title="Reset memory">↺</button>
@@ -46,6 +47,20 @@
     </form>
     <p class="hint">Tap a message to reveal the English. ⧉ copies the plain Japanese.</p>
   </main>
+
+  <dialog id="gallery-dlg" class="dlg wide">
+    <form method="dialog">
+      <h2>アルバム · Gallery</h2>
+      <p class="fine" id="gallery-count"></p>
+      <div class="grid" id="gallery-grid"></div>
+      <menu><button value="close">Close</button></menu>
+    </form>
+  </dialog>
+
+  <dialog id="lightbox" class="lb">
+    <img id="lightbox-img" alt="">
+    <p id="lightbox-cap"></p>
+  </dialog>
 
   <dialog id="settings-dlg" class="dlg">
     <form method="dialog">
@@ -79,7 +94,12 @@
           <small>おはよう at 6:00, meals, おやすみ at 23:00. Delivered when you open
           the app if you missed the moment.</small></span></label>
       <label class="chk"><input id="set-notify" type="checkbox">
-        <span>Browser notification when the tab isn't focused</span></label>
+        <span>Browser notification when the tab isn't focused
+          <small id="notify-status"></small></span></label>
+      <p class="fine">
+        <button type="button" id="notify-test" class="mini">Send a test notification</button>
+        <span id="notify-test-result"></span>
+      </p>
 
       <menu>
         <button value="cancel">Cancel</button>

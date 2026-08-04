@@ -29,11 +29,25 @@ function scrollDown() {
   log.scrollTop = log.scrollHeight;
 }
 
+/**
+ * The scroll-back transcript. Kept beside the rest of the state so it survives
+ * a reload — a companion you can't scroll back through has no past, and the
+ * whole point of her is that she accumulates one.
+ */
+const TRANSCRIPT_MAX = 400;
+let replaying = false;
+
+function remember(entry) {
+  if (replaying || !state) return;
+  state.transcript = [...(state.transcript || []), entry].slice(-TRANSCRIPT_MAX);
+}
+
 function addUserBubble(text) {
   const el = document.createElement('div');
   el.className = 'row me';
   el.innerHTML = `<div class="bubble me">${esc(text)}</div>`;
   log.append(el);
+  remember({ t: 'me', jp: text });
   scrollDown();
 }
 
@@ -60,6 +74,7 @@ function addHerBubble(bubble) {
     navigator.clipboard?.writeText(stripRuby(bubble.jp))
   );
   log.append(el);
+  remember({ t: 'her', jp: bubble.jp, en: bubble.en });
   scrollDown();
 }
 
@@ -73,8 +88,18 @@ function addPhoto(photo) {
     </figure>`;
   const img = el.querySelector('img');
   img.addEventListener('error', () => el.querySelector('.photo').classList.add('missing'));
+  el.querySelector('.photo').addEventListener('click', () => openLightbox(photo));
   log.append(el);
+  remember({ t: 'photo', file: photo.file, alt: photo.alt });
+  keepInGallery(photo);
   scrollDown();
+}
+
+/** Every photo she's ever sent, deduped, newest last. Drives the 🖼 gallery. */
+function keepInGallery(photo) {
+  if (replaying || !state) return;
+  state.gallery = (state.gallery || []).filter((g) => g.file !== photo.file);
+  state.gallery.push({ file: photo.file, alt: photo.alt || '', on: State.localDate() });
 }
 
 function addTeach(g) {
@@ -88,6 +113,28 @@ function addTeach(g) {
       ${g.note ? `<p class="note">${esc(g.note)}</p>` : ''}
     </details>`;
   log.append(el);
+  remember({ t: 'teach', g });
+  scrollDown();
+}
+
+/** Redraw a saved session instantly — no typing delays, no re-recording. */
+function replayLog() {
+  const past = state.transcript || [];
+  if (!past.length) return;
+  replaying = true;
+  log.classList.add('replay');
+  for (const e of past) {
+    if (e.t === 'me') addUserBubble(e.jp);
+    else if (e.t === 'her') addHerBubble(e);
+    else if (e.t === 'photo') addPhoto(e);
+    else if (e.t === 'teach') addTeach(e.g);
+  }
+  const rule = document.createElement('div');
+  rule.className = 'daybreak';
+  rule.textContent = 'ここから今日';
+  log.append(rule);
+  log.classList.remove('replay');
+  replaying = false;
   scrollDown();
 }
 
@@ -293,8 +340,27 @@ function notify(turn) {
 async function ensureNotifyPermission() {
   if (!settings.notify || typeof Notification === 'undefined') return;
   if (Notification.permission !== 'default') return;
-  settings.notify = (await Notification.requestPermission()) === 'granted';
-  State.saveSettings(settings);
+  await Notification.requestPermission();
+  syncSettingsForm();
+}
+
+/**
+ * Why notifications aren't arriving, in words. "denied" is the important one:
+ * it fails completely silently, and no amount of asking again will fix it —
+ * only the user, in the browser's own site settings.
+ */
+function notifyState() {
+  if (typeof Notification === 'undefined') {
+    return { ok: false, msg: 'this browser has no notification support' };
+  }
+  if (!settings.notify) return { ok: false, msg: 'turned off here' };
+  if (Notification.permission === 'denied') {
+    return { ok: false, msg: 'blocked — allow notifications for this site in your browser settings' };
+  }
+  if (Notification.permission === 'default') {
+    return { ok: false, msg: 'not granted yet — send a message or hit test below' };
+  }
+  return { ok: true, msg: 'on — only while this page is open, and only when it isn\'t focused' };
 }
 
 /* ---------- boot ---------- */
@@ -326,7 +392,12 @@ async function loadContent() {
   };
   const entries = await Promise.all(
     Object.entries(files).map(async ([k, path]) => {
-      const res = await fetch(path);
+      // 'no-cache' revalidates against the server every load rather than
+      // trusting the 10-minute cache GitHub Pages sets. Content changes far
+       // more often than code here, and a stale dialogue.json paired with
+      // current code is exactly the mismatch that looks like a broken app.
+      // It's still cheap: an unchanged file comes back as a 304.
+      const res = await fetch(path, { cache: 'no-cache' });
       if (!res.ok) throw new Error(`${path}: ${res.status}`);
       return [k, await res.json()];
     })
@@ -350,10 +421,44 @@ async function boot() {
   state = State.load();
   setMeter();
   buildSettings();
+  replayLog();
   await playOpening();
   scheduleProactive();
   startClock();
 }
+
+/* ---------- gallery ---------- */
+
+function openGallery() {
+  const grid = $('#gallery-grid');
+  const shots = [...(state.gallery || [])].reverse();
+  $('#gallery-count').textContent = shots.length
+    ? `${shots.length} 枚 · ${shots.length} photo${shots.length > 1 ? 's' : ''} she's sent you`
+    : 'Nothing yet — she sends photos as you get to know her.';
+  grid.innerHTML = '';
+  for (const g of shots) {
+    const fig = document.createElement('figure');
+    fig.className = 'shot';
+    fig.innerHTML = `
+      <img src="${esc(g.file)}" alt="${esc(g.alt)}" loading="lazy">
+      <div class="shot-fallback">📷<span>${esc(g.file.split('/').pop())}</span></div>
+      <figcaption>${esc(g.alt || '')}<small>${esc(g.on || '')}</small></figcaption>`;
+    fig.querySelector('img').addEventListener('error', () => fig.classList.add('missing'));
+    fig.addEventListener('click', () => openLightbox(g));
+    grid.append(fig);
+  }
+  $('#gallery-dlg').showModal();
+}
+
+function openLightbox(photo) {
+  const dlg = $('#lightbox');
+  $('#lightbox-img').src = photo.file;
+  $('#lightbox-cap').textContent = photo.alt || '';
+  dlg.showModal();
+}
+
+$('#gallery').addEventListener('click', openGallery);
+$('#lightbox').addEventListener('click', () => $('#lightbox').close());
 
 /* ---------- settings ---------- */
 
@@ -371,6 +476,7 @@ function syncSettingsForm() {
   $('#set-llm').checked = settings.llm;
   $('#set-proactive').checked = settings.proactive;
   $('#set-scheduled').checked = settings.scheduled;
+  $('#notify-status').textContent = notifyState().msg;
   $('#set-notify').checked = settings.notify;
   const q = quotaStatus(settings);
   $('#llm-status').textContent = !llmReady(settings)
@@ -386,6 +492,27 @@ $('#settings').addEventListener('click', () => {
   $('#settings-dlg').showModal();
 });
 
+// Fires immediately and unconditionally so "nothing happened" is itself the
+// answer — it proves whether the browser will show one at all.
+$('#notify-test').addEventListener('click', async () => {
+  const out = $('#notify-test-result');
+  if (typeof Notification === 'undefined') { out.textContent = ' no support'; return; }
+  if (Notification.permission === 'default') await Notification.requestPermission();
+  if (Notification.permission !== 'granted') {
+    out.textContent = ` blocked (${Notification.permission}) — allow it in browser site settings`;
+    syncSettingsForm();
+    return;
+  }
+  try {
+    const n = new Notification('結衣 Yui', { body: 'テスト。ちゃんと届いてる？', tag: 'yui-test' });
+    n.onclick = () => { window.focus(); n.close(); };
+    out.textContent = ' sent — check your notification tray';
+  } catch (err) {
+    out.textContent = ` failed: ${err.message}`;
+  }
+  syncSettingsForm();
+});
+
 $('#set-save').addEventListener('click', async (e) => {
   e.preventDefault();
   settings = {
@@ -399,7 +526,7 @@ $('#set-save').addEventListener('click', async (e) => {
   };
 
   if (settings.notify && typeof Notification !== 'undefined' && Notification.permission === 'default') {
-    settings.notify = (await Notification.requestPermission()) === 'granted';
+    await Notification.requestPermission();
   }
 
   State.saveSettings(settings);
@@ -414,7 +541,7 @@ $('#form').addEventListener('submit', (e) => {
 });
 
 $('#reset').addEventListener('click', async () => {
-  if (!confirm('Reset Yui\'s memory and start over?\n\n(Your API key and settings are kept.)')) return;
+  if (!confirm('Reset Yui\'s memory and start over?\n\nThe chat history and photo gallery are cleared too.\n(Your API key and settings are kept.)')) return;
   clearTimeout(proactiveTimer);
   State.reset();
   log.innerHTML = '';
