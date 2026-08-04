@@ -81,23 +81,20 @@ fully anime illustration, consistent recognizable face.”**
 
 ### What actually costs a request
 
-Only **free-typed text**. Everything else takes the authored path:
+Anything **you** send — typed or tapped from a quick-reply chip. Her own
+unprompted turns never do:
 
 | turn | API? |
 |---|---|
 | you type something | **yes** |
-| you tap a quick-reply chip | no |
+| you tap a quick-reply chip | **yes** |
 | session opener | no |
 | proactive nudge | no |
 | timed message (おはよう / おやすみ) | no |
 
-Chips are authored prompts with authored answers already waiting for them —
-spending quota to improvise a reply to a line the script wrote is waste, and it
-lets the API wander off a thread the chip existed to continue. The flag rides
-through the send queue too, so a chip tapped while she's still typing doesn't
-quietly become a free-text turn when it lands.
-
-Memory, affection, photos and grammar notes all run identically on both paths.
+Chips were briefly routed to the authored path to save quota, and it cost more
+than it saved: a chip is usually mid-thread, and answering it from the script
+broke the continuity the API was maintaining. Coherence won.
 
 ### Staying on the free tier
 

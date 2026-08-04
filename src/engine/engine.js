@@ -139,14 +139,8 @@ export class Companion {
     });
   }
 
-  /**
-   * Main entry: user said something.
-   * `opts.fromChip` marks a tapped quick-reply. Those are authored prompts
-   * with authored answers waiting for them, so they take the scripted path —
-   * no request, no quota, and no chance of the API wandering off a thread the
-   * chip was written to continue.
-   */
-  async respond(raw, state, opts = {}) {
+  /** Main entry: user said something. */
+  async respond(raw, state) {
     state.turns += 1;
     state.unanswered = 0;
     pushHistory(state, 'me', raw);
@@ -197,7 +191,6 @@ export class Companion {
       intentScore: match?.score ?? 0,
       band: state._band,
       userText: raw,
-      fromChip: !!opts.fromChip,
     });
   }
 
@@ -337,7 +330,6 @@ export class Companion {
     let llmHandled = false;
     const swappable =
       !meta.noLLM &&
-      !meta.fromChip &&
       bubbles.length &&
       plan.kind !== 'photo_request' &&
       llmReady(settings);

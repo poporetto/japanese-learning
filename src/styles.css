@@ -273,6 +273,10 @@ ruby rt {
 }
 .composer input {
   flex: 1;
+  /* Flex items default to min-width:auto, and an <input>'s intrinsic minimum
+     is wide — so the row refused to shrink and pushed the page into a 7px
+     sideways scroll at 320px. */
+  min-width: 0;
   background: var(--panel-2);
   border: 1px solid var(--line);
   color: var(--ink);
@@ -285,7 +289,12 @@ ruby rt {
   background: var(--brand); color: var(--brand-ink); border: 0;
   border-radius: 20px; padding: 0 16px; font: inherit;
   font-weight: 600; cursor: pointer;
-  display: inline-flex; align-items: center; gap: 6px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  /* The input is flex:1; without this the button gets squeezed on narrow
+     screens and its label wraps, which is the other half of the broken look. */
+  flex: none;
+  white-space: nowrap;
+  min-height: 44px;          /* comfortable tap target */
 }
 .composer button:hover { background: var(--brand-dim); }
 
@@ -425,6 +434,10 @@ body.llm-on .sprite::after {
 
 @media (max-width: 430px) {
   .emo { display: none; }
+  /* LINE's own send control is icon-only on a phone; dropping the label keeps
+     the tap target square and gives the input back ~40px. */
+  .composer button span { display: none; }
+  .composer button { padding: 0; width: 44px; }
   .tools { gap: 4px; }
   .tools button { width: 30px; height: 30px; }
   .sprite { width: 44px; height: 44px; }
@@ -434,8 +447,12 @@ body.llm-on .sprite::after {
 
 /* Lucide SVGs are 24×24 line art on currentColor, so they inherit the button's
    colour and hover states without extra rules. */
+/* Belt and braces: the attributes above already size these, and these rules
+   keep them honest if a parent tries to stretch them. */
+svg { max-width: 100%; }
 .ico { width: 18px; height: 18px; display: block; flex: none; }
-.ico-lg { width: 30px; height: 30px; stroke-width: 1.5; }
+.ico-lg { width: 30px; height: 30px; stroke-width: 1.5; flex: none; }
+.ico-sm { width: 13px; height: 13px; display: block; flex: none; }
 
 .tools button {
   display: inline-flex;
@@ -450,7 +467,7 @@ body.llm-on .sprite::after {
   top: 5px; right: 5px;
   border-radius: 6px;
 }
-.copy .ico { width: 13px; height: 13px; }
+
 .bubble.her:hover .copy { opacity: .55; }
 .copy:hover { opacity: 1 !important; background: var(--panel-2); }
 
