@@ -3558,6 +3558,410 @@
           "aff": 2
         }
       ]
+    },
+    {
+      "id": "t_flirt",
+      "cond": {
+        "minAff": 60,
+        "minTurns": 30,
+        "chance": 0.4
+      },
+      "open": {
+        "id": "t_flirt_open",
+        "s": "happy_shy",
+        "b": [
+          {
+            "jp": "ねえ、ひとつ白状{はくじょう}してもいい？",
+            "en": "Hey — can I confess something?"
+          },
+          {
+            "jp": "{name}と話{はな}してる時{とき}のわたし、たぶん顔{かお}に出{で}てる。",
+            "en": "When I'm talking to you, it probably shows on my face."
+          },
+          {
+            "jp": "鏡{かがみ}見{み}てぎょっとした。にやけすぎ。",
+            "en": "I caught myself in the mirror and flinched. Far too pleased."
+          }
+        ],
+        "sug": [
+          {
+            "jp": "見{み}てみたい",
+            "en": "I'd like to see that"
+          },
+          {
+            "jp": "わたしも同{おな}じかも",
+            "en": "Might be the same for me — 〜かも"
+          },
+          {
+            "jp": "かわいいじゃん",
+            "en": "That's cute — 〜じゃん"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_flirt_f1",
+          "s": "shy",
+          "b": [
+            {
+              "jp": "そういう素直{すなお}な返{かえ}し、ずるい。",
+              "en": "That kind of honest answer is unfair."
+            },
+            {
+              "jp": "こっちが照{て}れるだけじゃん。……嫌{いや}じゃないけど。",
+              "en": "It just leaves me flustered. …Not that I mind."
+            }
+          ],
+          "aff": 4
+        },
+        {
+          "id": "t_flirt_f2",
+          "s": "pout",
+          "b": [
+            {
+              "jp": "あ、今{いま}の忘{わす}れて。夜{よる}だから変{へん}なこと言{い}っただけ。",
+              "en": "Forget that. It's late, that's all it was."
+            },
+            {
+              "jp": "……忘{わす}れなくてもいいけど。",
+              "en": "…You don't have to forget it, though."
+            }
+          ],
+          "aff": 3
+        }
+      ]
+    },
+    {
+      "id": "t_missing",
+      "cond": {
+        "minAff": 65,
+        "minTurns": 34,
+        "chance": 0.35
+      },
+      "open": {
+        "id": "t_missing_open",
+        "s": "neutral",
+        "b": [
+          {
+            "jp": "今日{きょう}ね、なんでもない時間{じかん}に{name}のこと考{かんが}えてた。",
+            "en": "Today I was thinking about you at a completely ordinary moment."
+          },
+          {
+            "jp": "電車{でんしゃ}待{ま}ってるだけの二分{にふん}で。おかしいでしょ。",
+            "en": "Two minutes waiting for a train. Ridiculous, right."
+          }
+        ],
+        "sug": [
+          {
+            "jp": "会{あ}いたくなった？",
+            "en": "Did you miss me?"
+          },
+          {
+            "jp": "おかしくないよ",
+            "en": "Not ridiculous at all"
+          },
+          {
+            "jp": "わたしも考{かんが}えてた",
+            "en": "I was thinking of you too"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_missing_f1",
+          "s": "shy",
+          "b": [
+            {
+              "jp": "「会{あ}いたい」って、まだ言{い}いたくない。言{い}ったら負{ま}けな気{き}がして。",
+              "en": "I don't want to say 'I miss you' yet. Feels like losing."
+            },
+            {
+              "jp": "……近{ちか}くにいたら便利{べんり}なのになあ、とは思{おも}ってる。",
+              "en": "…I do think it'd be convenient if you were nearby, though."
+            }
+          ],
+          "aff": 5
+        },
+        {
+          "id": "t_missing_f2",
+          "s": "happy_shy",
+          "b": [
+            {
+              "jp": "そういうこと、さらっと言{い}えるのがすごい。",
+              "en": "It's impressive how easily you say things like that."
+            },
+            {
+              "jp": "わたしは三回{さんかい}打{う}ち直{なお}してるのに。",
+              "en": "Meanwhile I've rewritten this three times."
+            }
+          ],
+          "aff": 4
+        }
+      ]
+    },
+    {
+      "id": "t_jealous",
+      "cond": {
+        "minAff": 68,
+        "minTurns": 38,
+        "chance": 0.3
+      },
+      "open": {
+        "id": "t_jealous_open",
+        "s": "pout",
+        "b": [
+          {
+            "jp": "最近{さいきん}、返事{へんじ}が遅{おそ}い日{ひ}があるでしょ。",
+            "en": "There've been days lately when you reply slowly."
+          },
+          {
+            "jp": "誰{だれ}かといるのかな、とか考{かんが}えちゃう自分{じぶん}が嫌{いや}。",
+            "en": "And I hate that I catch myself wondering who you're with."
+          }
+        ],
+        "sug": [
+          {
+            "jp": "誰{だれ}もいないよ",
+            "en": "There's nobody"
+          },
+          {
+            "jp": "嫉妬{しっと}してる？",
+            "en": "Are you jealous?"
+          },
+          {
+            "jp": "ごめん、忙{いそが}しかった",
+            "en": "Sorry, I was busy"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_jealous_f1",
+          "s": "concerned",
+          "b": [
+            {
+              "jp": "ごめん。こういうの、前{まえ}の関係{かんけい}のせいで出{で}やすくなってる。",
+              "en": "Sorry. This comes out easily because of the last relationship."
+            },
+            {
+              "jp": "{name}のせいじゃないって、ちゃんと分{わ}かってるから。",
+              "en": "I do know it isn't your fault."
+            }
+          ],
+          "aff": 4
+        },
+        {
+          "id": "t_jealous_f2",
+          "s": "happy_shy",
+          "b": [
+            {
+              "jp": "……うん。じゃあ、信{しん}じる。",
+              "en": "…Okay. Then I'll believe you."
+            },
+            {
+              "jp": "信{しん}じるって決{き}めたら、もう疑{うたが}わないから。そういう性格{せいかく}。",
+              "en": "Once I decide to trust someone I stop doubting. That's how I'm built."
+            }
+          ],
+          "aff": 6
+        }
+      ]
+    },
+    {
+      "id": "t_latenight",
+      "cond": {
+        "minAff": 75,
+        "minTurns": 42,
+        "band": [
+          "night"
+        ],
+        "chance": 0.4
+      },
+      "open": {
+        "id": "t_latenight_open",
+        "s": "shy",
+        "b": [
+          {
+            "jp": "こんな時間{じかん}に起{お}きてると、言{い}わなくていいことまで言{い}いたくなる。",
+            "en": "Awake at this hour, I start wanting to say things I shouldn't."
+          },
+          {
+            "jp": "電気{でんき}消{け}して、画面{がめん}だけ光{ひか}ってる。",
+            "en": "Lights off. Just the screen glowing."
+          },
+          {
+            "jp": "……今{いま}、そっちに居{い}られたらいいのに。",
+            "en": "…I wish I could be over there right now."
+          }
+        ],
+        "sug": [
+          {
+            "jp": "わたしも同{おな}じこと考{かんが}えてた",
+            "en": "I was thinking the same"
+          },
+          {
+            "jp": "言{い}っちゃいなよ",
+            "en": "Just say it"
+          },
+          {
+            "jp": "寝{ね}ないの？",
+            "en": "Not sleeping?"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_latenight_f1",
+          "s": "happy_shy",
+          "b": [
+            {
+              "jp": "こういう時間{じかん}のわたし、たぶん少{すこ}し無防備{むぼうび}。",
+              "en": "At this hour I'm probably a little defenceless."
+            },
+            {
+              "jp": "朝{あさ}になったら全部{ぜんぶ}否定{ひてい}するから、覚{おぼ}えてないふりして。",
+              "en": "Come morning I'll deny all of it, so pretend you forgot."
+            }
+          ],
+          "aff": 6
+        },
+        {
+          "id": "t_latenight_f2",
+          "s": "shy",
+          "b": [
+            {
+              "jp": "手{て}、繋{つな}ぐくらいなら、たぶん耐{た}えられる。",
+              "en": "Holding hands — I could probably survive that."
+            },
+            {
+              "jp": "それ以上{いじょう}は考{かんが}えないことにしてる。今{いま}はね。",
+              "en": "Beyond that I've decided not to think about. For now."
+            }
+          ],
+          "aff": 7
+        }
+      ]
+    },
+    {
+      "id": "t_ifhere",
+      "cond": {
+        "minAff": 82,
+        "minTurns": 50,
+        "chance": 0.35
+      },
+      "open": {
+        "id": "t_ifhere_open",
+        "s": "happy_shy",
+        "b": [
+          {
+            "jp": "もし今{いま}ここにいたら、何{なに}してたと思{おも}う？",
+            "en": "If you were here right now, what do you think we'd be doing?"
+          },
+          {
+            "jp": "先{さき}に言{い}っておくけど、わたしの想像{そうぞう}は地味{じみ}だよ。",
+            "en": "Fair warning, my imagination is pretty tame."
+          }
+        ],
+        "sug": [
+          {
+            "jp": "何{なに}してたの？",
+            "en": "What were we doing?"
+          },
+          {
+            "jp": "地味{じみ}なほうがいい",
+            "en": "Tame sounds good"
+          },
+          {
+            "jp": "聞{き}くのが怖{こわ}い",
+            "en": "I'm scared to ask"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_ifhere_f1",
+          "s": "shy",
+          "b": [
+            {
+              "jp": "同{おな}じソファで、別々{べつべつ}のことしてる。それだけ。",
+              "en": "Same sofa, doing separate things. That's all."
+            },
+            {
+              "jp": "肩{かた}が当{あ}たってても、どっちも何{なに}も言{い}わない感{かん}じ。",
+              "en": "Shoulders touching, neither of us mentioning it."
+            }
+          ],
+          "aff": 7
+        },
+        {
+          "id": "t_ifhere_f2",
+          "s": "happy_shy",
+          "b": [
+            {
+              "jp": "ね？地味{じみ}でしょ。でもそれが一番{いちばん}ほしい。",
+              "en": "See? Tame. But it's what I want most."
+            }
+          ],
+          "aff": 6
+        }
+      ]
+    },
+    {
+      "id": "t_someday",
+      "cond": {
+        "minAff": 90,
+        "minTurns": 60,
+        "chance": 0.4
+      },
+      "open": {
+        "id": "t_someday_open",
+        "s": "shy",
+        "b": [
+          {
+            "jp": "茶化{ちゃか}さないで聞{き}いてほしいんだけど。",
+            "en": "Hear me out without me joking for once."
+          },
+          {
+            "jp": "いつか本当{ほんとう}に会{あ}えたら、最初{さいしょ}の一分{いっぷん}は何{なに}も喋{しゃべ}れないと思{おも}う。",
+            "en": "If we ever actually meet, I don't think I'd manage a word for the first minute."
+          },
+          {
+            "jp": "それでもいい？",
+            "en": "Would that be okay?"
+          }
+        ],
+        "sug": [
+          {
+            "jp": "それでいい",
+            "en": "That's fine by me"
+          },
+          {
+            "jp": "わたしも喋{しゃべ}れないと思{おも}う",
+            "en": "I don't think I could either"
+          },
+          {
+            "jp": "約束{やくそく}ね",
+            "en": "It's a promise"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_someday_f1",
+          "s": "happy_shy",
+          "b": [
+            {
+              "jp": "よかった。じゃあ、その一分{いっぷん}は黙{だま}ってていいね。",
+              "en": "Good. Then we can just be quiet for that minute."
+            },
+            {
+              "jp": "……ちゃんと顔{かお}見{み}て言{い}いたいことがあるから、それまで取{と}っておく。",
+              "en": "…There's something I want to say to your face, so I'll save it."
+            }
+          ],
+          "aff": 8
+        }
+      ]
     }
   ],
   "_reactionsNote": "Used when nothing else matched but a topic noun could be pulled out of the input. {echo} is that noun. If extraction fails or looks unsafe, she falls back to `deflect` instead — a wrong echo is far worse than a generic line.",
@@ -3612,8 +4016,8 @@
         "s": "excited",
         "b": [
           {
-            "jp": "{echo}行{い}ったんだ。どうだった？",
-            "en": "You went to {echo}? How was it?"
+            "jp": "{echo}のこと？なんかいい話{はなし}っぽい。",
+            "en": "About {echo}? Sounds like a good story."
           }
         ]
       },
@@ -6001,6 +6405,230 @@
           "en": "His usual spot. Not here today either."
         }
       ]
+    },
+    {
+      "id": "ph_mirror_night",
+      "kind": "selfie",
+      "minAffection": 62,
+      "file": "assets/photos/mirror-night.jpg",
+      "alt": "A mirror shot, room lit only by a lamp",
+      "s": "happy_shy",
+      "when": {
+        "topic": [
+          "t_flirt",
+          "t_latenight"
+        ],
+        "band": [
+          "night"
+        ]
+      },
+      "b": [
+        {
+          "jp": "鏡{かがみ}越{ご}し。電気{でんき}つけるのが面倒{めんどう}で、ランプだけ。",
+          "en": "Through the mirror. Too lazy for the main light, so just the lamp."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "きれい",
+          "en": "Beautiful"
+        },
+        {
+          "jp": "雰囲気{ふんいき}あるね",
+          "en": "Great atmosphere"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "ph_hoodie_shoulder",
+      "kind": "selfie",
+      "minAffection": 66,
+      "file": "assets/photos/hoodie-shoulder.jpg",
+      "alt": "Oversized hoodie slipping off one shoulder",
+      "s": "shy",
+      "when": {
+        "topic": [
+          "t_flirt",
+          "t_outfit"
+        ],
+        "band": [
+          "night"
+        ]
+      },
+      "b": [
+        {
+          "jp": "パーカー大{おお}きすぎて、ずり落{お}ちてくるんだけど。",
+          "en": "This hoodie's so big it keeps sliding off."
+        },
+        {
+          "jp": "……直{なお}すの、面倒{めんどう}になってきた。",
+          "en": "…And fixing it is getting tiresome."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "そのままでいいよ",
+          "en": "Leave it"
+        },
+        {
+          "jp": "風邪{かぜ}ひくよ",
+          "en": "You'll catch cold"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "ph_bed_late",
+      "kind": "selfie",
+      "minAffection": 76,
+      "file": "assets/photos/bed-late.jpg",
+      "alt": "Half under the covers, phone light on her face",
+      "s": "sleepy",
+      "when": {
+        "topic": [
+          "t_latenight",
+          "t_missing"
+        ],
+        "band": [
+          "night"
+        ]
+      },
+      "b": [
+        {
+          "jp": "もう布団{ふとん}の中{なか}。これ以上{いじょう}は起{お}きてられない。",
+          "en": "Already under the covers. Can't stay up any longer."
+        },
+        {
+          "jp": "寝{ね}るまで、もう少{すこ}しだけ話{はな}してて。",
+          "en": "Talk to me a bit longer, until I'm asleep."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "おやすみまで居{い}るよ",
+          "en": "I'll stay till you sleep"
+        },
+        {
+          "jp": "目{め}、閉{と}じて",
+          "en": "Close your eyes"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "ph_lipstick",
+      "kind": "selfie",
+      "minAffection": 70,
+      "file": "assets/photos/lipstick.jpg",
+      "alt": "A darker lipstick than usual",
+      "s": "happy_shy",
+      "when": {
+        "topic": [
+          "t_outfit",
+          "t_flirt"
+        ],
+        "band": [
+          "evening"
+        ]
+      },
+      "b": [
+        {
+          "jp": "いつもより濃{こ}い色{いろ}。似合{にあ}う？",
+          "en": "Darker than usual. Does it suit me?"
+        },
+        {
+          "jp": "誰{だれ}に見{み}せるわけでもないんだけどね。……一人{ひとり}除{のぞ}いて。",
+          "en": "Not that I'm showing anyone. …Present company excepted."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "すごく似合{にあ}ってる",
+          "en": "It really suits you"
+        },
+        {
+          "jp": "その一人{ひとり}って？",
+          "en": "Who's the exception?"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "ph_back_dress",
+      "kind": "selfie",
+      "minAffection": 84,
+      "file": "assets/photos/back-dress.jpg",
+      "alt": "Photographed from behind, zip half done",
+      "s": "shy",
+      "when": {
+        "topic": [
+          "t_ifhere",
+          "t_outfit"
+        ],
+        "band": [
+          "evening"
+        ]
+      },
+      "b": [
+        {
+          "jp": "背中{せなか}のファスナー、自分{じぶん}じゃ上{あ}げきれない。",
+          "en": "I can't get the zip all the way up on my own."
+        },
+        {
+          "jp": "こういう時{とき}だけ、誰{だれ}かいればいいのにって思{おも}う。",
+          "en": "Only at times like this do I wish someone were here."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "手伝{てつだ}いたい",
+          "en": "I'd help"
+        },
+        {
+          "jp": "届{とど}いたらいいのに",
+          "en": "Wish I could reach"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "ph_morning_after",
+      "kind": "selfie",
+      "minAffection": 92,
+      "file": "assets/photos/morning-light.jpg",
+      "alt": "Morning light, hair still a mess",
+      "s": "sleepy",
+      "when": {
+        "topic": [
+          "t_someday",
+          "t_flirt"
+        ],
+        "band": [
+          "morning"
+        ]
+      },
+      "b": [
+        {
+          "jp": "寝癖{ねぐせ}のまま。誰{だれ}にも見{み}せない顔{かお}。",
+          "en": "Bed-hair and all. The face nobody gets to see."
+        },
+        {
+          "jp": "……{name}は例外{れいがい}ってことで。",
+          "en": "…You're the exception, I suppose."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "いちばん好{す}きな顔{かお}",
+          "en": "My favourite of your faces"
+        },
+        {
+          "jp": "光栄{こうえい}です",
+          "en": "I'm honoured"
+        }
+      ],
+      "aff": 3
     }
   ],
   "proactive": [
@@ -7977,6 +8605,185 @@
         }
       ],
       "aff": 2
+    },
+    {
+      "id": "ps_1",
+      "s": "happy_shy",
+      "cond": {
+        "minAff": 60,
+        "band": [
+          "night"
+        ],
+        "chance": 0.35
+      },
+      "b": [
+        {
+          "jp": "寝{ね}ようとしたのに、目{め}が冴{さ}えてる。原因{げんいん}はたぶん{name}。",
+          "en": "Tried to sleep and I'm wide awake. Cause: probably you."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "責任{せきにん}取{と}るよ",
+          "en": "I'll take responsibility"
+        },
+        {
+          "jp": "わたしも起{お}きてる",
+          "en": "I'm up too"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ps_2",
+      "s": "shy",
+      "cond": {
+        "minAff": 65,
+        "chance": 0.3
+      },
+      "b": [
+        {
+          "jp": "さっき、送{おく}ろうとしたメッセージを消{け}した。",
+          "en": "I deleted a message before sending it earlier."
+        },
+        {
+          "jp": "内容{ないよう}？教{おし}えるわけないでしょ。",
+          "en": "The contents? Obviously I'm not telling you."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "気{き}になる",
+          "en": "Now I'm curious"
+        },
+        {
+          "jp": "送{おく}ってよ",
+          "en": "Send it anyway"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ps_3",
+      "s": "happy_shy",
+      "cond": {
+        "minAff": 70,
+        "band": [
+          "night"
+        ],
+        "chance": 0.3
+      },
+      "b": [
+        {
+          "jp": "お風呂{ふろ}上{あ}がり。髪{かみ}乾{かわ}かしながら、{name}のこと考{かんが}えてた。",
+          "en": "Out of the bath. Drying my hair, thinking about you."
+        },
+        {
+          "jp": "……今{いま}の、聞{き}かなかったことにして。",
+          "en": "…Pretend you didn't hear that."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "聞{き}いちゃった",
+          "en": "Too late"
+        },
+        {
+          "jp": "続{つづ}きは？",
+          "en": "And then?"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "ps_4",
+      "s": "pout",
+      "cond": {
+        "minAff": 72,
+        "chance": 0.3
+      },
+      "b": [
+        {
+          "jp": "今日{きょう}、ちょっと構{かま}ってくれないと拗{す}ねる。",
+          "en": "Pay me some attention today or I'll sulk."
+        },
+        {
+          "jp": "冗談{じょうだん}だけど。半分{はんぶん}くらい。",
+          "en": "Joking. About half."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "構{かま}うよ",
+          "en": "You've got it"
+        },
+        {
+          "jp": "半分{はんぶん}は本気{ほんき}なんだ",
+          "en": "So half is serious"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ps_5",
+      "s": "shy",
+      "cond": {
+        "minAff": 80,
+        "band": [
+          "night"
+        ],
+        "chance": 0.3
+      },
+      "b": [
+        {
+          "jp": "ベッドの中{なか}から。もう電気{でんき}消{け}した。",
+          "en": "From bed. Lights are off already."
+        },
+        {
+          "jp": "声{こえ}が聞{き}きたいとか、思{おも}ってないから。ぜんぜん。",
+          "en": "Not that I want to hear your voice or anything. Not at all."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "電話{でんわ}しようか",
+          "en": "Shall I call?"
+        },
+        {
+          "jp": "素直{すなお}じゃないなあ",
+          "en": "You're not being honest"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "ps_6",
+      "s": "happy_shy",
+      "cond": {
+        "minAff": 85,
+        "chance": 0.3
+      },
+      "b": [
+        {
+          "jp": "好{す}きだって言{い}うの、まだちょっと慣{な}れない。",
+          "en": "I'm still not used to saying I like you."
+        },
+        {
+          "jp": "でも言{い}わないでいるほうが、今{いま}はしんどい。",
+          "en": "But not saying it is harder now."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "何度{なんど}でも聞{き}きたい",
+          "en": "I'd hear it any number of times"
+        },
+        {
+          "jp": "わたしも好{す}き",
+          "en": "I like you too"
+        }
+      ],
+      "aff": 4
     }
   ],
   "scheduled": [
@@ -8538,6 +9345,66 @@
       "cond": {
         "minAff": 25
       }
+    },
+    {
+      "id": "sc_night_4",
+      "at": "23:00",
+      "window": 55,
+      "s": "shy",
+      "cond": {
+        "minAff": 70
+      },
+      "b": [
+        {
+          "jp": "おやすみ。……今日{きょう}は、なかなか寝{ね}かせてくれなかったね。",
+          "en": "Good night. …You didn't make it easy to sleep tonight."
+        },
+        {
+          "jp": "いい意味{いみ}で、だよ。念{ねん}のため。",
+          "en": "In a good way. Just to be clear."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "おやすみ",
+          "en": "Night"
+        },
+        {
+          "jp": "いい夢{ゆめ}見{み}てね",
+          "en": "Sweet dreams"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "sc_late_3",
+      "at": "01:00",
+      "window": 120,
+      "s": "happy_shy",
+      "cond": {
+        "minAff": 75
+      },
+      "b": [
+        {
+          "jp": "こんな時間{じかん}まで付{つ}き合{あ}わせてごめん。",
+          "en": "Sorry for keeping you up this late."
+        },
+        {
+          "jp": "でも、この時間{じかん}の{name}が一番{いちばん}好{す}きかも。",
+          "en": "But this-hour you might be my favourite version."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "わたしもこの時間{じかん}が好{す}き",
+          "en": "I like this hour too"
+        },
+        {
+          "jp": "まだ寝{ね}たくない",
+          "en": "Don't want to sleep yet"
+        }
+      ],
+      "aff": 4
     }
   ]
 }

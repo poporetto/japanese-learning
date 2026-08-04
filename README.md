@@ -93,6 +93,37 @@ Three mechanisms keep this from becoming her whole personality:
 
 A 400-draw simulation at affection 0 produces zero references to any of it.
 
+## The warmer end
+
+She's canonically 26 and this is a companion app, so the relationship escalates.
+The register is **suggestive, not explicit** — the charge sits in what she stops
+herself saying, and `persona.json → life.intimate.limits` states that in the
+prompt itself so improvised turns hold the same line.
+
+| gate | thread | |
+|---|---|---|
+| 60 | `t_flirt` | she admits it shows on her face |
+| 65 | `t_missing` | thinking of you at an ordinary moment, refusing to say 会いたい |
+| 68 | `t_jealous` | a flicker of possessiveness she apologises for, tied to her ex |
+| 75 | `t_latenight` | lights off, defences down, "deny it all tomorrow" |
+| 82 | `t_ifhere` | what she'd actually want — deliberately tame, and the point |
+| 90 | `t_someday` | the promise, with no joke left to hide behind |
+
+Plus 6 proactive lines, 2 late-night timed variants, 3 Q&A entries (会いたい /
+キス / 何着てる — each with a deflecting low-affection answer and a warmer one),
+and 6 photo moments at 62–92.
+
+Two gates enforce it, and a validator proves them:
+
+- **Authored content** carries `cond.minAff`, audited by check 6 in the content
+  validator — an intimate line gated below 60 fails the build.
+- **`llm.js` withholds `life.intimate` from the prompt below affection 60**, so
+  Gemini can't reach this register early. Verified: withheld at 59, included at
+  60.
+
+Swept across 300 sessions each at affection 0 / 30 / 55: **zero** intimate lines
+or photos. At 75 and 95 the whole set is reachable.
+
 ## Proactive messages
 
 She starts messages on her own after 55–105 seconds of silence, backing off

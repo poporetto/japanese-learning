@@ -24,7 +24,10 @@ const SPRITES = [
   'pout', 'surprised', 'concerned', 'tired', 'sleepy',
 ];
 
-const TIMEOUT_MS = 9000;
+// Measured round trips run 2.6–6.2s. At 9s the tail occasionally aborted and
+// fell back to an authored line, which is indistinguishable from her ignoring
+// you. The typing indicator covers the wait now, so patience is cheap.
+const TIMEOUT_MS = 15000;
 
 export function llmReady(settings) {
   return !!(settings?.llm && settings?.apiKey?.trim());
@@ -120,6 +123,39 @@ ${past.summary}
 ${(past.beats || []).map((b) => `- ${b}`).join('\n')}
 扱い方: 自分からは持ち出さない。相手が過去や恋愛の話をしたときに、一言だけこぼす。
 長く語らない。同情を引こうとしない。すぐ話題を戻して、笑ってごまかす。`;
+}
+
+// School-era memories are ordinary getting-to-know-you material, so the gate is
+// low — but the framing is stated explicitly, because the one thing this must
+// never become is her performing her teenage self for him.
+const SCHOOL_MIN_AFFECTION = 20;
+
+function schoolBlock(persona, state) {
+  const sc = persona.life?.school;
+  if (!sc || state.affection < SCHOOL_MIN_AFFECTION) return '';
+  return `
+
+【高校時代の思い出 — 昔話として】
+${sc.summary}
+${(sc.beats || []).map((b) => `- ${b}`).join('\n')}
+今の気持ち: ${sc.nowFeels}
+扱い方: 二十六歳の大人が懐かしく振り返る話として語る。当時の自分の見た目を売りにしない。
+色っぽい話題とは絶対に混ぜない。混ざりそうになったら現在の話に戻す。`;
+}
+
+// Same gating logic as the past: below this the API isn't told this side of
+// her exists, so it can't jump ahead of the authored escalation.
+const INTIMATE_MIN_AFFECTION = 60;
+
+function intimateBlock(persona, state) {
+  const it = persona.life?.intimate;
+  if (!it || state.affection < INTIMATE_MIN_AFFECTION) return '';
+  return `
+
+【この相手への気持ち — 親密度が高いときだけ】
+${it.summary}
+${(it.beats || []).map((b) => `- ${b}`).join('\n')}
+表現の限度: ${it.limits}`;
 }
 
 function personaBlock(persona) {
@@ -290,7 +326,7 @@ export async function improvise({ settings, persona, state, stage, userText, dir
   }
 
   const system = [
-    personaBlock(persona) + pastBlock(persona, state),
+    personaBlock(persona) + schoolBlock(persona, state) + pastBlock(persona, state) + intimateBlock(persona, state),
     memoryBlock(state, stage),
     RULES,
     directionBlock(direction, userText),

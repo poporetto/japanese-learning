@@ -188,6 +188,7 @@ export class Companion {
       script,
       analysis: a,
       intentId: match?.id ?? null,
+      intentScore: match?.score ?? 0,
       band: state._band,
       userText: raw,
     });

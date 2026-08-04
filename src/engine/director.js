@@ -207,13 +207,22 @@ export function proactivePlan(state, dialogue, band) {
 // are the rarer, more loaded thing.
 const COOLDOWN = { scene: 5, selfie: 12 };
 
+// A 2-character keyword scores 4 — just over the matcher's threshold, and a
+// pure guess. Good enough to pick a reply, not good enough to pick a picture:
+// 「財布を落として大変だった」 weakly matched work_talk and produced a photo of
+// her tidy desk. Photos need a keyword that actually carries the subject.
+const PHOTO_INTENT_MIN = 8;
+
 /** Does this photo fit what's being talked about right now? */
 function fitsContext(photo, ctx) {
   const w = photo.when;
   if (!w) return false; // ambient photos only ever fire on the random path
-  if (w.intent?.includes(ctx.intentId)) return true;
+  if (w.intent?.includes(ctx.intentId) && (ctx.intentScore ?? 0) >= PHOTO_INTENT_MIN) return true;
   if (w.topic?.includes(ctx.topicId)) return true;
-  if (w.band?.includes(ctx.band)) return true;
+  // `band` means "any time this evening" — ambient flavour, fine alongside an
+  // authored line. When the API has just written something specific about what
+  // he said, a photo justified only by the hour is a non-sequitur.
+  if (w.band?.includes(ctx.band) && !ctx.contextualOnly) return true;
   return false;
 }
 

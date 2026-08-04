@@ -910,6 +910,201 @@
           "aff": 1
         }
       ]
+    },
+    {
+      "id": "qa_miss_me",
+      "kw": [
+        "会いたい",
+        "寂しい",
+        "さびしい",
+        "miss you",
+        "恋しい"
+      ],
+      "a": [
+        {
+          "id": "qa_miss_low",
+          "s": "shy",
+          "cond": {
+            "maxAff": 60
+          },
+          "b": [
+            {
+              "jp": "……そういうの、不意打{ふいう}ちで言{い}わないでよ。",
+              "en": "…Don't spring that on me."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "ごめん",
+              "en": "Sorry"
+            },
+            {
+              "jp": "本当{ほんとう}だよ",
+              "en": "I mean it"
+            }
+          ],
+          "aff": 2
+        },
+        {
+          "id": "qa_miss_high",
+          "s": "happy_shy",
+          "cond": {
+            "minAff": 60
+          },
+          "b": [
+            {
+              "jp": "わたしも。って言{い}ったら、調子{ちょうし}に乗{の}るでしょ。",
+              "en": "Me too. Though saying so will go to your head."
+            },
+            {
+              "jp": "……乗{の}っていいよ、今日{きょう}は。",
+              "en": "…Go ahead, then. Just today."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "乗{の}っちゃう",
+              "en": "Then I will"
+            },
+            {
+              "jp": "嬉{うれ}しい",
+              "en": "That makes me happy"
+            }
+          ],
+          "aff": 4
+        }
+      ]
+    },
+    {
+      "id": "qa_kiss",
+      "kw": [
+        "キス",
+        "抱きしめ",
+        "ハグ",
+        "手を繋",
+        "触れたい",
+        "hug",
+        "kiss"
+      ],
+      "a": [
+        {
+          "id": "qa_kiss_low",
+          "s": "surprised",
+          "cond": {
+            "maxAff": 70
+          },
+          "b": [
+            {
+              "jp": "えっ。順番{じゅんばん}すっ飛{と}ばしすぎ。",
+              "en": "Whoa. You've skipped several steps."
+            },
+            {
+              "jp": "まずはちゃんと会{あ}うところからでしょ。",
+              "en": "We start with actually meeting, surely."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "それもそうだね",
+              "en": "Fair enough"
+            },
+            {
+              "jp": "いつか会{あ}おうね",
+              "en": "Let's meet someday"
+            }
+          ]
+        },
+        {
+          "id": "qa_kiss_high",
+          "s": "shy",
+          "cond": {
+            "minAff": 70
+          },
+          "b": [
+            {
+              "jp": "……そういうこと、平気{へいき}で聞{き}くようになったね。",
+              "en": "…You've got bold about asking things like that."
+            },
+            {
+              "jp": "想像{そうぞう}くらいはしてる。それ以上{いじょう}は会{あ}ってから。",
+              "en": "I've imagined it, at least. Anything more waits until we meet."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "会{あ}うのが楽{たの}しみ",
+              "en": "Looking forward to meeting"
+            },
+            {
+              "jp": "ずるい言{い}い方{かた}",
+              "en": "That's a sly way to put it"
+            }
+          ],
+          "aff": 4
+        }
+      ]
+    },
+    {
+      "id": "qa_what_wearing",
+      "kw": [
+        "何着てる",
+        "なにきてる",
+        "服装",
+        "what are you wearing"
+      ],
+      "a": [
+        {
+          "id": "qa_wearing_low",
+          "s": "pout",
+          "cond": {
+            "maxAff": 55
+          },
+          "b": [
+            {
+              "jp": "えっ、なんで？普通{ふつう}の部屋着{へやぎ}だよ。",
+              "en": "Huh, why? Normal loungewear."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "なんとなく",
+              "en": "No reason"
+            },
+            {
+              "jp": "ごめん変{へん}な質問{しつもん}",
+              "en": "Sorry, weird question"
+            }
+          ]
+        },
+        {
+          "id": "qa_wearing_high",
+          "s": "happy_shy",
+          "cond": {
+            "minAff": 70
+          },
+          "b": [
+            {
+              "jp": "だぼだぼのTシャツ。期待{きたい}に沿{そ}えなくて悪{わる}いけど。",
+              "en": "An oversized T-shirt. Sorry to disappoint."
+            },
+            {
+              "jp": "見{み}る？……いや、やっぱりなし。今日{きょう}は。",
+              "en": "Want to see? …No, forget it. Not today."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "見{み}たかった",
+              "en": "I wanted to see"
+            },
+            {
+              "jp": "また今度{こんど}ね",
+              "en": "Another time then"
+            }
+          ],
+          "aff": 3
+        }
+      ]
     }
   ]
 }
