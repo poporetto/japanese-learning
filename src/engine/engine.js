@@ -139,8 +139,14 @@ export class Companion {
     });
   }
 
-  /** Main entry: user said something. */
-  async respond(raw, state) {
+  /**
+   * Main entry: user said something.
+   * `opts.fromChip` marks a tapped quick-reply. Those are authored prompts
+   * with authored answers waiting for them, so they take the scripted path —
+   * no request, no quota, and no chance of the API wandering off a thread the
+   * chip was written to continue.
+   */
+  async respond(raw, state, opts = {}) {
     state.turns += 1;
     state.unanswered = 0;
     pushHistory(state, 'me', raw);
@@ -191,6 +197,7 @@ export class Companion {
       intentScore: match?.score ?? 0,
       band: state._band,
       userText: raw,
+      fromChip: !!opts.fromChip,
     });
   }
 
@@ -330,6 +337,7 @@ export class Companion {
     let llmHandled = false;
     const swappable =
       !meta.noLLM &&
+      !meta.fromChip &&
       bubbles.length &&
       plan.kind !== 'photo_request' &&
       llmReady(settings);
@@ -373,9 +381,15 @@ export class Companion {
     // Unsolicited photo, on her own initiative — usually because the photo
     // matches whatever she just brought up.
     if (!photo && plan.kind !== 'photo_request') {
+      // On a deflect the director pre-picks a topic to chain into. If the API
+      // then took the turn somewhere else — which is the whole point of the
+      // API — that topic was discarded, and using it to choose a photo pins a
+      // picture to a subject she never raised: an umbrella question answered
+      // with a photo of team lunch.
+      const discardedTopic = llmHandled && plan.kind === 'deflect';
       const p = photoPlan(state, this.dialogue, {
         ...meta,
-        topicId: plan.topic?.id ?? state.pendingTopic ?? null,
+        topicId: discardedTopic ? state.pendingTopic : (plan.topic?.id ?? state.pendingTopic ?? null),
         contextualOnly: llmHandled,
       });
       if (p) {

@@ -1,15 +1,39 @@
 :root {
-  --bg: #12101a;
-  --panel: #1b1826;
-  --panel-2: #241f33;
-  --ink: #ece9f5;
-  --dim: #a49ec0;
-  --her: #2b2540;
-  --me: #6d5ae6;
-  --accent: #ff8fb1;
-  --line: #322b47;
+  /* LINE's palette. Brand green for anything you send or press; the received
+     side stays neutral so her photos and portraits carry the colour instead. */
+  --brand: #06c755;
+  --brand-ink: #ffffff;
+  --brand-dim: #05a948;
+
+  --bg: #e9edf2;        /* the wallpaper behind the thread */
+  --panel: #ffffff;     /* header, composer, sheets */
+  --panel-2: #f4f6f8;
+  --ink: #1a1a1c;
+  --dim: #7b828c;
+  --her: #ffffff;       /* received bubbles are white, not tinted */
+  --me: var(--brand);
+  --me-ink: var(--brand-ink);
+  --accent: #06c755;
+  --line: #dfe3e8;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .08);
   --radius: 18px;
-  color-scheme: dark;
+  color-scheme: light;
+}
+
+/* LINE ships a dark mode and it keeps the same green, so the accent is the one
+   thing that does not change between the two. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17181a;
+    --panel: #1e1f22;
+    --panel-2: #26272b;
+    --ink: #e9eaec;
+    --dim: #8f959e;
+    --her: #2c2d31;
+    --line: #33353a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .35);
+    color-scheme: dark;
+  }
 }
 
 * { box-sizing: border-box; }
@@ -43,7 +67,7 @@ html, body {
      The fallback keeps normal browser tabs looking unchanged. */
   padding: calc(12px + env(safe-area-inset-top, 0px)) 14px 12px;
   border-bottom: 1px solid var(--line);
-  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  background: var(--panel);
   /* Stays reachable when the log is scrolled down. */
   position: sticky;
   top: 0;
@@ -82,14 +106,14 @@ html, body {
 .meter {
   height: 5px;
   border-radius: 99px;
-  background: #0e0c16;
+  background: var(--panel-2);
   overflow: hidden;
   margin-top: 6px;
 }
 .meter .fill {
   height: 100%;
   width: 0;
-  background: linear-gradient(90deg, var(--me), var(--accent));
+  background: linear-gradient(90deg, var(--brand), #4ee08a);
   transition: width .5s ease;
 }
 
@@ -99,7 +123,7 @@ html, body {
   background: none; border: 1px solid var(--line); color: var(--dim);
   border-radius: 8px; width: 28px; height: 28px; cursor: pointer;
 }
-.tools button:hover { color: var(--ink); border-color: var(--me); }
+.tools button:hover { color: var(--brand); border-color: var(--brand); }
 
 /* ---- log ---- */
 
@@ -127,13 +151,17 @@ html, body {
 
 .bubble.her {
   background: var(--her);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
   border-bottom-left-radius: 6px;
   cursor: pointer;
   padding-right: 30px;
 }
 .bubble.me {
   background: var(--me);
+  color: var(--me-ink);
   border-bottom-right-radius: 6px;
+  box-shadow: var(--shadow);
 }
 
 .bubble .jp { font-size: 17px; line-height: 2.1; }
@@ -152,7 +180,7 @@ ruby rt { letter-spacing: -.04em; white-space: nowrap; }
 
 ruby rt {
   font-size: .5em;
-  color: var(--accent);
+  color: var(--dim);
   opacity: .85;
   font-weight: 400;
 }
@@ -195,7 +223,7 @@ ruby rt {
 
 /* grammar note */
 .teach {
-  background: #171425;
+  background: var(--panel-2);
   border: 1px solid var(--line);
   border-left: 3px solid var(--accent);
   border-radius: 12px;
@@ -233,7 +261,7 @@ ruby rt {
   text-align: left;
   line-height: 1.25;
 }
-.chip:hover { border-color: var(--me); }
+.chip:hover { border-color: var(--brand); color: var(--brand-dim); }
 .chip small { display: block; color: var(--dim); font-size: 11px; }
 
 /* ---- composer ---- */
@@ -245,19 +273,21 @@ ruby rt {
 }
 .composer input {
   flex: 1;
-  background: #0f0d18;
+  background: var(--panel-2);
   border: 1px solid var(--line);
   color: var(--ink);
-  border-radius: 14px;
-  padding: 11px 14px;
+  border-radius: 20px;
+  padding: 11px 15px;
   font: inherit;
 }
-.composer input:focus { outline: none; border-color: var(--me); }
+.composer input:focus { outline: none; border-color: var(--brand); }
 .composer button {
-  background: var(--me); color: #fff; border: 0;
-  border-radius: 14px; padding: 0 18px; font: inherit;
+  background: var(--brand); color: var(--brand-ink); border: 0;
+  border-radius: 20px; padding: 0 16px; font: inherit;
   font-weight: 600; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
 }
+.composer button:hover { background: var(--brand-dim); }
 
 .hint {
   /* Same story at the bottom: the home-indicator bar would otherwise sit on it. */
@@ -272,7 +302,7 @@ ruby rt {
 .dlg {
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: var(--panel, #17141f);
+  background: var(--panel);
   color: var(--ink);
   padding: 20px;
   width: min(420px, calc(100vw - 32px));
@@ -285,17 +315,17 @@ ruby rt {
 .fld > span { display: block; font-size: 12px; color: var(--dim); margin-bottom: 5px; }
 .fld input, .fld select {
   width: 100%;
-  background: #0f0d18;
+  background: var(--panel-2);
   border: 1px solid var(--line);
   color: var(--ink);
   border-radius: 10px;
   padding: 9px 11px;
   font: inherit;
 }
-.fld input:focus, .fld select:focus { outline: none; border-color: var(--me); }
+.fld input:focus, .fld select:focus { outline: none; border-color: var(--brand); }
 
 .fine { margin: 0 0 16px; font-size: 11px; line-height: 1.5; color: var(--dim); }
-.fine a { color: var(--me); }
+.fine a { color: var(--brand-dim); }
 .fine code { font-size: 10px; }
 
 .chk { display: flex; gap: 9px; align-items: flex-start; margin-bottom: 12px; font-size: 13px; }
@@ -310,7 +340,7 @@ ruby rt {
   background: transparent; border: 1px solid var(--line); color: var(--ink);
   border-radius: 12px; padding: 8px 16px; font: inherit; cursor: pointer;
 }
-.dlg menu button.primary { background: var(--me); border-color: var(--me); color: #fff; font-weight: 600; }
+.dlg menu button.primary { background: var(--brand); border-color: var(--brand); color: var(--brand-ink); font-weight: 600; }
 
 /* A quiet tell that she's improvising rather than reading from the script. */
 body.llm-on .sprite::after {
@@ -325,7 +355,7 @@ body.llm-on .sprite::after {
   background: transparent; border: 1px solid var(--line); color: var(--ink);
   border-radius: 9px; padding: 4px 10px; font: inherit; font-size: 11px; cursor: pointer;
 }
-.mini:hover { border-color: var(--me); }
+.mini:hover { border-color: var(--brand); }
 
 /* ---- restored transcript ---- */
 
@@ -362,7 +392,7 @@ body.llm-on .sprite::after {
   width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
   border-radius: 12px; border: 1px solid var(--line);
 }
-.shot:hover img { border-color: var(--me); }
+.shot:hover img { border-color: var(--brand); }
 .shot-fallback { display: none; }
 .shot.missing img { display: none; }
 .shot.missing .shot-fallback {
@@ -399,3 +429,33 @@ body.llm-on .sprite::after {
   .tools button { width: 30px; height: 30px; }
   .sprite { width: 44px; height: 44px; }
 }
+
+/* ---- icons ---- */
+
+/* Lucide SVGs are 24×24 line art on currentColor, so they inherit the button's
+   colour and hover states without extra rules. */
+.ico { width: 18px; height: 18px; display: block; flex: none; }
+.ico-lg { width: 30px; height: 30px; stroke-width: 1.5; }
+
+.tools button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The copy affordance was a text glyph; as an icon it needs its own box. */
+.copy {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; padding: 0;
+  top: 5px; right: 5px;
+  border-radius: 6px;
+}
+.copy .ico { width: 13px; height: 13px; }
+.bubble.her:hover .copy { opacity: .55; }
+.copy:hover { opacity: 1 !important; background: var(--panel-2); }
+
+.photo-fallback, .shot-fallback { font-size: 0; }
+
+/* Native controls default to the browser's blue; hand them the brand green. */
+input[type="checkbox"], input[type="radio"], progress { accent-color: var(--brand); }
+::selection { background: color-mix(in srgb, var(--brand) 30%, transparent); }

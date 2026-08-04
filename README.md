@@ -50,6 +50,55 @@ stray cat 「しっぽ」, the ramen place she goes to weekly. It's injected int
 every request, which is what stops an improvised reply inventing a different
 life each turn.
 
+## Yui image canon
+
+Use these rules for every newly generated portrait, selfie, event photo, and
+photo opportunity so Yui remains visually consistent:
+
+- **Yui must appear in every image.** Environmental and object-focused moments
+  should still include her clearly in the composition, preferably as a natural
+  selfie or a candid scene involving her.
+- Draw her in a **fully anime illustration style** throughout. Do not combine
+  an anime head or face with a photorealistic body or background.
+- Yui is a **26-year-old adult** with long black hair, warm brown eyes, a sweet,
+  innocent, homey presence, and a slender build with a **naturally modest
+  silhouette**. Keep that silhouette consistent; do not emphasize or enlarge
+  her chest.
+- Vary her hairstyle naturally between loose long hair, ponytails, low or high
+  buns, half-up styles, braids, twin low ponytails, and occasional tied or
+  tucked styles. Keep her black hair and recognizable face consistent.
+- Vary clothing and styling to fit the scene. Rotate blue, cyan, pink, teal,
+  mint, cream, navy, and other complementary colors instead of defaulting to
+  purple. Use different casual, homey, work, outdoor, and seasonal outfits.
+- Keep framing, poses, expressions, and locations varied while preserving her
+  gentle character design. Any romantic progression should remain tasteful,
+  non-explicit, and consistent with the app's established affection gates.
+
+When prompting an image model, include this core description: **“Yui, a
+26-year-old adult anime woman with long black hair, warm brown eyes, a sweet and
+homey presence, and a slender build with a naturally flat, modest silhouette;
+fully anime illustration, consistent recognizable face.”**
+
+### What actually costs a request
+
+Only **free-typed text**. Everything else takes the authored path:
+
+| turn | API? |
+|---|---|
+| you type something | **yes** |
+| you tap a quick-reply chip | no |
+| session opener | no |
+| proactive nudge | no |
+| timed message (おはよう / おやすみ) | no |
+
+Chips are authored prompts with authored answers already waiting for them —
+spending quota to improvise a reply to a line the script wrote is waste, and it
+lets the API wander off a thread the chip existed to continue. The flag rides
+through the send queue too, so a chip tapped while she's still typing doesn't
+quietly become a free-text turn when it lands.
+
+Memory, affection, photos and grammar notes all run identically on both paths.
+
 ### Staying on the free tier
 
 The hard guarantee is Google's: **don't attach a billing account** to the Cloud
@@ -243,6 +292,22 @@ HTTP-referrer restriction on it in the Google Cloud console, limited to
 `yourname.github.io/*`. That's the only meaningful protection for a key used
 from a browser; a key shipped inside the page is readable by anyone regardless
 of how it's obfuscated.
+
+## Look
+
+LINE's visual language: white received bubbles with a hairline, brand-green
+(`#06c755`) for anything you send or press, a neutral wallpaper behind the
+thread, and no colour on her side so her photos carry it instead.
+
+Light by default, with a dark variant on `prefers-color-scheme` — LINE ships one
+and keeps the same green in it, so the accent is the only thing that doesn't
+change between the two. Everything is driven from CSS variables in `:root`, so
+re-theming is one block.
+
+Icons are [Lucide](https://lucide.dev) (MIT), **inlined as SVG** rather than
+pulled from a CDN or an icon font — the project has no build step and makes no
+external requests, and each icon is a few hundred bytes. They're line art on
+`currentColor`, so they inherit each button's colour and hover state for free.
 
 ## Layout
 

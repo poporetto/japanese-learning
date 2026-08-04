@@ -78,7 +78,7 @@ function addHerBubble(bubble) {
     <div class="bubble her" role="button" tabindex="0">
       <div class="jp">${ruby(bubble.jp)}</div>
       ${bubble.en ? `<div class="en" hidden>${esc(bubble.en)}</div>` : ''}
-      <button class="copy" title="Copy plain text">⧉</button>
+      <button class="copy" title="Copy plain text" aria-label="Copy">${svgIcon('copy')}</button>
     </div>`;
   const box = el.querySelector('.bubble');
   const en = el.querySelector('.en');
@@ -104,7 +104,7 @@ function addPhoto(photo) {
   el.innerHTML = `
     <figure class="photo">
       <img src="${esc(photo.file)}" alt="${esc(photo.alt || '')}">
-      <div class="photo-fallback">📷<span>${esc(photo.file)}</span></div>
+      <div class="photo-fallback">${svgIcon('imageOff', 'ico-lg')}<span>${esc(photo.file)}</span></div>
     </figure>`;
   const img = el.querySelector('img');
   img.addEventListener('error', () => el.querySelector('.photo').classList.add('missing'));
@@ -169,6 +169,20 @@ function typingIndicator() {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+/**
+ * Lucide icon paths, inlined. The project has no build step and makes no
+ * external requests, so pulling the icon font or a CDN bundle isn't an option —
+ * and these are a few hundred bytes each. MIT licensed.
+ */
+const ICONS = {
+  copy: '<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+  imageOff: '<line x1="2" x2="22" y1="2" y2="22"/><path d="M10.41 10.41a2 2 0 1 1-2.83-2.83"/><line x1="13.5" x2="6" y1="13.5" y2="21"/><line x1="18" x2="21" y1="12" y2="15"/><path d="M3.59 3.59A1.99 1.99 0 0 0 3 5v14a2 2 0 0 0 2 2h14c.55 0 1.052-.22 1.41-.59"/><path d="M21 15V5a2 2 0 0 0-2-2H9"/>',
+};
+
+const svgIcon = (name, cls = 'ico') =>
+  `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ` +
+  `stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg>`;
+
 /* ---------- chrome: sprite, meter, suggestions ---------- */
 
 const PROFILE_FALLBACK = 'assets/portraits/yui-chat-profile.png';
@@ -209,7 +223,7 @@ function setSuggestions(list) {
     const b = document.createElement('button');
     b.className = 'chip';
     b.innerHTML = `<span>${esc(stripRuby(s.jp))}</span><small>${esc(s.en || '')}</small>`;
-    b.addEventListener('click', () => send(stripRuby(s.jp)));
+    b.addEventListener('click', () => send(stripRuby(s.jp), { fromChip: true }));
     bar.append(b);
   }
 }
@@ -249,18 +263,20 @@ async function play(turn) {
 
   // Anything typed while she was "typing" gets sent now, not dropped.
   if (queued) {
-    const next = queued;
+    const { value, opts } = queued;
     queued = null;
-    send(next);
+    send(value, opts);
   }
 }
 
-async function send(text) {
+async function send(text, opts = {}) {
   const value = text.trim();
   if (!value) return;
   $('#input').value = '';
   if (busy) {
-    queued = value;
+    // Queue the options with the text — a chip tapped while she's still
+    // typing must not turn into a free-text turn when it finally sends.
+    queued = { value, opts };
     return;
   }
   addUserBubble(value);
@@ -273,7 +289,7 @@ async function send(text) {
   const waiting = typingIndicator();
   let turn;
   try {
-    turn = await yui.respond(value, state);
+    turn = await yui.respond(value, state, opts);
   } finally {
     waiting.remove();
     busy = false;
@@ -470,7 +486,7 @@ function openGallery() {
     fig.className = 'shot';
     fig.innerHTML = `
       <img src="${esc(g.file)}" alt="${esc(g.alt)}" loading="lazy">
-      <div class="shot-fallback">📷<span>${esc(g.file.split('/').pop())}</span></div>
+      <div class="shot-fallback">${svgIcon('imageOff', 'ico-lg')}<span>${esc(g.file.split('/').pop())}</span></div>
       <figcaption>${esc(g.alt || '')}<small>${esc(g.on || '')}</small></figcaption>`;
     fig.querySelector('img').addEventListener('error', () => fig.classList.add('missing'));
     fig.addEventListener('click', () => openLightbox(g));

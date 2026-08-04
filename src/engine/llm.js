@@ -22,6 +22,9 @@ export const MODELS = [
 const SPRITES = [
   'neutral', 'smile', 'excited', 'shy', 'happy_shy',
   'pout', 'surprised', 'concerned', 'tired', 'sleepy',
+  // The wider range. Without these in the enum the model could only ever pick
+  // between mild moods, so she read as pleasant and flat no matter the scene.
+  'angry', 'hurt', 'sad', 'jealous', 'love', 'smug', 'serious',
 ];
 
 // Measured round trips run 2.6–6.2s. At 9s the tail occasionally aborted and
@@ -156,6 +159,49 @@ function intimateBlock(persona, state) {
 ${it.summary}
 ${(it.beats || []).map((b) => `- ${b}`).join('\n')}
 表現の限度: ${it.limits}`;
+}
+
+// The premise, so it is never gated: she met him once, in the rain, and still
+// has his umbrella. Every other "meeting" line in the content means meeting
+// again properly — this block is what keeps the model from writing them as
+// strangers who have never been in the same room.
+function meetingBlock(persona) {
+  const m = persona.life?.meeting;
+  if (!m) return '';
+  return `
+
+【二人のなれそめ — 前提。絶対に忘れない】
+${m.summary}
+${(m.beats || []).map((b) => `- ${b}`).join('\n')}
+今の気持ち: ${m.nowFeels}
+注意: 「会う」と言うときは「もう一度ちゃんと会う」の意味。初対面ではない。`;
+}
+
+// The rival. Not a villain by construction — the pressure only works if he is
+// a reasonable option she has to keep actively declining.
+const RIVAL_MIN_AFFECTION = 35;
+
+function rivalBlock(persona, state) {
+  const r = persona.life?.rival;
+  if (!r || state.affection < RIVAL_MIN_AFFECTION) return '';
+  return `
+
+【${r.who}のこと — 親密度が上がってきたときだけ】
+${r.summary}
+${(r.beats || []).map((b) => `- ${b}`).join('\n')}
+扱い方: ${r.handling}`;
+}
+
+function emotionBlock(persona) {
+  const e = persona.life?.emotions;
+  if (!e) return '';
+  const rows = Object.entries(e).map(([k, v]) => `- ${k}: ${v}`).join('\n');
+  return `
+
+【感情の出かた — 場面に合う感情を選び、その出かたを守る】
+${rows}
+毎ターン穏やかでいる必要はない。怒るときは怒り、拗ねるときは拗ねる。
+sprite は感情に合わせて選ぶこと（angry / hurt / sad / jealous / love / smug / serious も使える）。`;
 }
 
 function personaBlock(persona) {
@@ -337,7 +383,9 @@ export async function improvise({ settings, persona, state, stage, userText, dir
   }
 
   const system = [
-    personaBlock(persona) + schoolBlock(persona, state) + pastBlock(persona, state) + intimateBlock(persona, state),
+    personaBlock(persona) + meetingBlock(persona) + emotionBlock(persona) +
+      schoolBlock(persona, state) + pastBlock(persona, state) +
+      rivalBlock(persona, state) + intimateBlock(persona, state),
     memoryBlock(state, stage),
     RULES,
     directionBlock(direction, userText),
