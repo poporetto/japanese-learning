@@ -59,8 +59,8 @@ rather than charging you. On top of that, `llm.js` enforces three limits itself:
 | Gate | Behaviour |
 |---|---|
 | Daily cap | 200 requests for Flash, 800 for Flash-Lite — under the free RPD |
-| Rate limit | 4.5s minimum between calls, under the free RPM |
-| 429 latch | One quota error and it stops calling until the Pacific-midnight reset |
+| Rate limit | 6.5s minimum between calls, under the free 10 RPM |
+| 429 latch | A per-**day** quota error stops all calls until the Pacific-midnight reset; a per-**minute** one only pauses for the retry delay |
 
 Every one of those falls back to the authored line. Hitting the limit looks like
 her being slightly less responsive, never like an error. ⚙ shows the day's count.
@@ -125,13 +125,63 @@ draw against 60 ordinary ones and never appear.
 Currently 65 proactive lines: time-banded slices of her day, 14 questions aimed
 at you, ignored-escalation, and affection-gated ones.
 
+## Timed messages
+
+Eight clock slots, 20 authored variants, in `dialogue.scheduled`:
+
+| time | |
+|---|---|
+| 06:00 | おはよう — still half asleep |
+| 07:30 | heading out, fighting the Hibiya line |
+| 12:00 | lunch — what are you having? |
+| 15:00 | the 3pm slump |
+| 19:00 | dinner |
+| 22:00 | winding down, how was your day |
+| 23:00 | おやすみ |
+| 01:00 | "wait, you're still up?" |
+
+Each fires **once per local day** and expires: a slot is only delivered within
+`window` minutes of its time, so opening the app at 21:00 doesn't hand you a
+stale おはよう. That grace period is the point — the tab isn't open at 06:00, so
+you get it when you arrive, provided you arrive soon enough. Arriving inside a
+window opens with the timed message *instead of* the usual greeting rather than
+stacking both.
+
+If several come due at once, the most recent is delivered and the rest are
+retired, so you never work through a backlog that's no longer true.
+
 ### Notifications
 
-On by default. Permission is requested on your first message rather than at
-load, because browsers auto-deny a request that isn't tied to a user gesture
-and then never ask again. She only notifies when the tab isn't focused, and
-`renotify` means a second message re-alerts rather than silently replacing the
-first. Turn it off in ⚙.
+On by default, but there are real limits worth knowing before relying on them:
+
+- **Only while the page is open.** These are plain `Notification` calls, not
+  push. If the app isn't running in a tab or in the background, nothing fires —
+  a 06:00 おはよう reaches you when you next open it, not on a closed phone.
+  Real background delivery needs a service worker and a push server.
+- **Only when the tab isn't focused.** Looking at the app already shows you the
+  message, so notifying too would be noise.
+- **`denied` is permanent from our side.** Browsers auto-deny a permission
+  request that isn't tied to a user gesture, and once denied, asking again does
+  nothing — only you can undo it in the browser's site settings. ⚙ now states
+  the current permission and has a **test button** so a silent failure is
+  visible instead of mysterious.
+
+Permission is requested on your first message rather than at load, for the
+gesture reason above.
+
+## Chat history and gallery
+
+The transcript persists. Reload and your conversation is still there to scroll
+back through, with a 「ここから今日」 divider marking where the restored history
+ends. It replays instantly — the typing animation is suppressed, or a reload
+would look like her firing 200 messages at once. Capped at 400 entries.
+
+🖼 opens the **gallery**: every photo she's sent, deduped and dated, newest
+first. Tap any thumbnail — in the gallery or in the chat — for a full-size
+lightbox. Photos whose image files don't exist yet show the same dashed
+placeholder as in the chat.
+
+`↺` clears both along with her memory.
 
 ## Deploying to GitHub Pages
 

@@ -384,3 +384,18 @@ body.llm-on .sprite::after {
 .lb::backdrop { background: rgba(0, 0, 0, .82); }
 .lb img { max-width: 92vw; max-height: 80dvh; display: block; border-radius: 14px; }
 .lb p { color: var(--dim); font-size: 12px; text-align: center; margin: 8px 0 0; }
+
+/* ---- narrow screens ---- */
+
+/* 結衣 → ケン wrapped one character per line once the tools row squeezed the
+   name column. Truncate instead of wrapping, and drop the emotion label on
+   phones so the buttons keep their tap targets. */
+.name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stage { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+@media (max-width: 430px) {
+  .emo { display: none; }
+  .tools { gap: 4px; }
+  .tools button { width: 30px; height: 30px; }
+  .sprite { width: 44px; height: 44px; }
+}
