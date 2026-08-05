@@ -20,6 +20,43 @@ const SCAN_BLOCKING = ['ask_photo', 'meaning_question', 'teach_request'];
 // never write back into the loaded JSON, so every turn works on copies.
 const clone = (bubbles) => bubbles.map((b) => ({ ...b }));
 
+const NO_RUBY = /\{[ぁ-んー]+\}/g;
+
+/**
+ * Which N2 points does this turn actually use?
+ *
+ * The grammar card used to be chosen by intent/topic alone, so it explained a
+ * pattern she hadn't said — measured at 1% overlap. She'd write
+ * 「休めるどころか、仕事が増えていく一方」 and the card would teach 〜わけにはいかない,
+ * with the real answer sitting in her own sentence.
+ *
+ * Two detectors. Authored lines and API replies both name their pattern at the
+ * end of the English gloss (" — 〜どころか"), which is exact. Older lines that
+ * predate that convention are caught by matching the point's surface form
+ * against the Japanese.
+ */
+function usedGrammar(bubbles, grammar) {
+  const hits = [];
+  for (const g of grammar) {
+    const point = g.point.replace(NO_RUBY, '');
+    const surface = point.replace(/^〜/, '').split('(')[0].trim();
+
+    for (const b of bubbles) {
+      const named = [...String(b.en || '').matchAll(/—\s*(〜[^\s,.;、。]+)/g)].map((m) => m[1]);
+      const plain = b.jp.replace(NO_RUBY, '');
+      // Short forms like 〜ほど or 〜さえ appear inside ordinary words far too
+      // often to be evidence, and a multi-part point can't be matched whole.
+      const bySurface =
+        surface.length >= 3 && !surface.includes('〜') && plain.includes(surface);
+      if (named.includes(point) || bySurface) {
+        hits.push({ id: g.id, line: b.jp });   // keep the sentence, ruby and all
+        break;
+      }
+    }
+  }
+  return hits;
+}
+
 // What the director's turn kinds mean, phrased as stage directions for the API.
 const GOALS = {
   greet: '会話を切り出す。時間帯に合った軽い挨拶から。',
@@ -28,6 +65,7 @@ const GOALS = {
   topic_follow: '今の話題を掘り下げる。',
   callback: '前に相手が話してくれたことを思い出して、そこに触れる。',
   deflect: '相手の話にちゃんと乗る。分からないふりや話題転換はしない。',
+  withdrawn: 'そっけなく短く返す。句点を増やし、質問も写真も出さない。冷たいのではなく、近づかれて身構えている。',
   default: '自然に会話を続ける。',
 };
 
@@ -180,6 +218,7 @@ export class Companion {
       gapDays: 0,
       band: state._band,
       justLearned: newMemories.length > 0,
+      userText: raw,
     });
 
     // What she's currently talking about decides which photo she'd reach for.
@@ -293,6 +332,10 @@ export class Companion {
       markUsed(state, v.id);
       if (v.q) state.pendingSlot = v.q;
       if (v.setFlag) state.flags[v.setFlag] = true;
+      // `coldHours` starts the withdrawal. Real hours, not turns: the point is
+      // that a day passes and she comes back to it, which turn counts can't say.
+      if (v.coldHours) state.coldUntil = Date.now() + v.coldHours * 3600 * 1000;
+      if (v.clearCold) state.coldUntil = 0;
       if (plan.kind === 'callback') state.lastCallbackTurn = state.turns;
       if (plan.kind !== 'deflect') direction.refs.push(v.b.map((b) => b.jp).join(' '));
       if (v.q) direction.askAbout = v.q;
@@ -372,7 +415,8 @@ export class Companion {
 
     // Unsolicited photo, on her own initiative — usually because the photo
     // matches whatever she just brought up.
-    if (!photo && plan.kind !== 'photo_request') {
+    const withdrawn = plan.kind === 'withdrawn';
+    if (!photo && plan.kind !== 'photo_request' && !withdrawn) {
       // On a deflect the director pre-picks a topic to chain into. If the API
       // then took the turn somewhere else — which is the whole point of the
       // API — that topic was discarded, and using it to choose a photo pins a
@@ -403,6 +447,7 @@ export class Companion {
     const g = teachPlan(state, this.grammar, {
       ...meta,
       topicId: plan.topic?.id ?? state.pendingTopic ?? null,
+      usedHits: usedGrammar(bubbles, this.grammar),
     });
     if (g && bubbles.length) {
       teach = g;

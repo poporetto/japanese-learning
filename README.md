@@ -170,6 +170,45 @@ Two gates enforce it, and a validator proves them:
 Swept across 300 sessions each at affection 0 / 30 / 55: **zero** intimate lines
 or photos. At 75 and 95 the whole set is reachable.
 
+## The arc
+
+Six beats that turn the relationship into a story with an ending, gated on flags
+rather than affection so they land in order:
+
+| beat | trigger | |
+|---|---|---|
+| `t_choice` | 45 + knows Fujii | she asks whether to accept his dinner — **your answer forks** |
+| `t_thaw` | after "go" | she withdrew; she comes back and explains why |
+| `t_ex_returns` | 55 + knows ex | he messages once. She doesn't reply, and bins the folded photo |
+| `t_naming` | 58 | Sakura asks who you are and she has no word for it |
+| `t_expire` | 65 + umbrella | you pass N2. Both excuses to keep talking are gone at once |
+| `t_together` | 75 + `ready` | she says it, without joking. Sets `together` |
+
+Then it gets harder, not easier — `t_ldr_time` (two overlapping hours a day),
+`t_ldr_call` (she goes mute on video), `t_ldr_hard` (couples at the station),
+`t_ldr_fight` (three days of silence), `t_ldr_plan` (November — one year from
+the rain). Being together is a **stage**, not a score: `flags.together` makes
+`stageOf` report 恋人 regardless of the meter.
+
+### Your answer actually decides something
+
+`cond.afterText` matches a regex against what you just said, and the director
+runs two passes so a branch that declares which answer it responds to beats the
+generic fallback. Tell her to go and she withdraws; tell her not to and she
+declines him for her own reasons; tell her it's her call and she says that's the
+most cowardly answer of the three.
+
+### The cold spell
+
+`coldHours` on a variant sets `state.coldUntil` in real hours. While it's live
+she pre-empts her own threads: short flat lines from `dialogue.withdrawn`, no
+questions, **no photos** — the flatness is the content.
+
+It ends when you actually reach out. `RE_REACHING_OUT` matches an apology or a
+「待ってる」 and switches her to `dialogue.thaw`, which clears the timer. Without
+that the only way through a sulk was the wall clock, which made it something
+that happened *to* you and left the reconciliation lines unreachable.
+
 ## Proactive messages
 
 She starts messages on her own after 55–105 seconds of silence, backing off
@@ -199,8 +238,10 @@ Author them in `dialogue.proactive`, same shape as everything else:
 those lines jump the queue — otherwise 「無視してる？」 would lose the random
 draw against 60 ordinary ones and never appear.
 
-Currently 71 proactive lines: time-banded slices of her day, 14 questions aimed
-at you, ignored-escalation, and affection-gated ones.
+Currently 130 proactive lines: time-banded slices of her day, 24 questions aimed
+at you, ignored-escalation, and flag-gated ones. Measured over 400 nudges — 314
+distinct lines, zero immediate repeats, two repeats inside ten nudges (both from
+the deliberately small ignored-escalation pool).
 
 ## Story arcs
 
@@ -393,7 +434,7 @@ she'd send it:
 - A photo with no `when` only appears on the low-probability random path.
 - Ask too often and she deflects (`photoDeny`) rather than spamming.
 
-Currently **56 photos — 33 scenes and 23 selfies.** The scenes are her
+Currently **110 photos — 80 scenes and 30 selfies.** The scenes are her
 surroundings: konbini hauls, ramen, gyoza, her desk at work and at home, the
 empty office floor, the train window, the shopping street at dusk, the konbini
 at 1am, the sky, rain, umbrellas, laundry, Nakameguro station, the Meguro river
@@ -447,17 +488,22 @@ haircut, shy for the dress and the last one.
 
 ## N2 grammar
 
-All **156 points** of the standard JLPT N2 list are in `grammar-n2.json`, and a
-600-turn simulation surfaces every one of them. They ride along as a collapsible
-side note, never as the main message — roughly one every four turns, unseen
-points first.
+All **162 points** of the standard JLPT N2 list are in `grammar-n2.json`. They
+ride along as a collapsible side note, never as the main message.
 
-Each is tagged with `when.intent` and/or `when.topic`, and a matching card beats
-a random one: complain about work and you get 〜どころか, say you're exhausted and
-you get 〜てしかたがない, and the ex thread pulls 〜ざるを得ない, 〜ものの,
-〜てはじめて. Topic matching matters because most of the conversation happens
-inside her topic threads, where `intentId` is null and an intent-only match
-would always fall through to a random card.
+**A card only ever appears when it explains a sentence she just said, and it
+quotes that sentence.** This is the whole design: previously the card was chosen
+by intent and topic, which sounds reasonable and measured at **1% overlap** with
+what she'd actually written — she'd say 「休めるどころか、仕事が増えていく一方」 and
+the card would teach 〜わけにはいかない, with the real answer sitting in her own
+sentence. It's 100% now, and cards arrive about once every seven turns instead
+of every four: rarer, but never arbitrary.
+
+Detection runs two ways. Authored lines and API replies both name their pattern
+at the end of the English gloss (`" — 〜どころか"`), which is exact; older lines
+are caught by matching the point's surface form against the Japanese. Short
+forms like 〜ほど are excluded from surface matching — they appear inside
+ordinary words far too often to be evidence.
 
 Examples are written in her voice and set in her life — 田中さん's vague edits,
 the ramen place, the film she hasn't developed — so a card reads as an aside

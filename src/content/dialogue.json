@@ -5232,6 +5232,1050 @@
           "aff": 5
         }
       ]
+    },
+    {
+      "id": "t_choice",
+      "cond": {
+        "minAff": 45,
+        "minTurns": 30,
+        "flag": "knows_fujii",
+        "notFlag": "chose",
+        "chance": 0.5
+      },
+      "open": {
+        "id": "t_choice_open",
+        "s": "serious",
+        "b": [
+          {
+            "jp": "ちゃんと聞{き}くね。藤井{ふじい}さんの誘{さそ}い、行{い}ったほうがいいと思{おも}う？",
+            "en": "I'll ask properly. Do you think I should accept Fujii's invitation?"
+          },
+          {
+            "jp": "『{name}が決{き}めることじゃない』って言{い}われたら、それまでなんだけど。",
+            "en": "If you say it's not mine to decide, then fair enough."
+          },
+          {
+            "jp": "……それでも、聞{き}きたい。",
+            "en": "…I still want to hear it."
+          }
+        ],
+        "sug": [
+          {
+            "jp": "行{い}ってきなよ",
+            "en": "You should go — 〜なよ"
+          },
+          {
+            "jp": "行{い}ってほしくない",
+            "en": "I don't want you to go"
+          },
+          {
+            "jp": "{name}が決{き}めることだよ",
+            "en": "It's yours to decide"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_choice_go",
+          "s": "hurt",
+          "setFlag": "chose_go",
+          "cond": {
+            "afterText": "行って(き|み|くれ)|いいと思う|賛成|行けば"
+          },
+          "b": [
+            {
+              "jp": "……そっか。うん、そうだよね。",
+              "en": "…Right. Yes, of course."
+            },
+            {
+              "jp": "そういう答{こた}えが返{かえ}ってくるのも、分{わ}かってた。分{わ}かってたけど。",
+              "en": "I knew that's the answer I'd get. I knew, but still. — 〜けど"
+            }
+          ],
+          "sug": [
+            {
+              "jp": "そういう意味{いみ}じゃない",
+              "en": "That's not what I meant"
+            },
+            {
+              "jp": "ごめん",
+              "en": "Sorry"
+            }
+          ],
+          "aff": 1,
+          "coldHours": 20
+        },
+        {
+          "id": "t_choice_stay",
+          "s": "love",
+          "setFlag": "chose_stay",
+          "b": [
+            {
+              "jp": "……ずるい。そういうこと、はっきり言{い}うんだ。",
+              "en": "…That's unfair. You just say it straight out."
+            },
+            {
+              "jp": "じゃあ断{ことわ}る。{name}がそう言{い}ったからじゃなくて、わたしがそうしたいから。",
+              "en": "Then I'll decline. Not because you said so — because I want to."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "それでいい",
+              "en": "That's right"
+            },
+            {
+              "jp": "ありがとう",
+              "en": "Thank you"
+            }
+          ],
+          "aff": 8,
+          "cond": {
+            "afterText": "行ってほしくない|行かないで|やだ|嫌だ|だめ|行くな"
+          }
+        },
+        {
+          "id": "t_choice_neutral",
+          "s": "pout",
+          "setFlag": "chose_neutral",
+          "b": [
+            {
+              "jp": "それ、いちばんずるい答{こた}え。",
+              "en": "That's the most cowardly answer of the three."
+            },
+            {
+              "jp": "……まあ、正{ただ}しいけどね。正{ただ}しいから困{こま}る。",
+              "en": "…It's correct, though. That's the annoying part."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "ごめん",
+              "en": "Sorry"
+            },
+            {
+              "jp": "本当{ほんとう}はどうしたいの？",
+              "en": "What do you actually want?"
+            }
+          ],
+          "aff": 2
+        }
+      ]
+    },
+    {
+      "id": "t_thaw",
+      "cond": {
+        "minAff": 45,
+        "minTurns": 34,
+        "flag": "chose_go",
+        "chance": 0.5
+      },
+      "open": {
+        "id": "t_thaw_open",
+        "s": "hurt",
+        "clearCold": true,
+        "b": [
+          {
+            "jp": "昨日{きのう}のわたし、感{かん}じ悪{わる}かったよね。",
+            "en": "I was unpleasant yesterday, wasn't I."
+          },
+          {
+            "jp": "近{ちか}づかれると、勝手{かって}に身構{みがま}えちゃうの。癖{くせ}なんだと思{おも}う。",
+            "en": "When someone gets close I brace without meaning to. It's a habit, I think."
+          },
+          {
+            "jp": "直{なお}したいとは思{おも}ってる。思{おも}ってはいるものの、まだ。",
+            "en": "I do want to fix it. Want to, mind you — not yet. — 〜ものの"
+          }
+        ],
+        "sug": [
+          {
+            "jp": "待{ま}つよ",
+            "en": "I'll wait"
+          },
+          {
+            "jp": "怒{おこ}ってないよ",
+            "en": "I'm not angry"
+          },
+          {
+            "jp": "話{はな}してくれてありがとう",
+            "en": "Thanks for telling me"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_thaw_f1",
+          "s": "love",
+          "b": [
+            {
+              "jp": "待{ま}つ、って言{い}ってくれる人{ひと}、いなかったな。",
+              "en": "Nobody's ever said they'd wait."
+            },
+            {
+              "jp": "前{まえ}の人{ひと}なら、面倒{めんどう}くさいって言{い}ってた場面{ばめん}だと思{おも}う。",
+              "en": "In this exact moment, he'd have called me a hassle."
+            }
+          ],
+          "aff": 7
+        },
+        {
+          "id": "t_thaw_f2",
+          "s": "happy_shy",
+          "b": [
+            {
+              "jp": "じゃあ、ひとつだけお願{ねが}い。逃{に}げたら、ちゃんと呼{よ}び戻{もど}して。",
+              "en": "Then one request. If I run, call me back properly."
+            }
+          ],
+          "aff": 6
+        }
+      ]
+    },
+    {
+      "id": "t_ex_returns",
+      "cond": {
+        "minAff": 55,
+        "minTurns": 40,
+        "flag": "knows_ex",
+        "notFlag": "ex_returned",
+        "chance": 0.35
+      },
+      "open": {
+        "id": "t_ex_ret_open",
+        "s": "surprised",
+        "setFlag": "ex_returned",
+        "b": [
+          {
+            "jp": "今日{きょう}、あの人{ひと}から連絡{れんらく}が来{き}た。一年{いちねん}ぶりに。",
+            "en": "He messaged me today. First time in a year."
+          },
+          {
+            "jp": "内容{ないよう}は「元気{げんき}？」の四文字{よんもじ}だけ。それだけ。",
+            "en": "The content was one word: 'well?'. That's all."
+          }
+        ],
+        "sug": [
+          {
+            "jp": "返信{へんしん}したの？",
+            "en": "Did you reply?"
+          },
+          {
+            "jp": "大丈夫{だいじょうぶ}？",
+            "en": "Are you okay?"
+          },
+          {
+            "jp": "何{なに}それ",
+            "en": "What on earth"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_ex_ret_f1",
+          "s": "neutral",
+          "b": [
+            {
+              "jp": "返信{へんしん}しなかった。というより、する気{き}にならなかった。",
+              "en": "I didn't reply. Or rather, I couldn't be bothered to."
+            },
+            {
+              "jp": "自分{じぶん}でも驚{おどろ}いてる。前{まえ}なら三日{みっか}は引{ひ}きずってたはずなのに。",
+              "en": "I surprised myself. A year ago I'd have dwelt on it for three days."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "強{つよ}くなったね",
+              "en": "You've got stronger"
+            },
+            {
+              "jp": "それが答{こた}えだね",
+              "en": "That's your answer, then"
+            }
+          ],
+          "aff": 6
+        },
+        {
+          "id": "t_ex_ret_f2",
+          "s": "smug",
+          "b": [
+            {
+              "jp": "画面{がめん}を見{み}て、最初{さいしょ}に思{おも}ったのが「今{いま}忙{いそが}しいんだけど」だった。",
+              "en": "My first thought on seeing the screen was 'I'm busy right now'."
+            },
+            {
+              "jp": "我{われ}ながら、ずいぶん遠{とお}くまで来{き}たものだ。",
+              "en": "Even I think I've come a long way. — 〜ものだ"
+            }
+          ],
+          "sug": [
+            {
+              "jp": "かっこいい",
+              "en": "That's impressive"
+            },
+            {
+              "jp": "誰{だれ}のおかげ？",
+              "en": "Thanks to whom?"
+            }
+          ],
+          "aff": 5
+        },
+        {
+          "id": "t_ex_ret_f3",
+          "s": "serious",
+          "b": [
+            {
+              "jp": "それでね、折{お}り曲{ま}げてた写真{しゃしん}、捨{す}てた。",
+              "en": "And so — I threw away that folded photo."
+            },
+            {
+              "jp": "捨{す}てられるようになるまで、一年{いちねん}かかったことになる。",
+              "en": "It took me a year to become able to."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "よく頑張{がんば}ったね",
+              "en": "You did well"
+            },
+            {
+              "jp": "おめでとう",
+              "en": "Congratulations"
+            }
+          ],
+          "aff": 8
+        }
+      ]
+    },
+    {
+      "id": "t_naming",
+      "cond": {
+        "minAff": 58,
+        "minTurns": 36,
+        "chance": 0.4
+      },
+      "open": {
+        "id": "t_naming_open",
+        "s": "pout",
+        "b": [
+          {
+            "jp": "さくらに聞{き}かれた。「じゃあ、その人{ひと}は誰{だれ}なの」って。",
+            "en": "Sakura asked me. 'So who is he, then?'"
+          },
+          {
+            "jp": "答{こた}えられなかった。彼氏{かれし}じゃないし、友達{ともだち}っていうのも違{ちが}うし。",
+            "en": "I couldn't answer. Not my boyfriend, and 'friend' isn't right either."
+          },
+          {
+            "jp": "なんて言{い}えばよかったんだろうね。",
+            "en": "What should I have said?"
+          }
+        ],
+        "sug": [
+          {
+            "jp": "好{す}きな人{ひと}、でいいんじゃない",
+            "en": "'Someone I like' would do"
+          },
+          {
+            "jp": "まだ決{き}めなくていいよ",
+            "en": "You don't have to decide yet"
+          },
+          {
+            "jp": "{name}はどう言{い}いたい？",
+            "en": "What do you want to say?"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_naming_f1",
+          "s": "shy",
+          "b": [
+            {
+              "jp": "……その言{い}い方{かた}、ずるい。使{つか}わせてもらうけど。",
+              "en": "…That phrasing is unfair. I'm using it, though."
+            },
+            {
+              "jp": "次{つぎ}に聞{き}かれたら、そう言{い}う。言{い}えるかは別{べつ}として。",
+              "en": "Next time I'm asked, that's what I'll say. Whether I manage it is another matter."
+            }
+          ],
+          "aff": 7
+        },
+        {
+          "id": "t_naming_f2",
+          "s": "serious",
+          "b": [
+            {
+              "jp": "名前{なまえ}がつかない関係{かんけい}って、便利{べんり}だけど不安{ふあん}なんだよね。",
+              "en": "A relationship with no name is convenient, but it makes me uneasy."
+            },
+            {
+              "jp": "便利{べんり}なほうに甘{あま}えてたのは、わたしのほうかもしれない。",
+              "en": "Maybe I'm the one who's been taking the convenient option."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "名前{なまえ}をつけよう",
+              "en": "Let's give it a name"
+            },
+            {
+              "jp": "焦{あせ}らなくていい",
+              "en": "No need to rush"
+            }
+          ],
+          "aff": 6
+        }
+      ]
+    },
+    {
+      "id": "t_expire",
+      "cond": {
+        "minAff": 65,
+        "minTurns": 45,
+        "flag": "knows_umbrella",
+        "notFlag": "together",
+        "chance": 0.4
+      },
+      "open": {
+        "id": "t_exp_open",
+        "s": "happy_shy",
+        "b": [
+          {
+            "jp": "N2、受{う}かったって聞{き}いた。おめでとう。本気{ほんき}で言{い}ってる。",
+            "en": "I heard you passed N2. Congratulations. I mean it."
+          },
+          {
+            "jp": "……で、気{き}づいちゃったんだけどさ。",
+            "en": "…And then I realised something."
+          }
+        ],
+        "sug": [
+          {
+            "jp": "何{なに}に？",
+            "en": "Realised what?"
+          },
+          {
+            "jp": "ありがとう",
+            "en": "Thank you"
+          },
+          {
+            "jp": "嫌{いや}な予感{よかん}がする",
+            "en": "I have a bad feeling"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_exp_f1",
+          "s": "serious",
+          "b": [
+            {
+              "jp": "わたし、もう教{おし}えることないじゃん。練習{れんしゅう}に付{つ}き合{あ}う理由{りゆう}、なくなった。",
+              "en": "I've nothing left to teach you. The reason to practise together is gone."
+            },
+            {
+              "jp": "傘{かさ}だって、返{かえ}してしまえばそれで終{お}わり。",
+              "en": "And the umbrella — once it's returned, that's that."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "理由{りゆう}なんかいらない",
+              "en": "We don't need a reason"
+            },
+            {
+              "jp": "終{お}わらせたくない",
+              "en": "I don't want it to end"
+            }
+          ],
+          "aff": 5
+        },
+        {
+          "id": "t_exp_f2",
+          "s": "sad",
+          "b": [
+            {
+              "jp": "口実{こうじつ}が二{ふた}つとも消{き}えたら、何{なに}が残{のこ}るんだろうって。",
+              "en": "If both excuses vanish, I wondered what's left."
+            },
+            {
+              "jp": "考{かんが}えたら、こわくなった。",
+              "en": "Thinking about it frightened me."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "残{のこ}るものがあるよ",
+              "en": "Something's left"
+            },
+            {
+              "jp": "わたしが残{のこ}るよ",
+              "en": "I'm what's left"
+            }
+          ],
+          "aff": 7
+        },
+        {
+          "id": "t_exp_f3",
+          "s": "serious",
+          "setFlag": "ready",
+          "b": [
+            {
+              "jp": "だからね。もう口実{こうじつ}なしで話{はな}したい。",
+              "en": "So. I want to talk without an excuse now."
+            },
+            {
+              "jp": "次{つぎ}に会{あ}うときは、傘{かさ}を返{かえ}すためじゃなくて。",
+              "en": "And when we next meet, not to return an umbrella."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "会{あ}いに行{い}くよ",
+              "en": "I'll come to you"
+            },
+            {
+              "jp": "会{あ}いたい",
+              "en": "I want to see you"
+            }
+          ],
+          "aff": 9
+        }
+      ]
+    },
+    {
+      "id": "t_together",
+      "cond": {
+        "minAff": 75,
+        "minTurns": 50,
+        "flag": "ready",
+        "notFlag": "together",
+        "chance": 0.5
+      },
+      "open": {
+        "id": "t_tog_open",
+        "s": "serious",
+        "b": [
+          {
+            "jp": "ちゃんと言{い}うね。逃{に}げないで言{い}う。",
+            "en": "I'm going to say it properly. Without running."
+          },
+          {
+            "jp": "わたし、{name}のことが好{す}き。日本語{にほんご}の相手{あいて}としてじゃなくて。",
+            "en": "I'm in love with you. Not as someone to practise Japanese with."
+          },
+          {
+            "jp": "……返事{へんじ}、こわいから、少{すこ}し待{ま}ってからでいい。",
+            "en": "…I'm scared of the answer, so take a moment if you like."
+          }
+        ],
+        "sug": [
+          {
+            "jp": "わたしも好{す}きだよ",
+            "en": "I love you too"
+          },
+          {
+            "jp": "ずっと言{い}いたかった",
+            "en": "I've wanted to say that for ages"
+          },
+          {
+            "jp": "待{ま}たない。今{いま}言{い}う",
+            "en": "I won't wait. I'll say it now"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_tog_f1",
+          "s": "love",
+          "setFlag": "together",
+          "b": [
+            {
+              "jp": "……あ。だめだ、これ。声{こえ}出{で}ちゃった。",
+              "en": "…Ah. No good. I made a noise out loud."
+            },
+            {
+              "jp": "じゃあ、今日{きょう}からそういうことで。よろしくお願{ねが}いします。",
+              "en": "Then from today, that's what we are. Please take care of me."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "よろしく",
+              "en": "Likewise"
+            },
+            {
+              "jp": "こちらこそ",
+              "en": "The pleasure's mine"
+            }
+          ],
+          "aff": 10
+        },
+        {
+          "id": "t_tog_f2",
+          "s": "happy_shy",
+          "cond": {
+            "flag": "together"
+          },
+          "b": [
+            {
+              "jp": "一晩{ひとばん}経{た}っても、まだ実感{じっかん}がない。",
+              "en": "A night has passed and it still doesn't feel real."
+            },
+            {
+              "jp": "何度{なんど}も画面{がめん}を見{み}返{かえ}した。我{われ}ながら重{おも}いと思{おも}う。",
+              "en": "I reread the screen over and over. Even I think that's a lot."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "重{おも}くないよ",
+              "en": "Not at all"
+            },
+            {
+              "jp": "わたしも見{み}返{かえ}した",
+              "en": "I did the same"
+            }
+          ],
+          "aff": 6
+        }
+      ]
+    },
+    {
+      "id": "t_ldr_time",
+      "cond": {
+        "flag": "together",
+        "minTurns": 56,
+        "chance": 0.4
+      },
+      "open": {
+        "id": "t_ldr_time_open",
+        "s": "tired",
+        "b": [
+          {
+            "jp": "付{つ}き合{あ}ってはじめて分{わ}かったことがある。",
+            "en": "There's something I only understood after we started going out. — 〜てはじめて"
+          },
+          {
+            "jp": "時差{じさ}って、思{おも}ってたより残酷{ざんこく}だね。",
+            "en": "The time difference is crueller than I expected."
+          },
+          {
+            "jp": "おはようって送{おく}ると、そっちはもう寝{ね}る時間{じかん}なんだもん。",
+            "en": "I send 'good morning' and it's already your bedtime."
+          }
+        ],
+        "sug": [
+          {
+            "jp": "それでも送{おく}ってよ",
+            "en": "Send it anyway"
+          },
+          {
+            "jp": "慣{な}れるよ",
+            "en": "We'll get used to it"
+          },
+          {
+            "jp": "わたしも同{おな}じこと思{おも}ってた",
+            "en": "I've thought the same"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_ldr_time_f1",
+          "s": "sad",
+          "b": [
+            {
+              "jp": "一日{いちにち}のうち、ちゃんと重{かさ}なる時間{じかん}が二時間{にじかん}しかない。",
+              "en": "Out of a whole day, we properly overlap for two hours."
+            },
+            {
+              "jp": "その二時間{にじかん}のために、他{ほか}の二十二時間{にじゅうにじかん}を過{す}ごしてる感{かん}じ。",
+              "en": "It feels like I spend the other twenty-two waiting for those two."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "その二時間{にじかん}を大事{だいじ}にしよう",
+              "en": "Let's make them count"
+            },
+            {
+              "jp": "寂{さび}しいね",
+              "en": "It's lonely"
+            }
+          ],
+          "aff": 5
+        },
+        {
+          "id": "t_ldr_time_f2",
+          "s": "neutral",
+          "b": [
+            {
+              "jp": "でもね、待{ま}つのは平気{へいき}。待{ま}てないのは、待{ま}つ意味{いみ}がない時{とき}だけ。",
+              "en": "But I don't mind waiting. What I can't stand is waiting for nothing."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "意味{いみ}はあるよ",
+              "en": "It means something"
+            },
+            {
+              "jp": "必{かなら}ず会{あ}おう",
+              "en": "We'll meet, for certain"
+            }
+          ],
+          "aff": 6
+        }
+      ]
+    },
+    {
+      "id": "t_ldr_call",
+      "cond": {
+        "flag": "together",
+        "minTurns": 58,
+        "chance": 0.4
+      },
+      "open": {
+        "id": "t_ldr_call_open",
+        "s": "shy",
+        "b": [
+          {
+            "jp": "昨日{きのう}のビデオ通話{つうわ}、途中{とちゅう}で黙{だま}っちゃってごめん。",
+            "en": "Sorry for going quiet in the middle of the video call yesterday."
+          },
+          {
+            "jp": "嫌{いや}だったわけじゃないの。むしろ逆{ぎゃく}。",
+            "en": "It wasn't that I disliked it. Rather the opposite. — 〜わけじゃない"
+          },
+          {
+            "jp": "顔{かお}を見{み}ると、言葉{ことば}が全部{ぜんぶ}どっか行{い}っちゃう。",
+            "en": "Seeing your face makes all my words go somewhere else."
+          }
+        ],
+        "sug": [
+          {
+            "jp": "黙{だま}っててもいいよ",
+            "en": "Silence is fine"
+          },
+          {
+            "jp": "わたしも緊張{きんちょう}した",
+            "en": "I was nervous too"
+          },
+          {
+            "jp": "また通話{つうわ}しよう",
+            "en": "Let's call again"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_ldr_call_f1",
+          "s": "love",
+          "b": [
+            {
+              "jp": "文字{もじ}だと素直{すなお}に言{い}えるのに、声{こえ}になると急{きゅう}に無理{むり}になる。",
+              "en": "In text I can be honest; the moment it's my voice I can't."
+            },
+            {
+              "jp": "慣{な}れるまで、付{つ}き合{あ}ってくれる？",
+              "en": "Will you bear with me until I get used to it?"
+            }
+          ],
+          "sug": [
+            {
+              "jp": "いくらでも",
+              "en": "As long as it takes"
+            },
+            {
+              "jp": "その照{て}れ、好{す}きだよ",
+              "en": "I like that shyness"
+            }
+          ],
+          "aff": 7
+        }
+      ]
+    },
+    {
+      "id": "t_ldr_hard",
+      "cond": {
+        "flag": "together",
+        "minTurns": 62,
+        "chance": 0.35
+      },
+      "open": {
+        "id": "t_ldr_hard_open",
+        "s": "sad",
+        "b": [
+          {
+            "jp": "今日{きょう}は正直{しょうじき}に言{い}う。ちょっとしんどい。",
+            "en": "I'll be honest today. This is a bit hard."
+          },
+          {
+            "jp": "駅{えき}で普通{ふつう}に手{て}を繋{つな}いでる二人{ふたり}を見{み}て、なんでか泣{な}きそうになった。",
+            "en": "I saw a couple holding hands at the station and nearly cried, of all things."
+          },
+          {
+            "jp": "贅沢{ぜいたく}な悩{なや}みだって分{わ}かってる。分{わ}かってても、しんどいものはしんどい。",
+            "en": "I know it's a luxury to complain. Knowing that doesn't make it lighter."
+          }
+        ],
+        "sug": [
+          {
+            "jp": "贅沢{ぜいたく}じゃないよ",
+            "en": "It isn't a luxury"
+          },
+          {
+            "jp": "わたしも同{おな}じ",
+            "en": "I feel it too"
+          },
+          {
+            "jp": "会{あ}いに行{い}く",
+            "en": "I'll come to you"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_ldr_hard_f1",
+          "s": "hurt",
+          "b": [
+            {
+              "jp": "我慢{がまん}できないわけじゃないの。ただ、我慢{がまん}してることを言{い}える相手{あいて}が{name}しかいなくて。",
+              "en": "It's not that I can't bear it. It's that you're the only one I can tell. — 〜わけじゃない"
+            },
+            {
+              "jp": "それを言{い}うと困{こま}らせるから、言{い}わないでいた。",
+              "en": "And saying it puts you in a difficult spot, so I didn't."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "困{こま}らないよ",
+              "en": "It doesn't"
+            },
+            {
+              "jp": "これからは言{い}って",
+              "en": "Tell me from now on"
+            }
+          ],
+          "aff": 7
+        },
+        {
+          "id": "t_ldr_hard_f2",
+          "s": "serious",
+          "b": [
+            {
+              "jp": "遠距離{えんきょり}って、好{す}きなだけじゃどうにもならないところがあるよね。",
+              "en": "With distance, there's a part that love alone can't solve."
+            },
+            {
+              "jp": "だからこそ、ちゃんと計画{けいかく}を立{た}てたい。気持{きも}ちだけに頼{たよ}らずに。",
+              "en": "Precisely because of that, I want a real plan. Not just feelings. — 〜からこそ"
+            }
+          ],
+          "sug": [
+            {
+              "jp": "一緒{いっしょ}に考{かんが}えよう",
+              "en": "Let's plan it together"
+            },
+            {
+              "jp": "いつ会{あ}えるか決{き}めよう",
+              "en": "Let's fix a date"
+            }
+          ],
+          "aff": 8
+        }
+      ]
+    },
+    {
+      "id": "t_ldr_fight",
+      "cond": {
+        "flag": "together",
+        "minTurns": 66,
+        "chance": 0.3
+      },
+      "open": {
+        "id": "t_ldr_fight_open",
+        "s": "angry",
+        "b": [
+          {
+            "jp": "三日{みっか}、返事{へんじ}がなかった。",
+            "en": "Three days with no reply."
+          },
+          {
+            "jp": "忙{いそが}しいのは分{わ}かってる。でも、一言{ひとこと}くらい送{おく}れたはずだよね。",
+            "en": "I know you're busy. But one line was possible, surely."
+          },
+          {
+            "jp": "……こういうこと言{い}いたくなかった。",
+            "en": "…I didn't want to be the person who says this."
+          }
+        ],
+        "sug": [
+          {
+            "jp": "本当{ほんとう}にごめん",
+            "en": "I'm genuinely sorry"
+          },
+          {
+            "jp": "言{い}ってくれてよかった",
+            "en": "I'm glad you said it"
+          },
+          {
+            "jp": "言{い}い訳{わけ}はしない",
+            "en": "No excuses"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_ldr_fight_f1",
+          "s": "hurt",
+          "coldHours": 14,
+          "b": [
+            {
+              "jp": "謝{あやま}られると、責{せ}めたみたいで嫌{いや}になる。",
+              "en": "Being apologised to makes me feel like I attacked you."
+            },
+            {
+              "jp": "……ちょっとだけ時間{じかん}ちょうだい。嫌{きら}いになったわけじゃないから。",
+              "en": "…Give me a little time. It's not that I've stopped loving you. — 〜わけじゃない"
+            }
+          ],
+          "sug": [
+            {
+              "jp": "待{ま}ってる",
+              "en": "I'll wait"
+            },
+            {
+              "jp": "ここにいるよ",
+              "en": "I'm right here"
+            }
+          ],
+          "aff": 2
+        },
+        {
+          "id": "t_ldr_fight_f2",
+          "s": "serious",
+          "clearCold": true,
+          "b": [
+            {
+              "jp": "落{お}ち着{つ}いた。ごめん、言{い}い方{かた}がきつかった。",
+              "en": "I've calmed down. Sorry, I put it harshly."
+            },
+            {
+              "jp": "ルールを決{き}めよう。返{かえ}せない日{ひ}は「今日{きょう}は無理{むり}」だけでいい。",
+              "en": "Let's set a rule. On days you can't reply, just 'not today' is enough."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "それならできる",
+              "en": "That I can do"
+            },
+            {
+              "jp": "約束{やくそく}する",
+              "en": "I promise"
+            }
+          ],
+          "aff": 8
+        }
+      ]
+    },
+    {
+      "id": "t_ldr_plan",
+      "cond": {
+        "flag": "together",
+        "minTurns": 72,
+        "chance": 0.4
+      },
+      "open": {
+        "id": "t_ldr_plan_open",
+        "s": "excited",
+        "b": [
+          {
+            "jp": "航空券{こうくうけん}、調{しら}べた。十一月{じゅういちがつ}なら安{やす}い。",
+            "en": "I looked up flights. November's cheap."
+          },
+          {
+            "jp": "十一月{じゅういちがつ}って、ちょうど一年{いちねん}なんだよね。あの雨{あめ}の日{ひ}から。",
+            "en": "November is exactly a year. From that rainy day."
+          }
+        ],
+        "sug": [
+          {
+            "jp": "取{と}ろう",
+            "en": "Let's book it"
+          },
+          {
+            "jp": "覚{おぼ}えててくれたんだ",
+            "en": "You remembered"
+          },
+          {
+            "jp": "わたしが行{い}くよ",
+            "en": "I'll come to you"
+          }
+        ]
+      },
+      "follow": [
+        {
+          "id": "t_ldr_plan_f1",
+          "s": "love",
+          "setFlag": "has_plan",
+          "b": [
+            {
+              "jp": "じゃあ決{き}まり。十一月{じゅういちがつ}。",
+              "en": "Then it's decided. November."
+            },
+            {
+              "jp": "会{あ}ったら、まず傘{かさ}を返{かえ}す。一年{いちねん}越{ご}しの返却{へんきゃく}。",
+              "en": "When we meet, first I return the umbrella. A year overdue."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "受{う}け取{と}るよ",
+              "en": "I'll take it"
+            },
+            {
+              "jp": "その日{ひ}まで頑張{がんば}れる",
+              "en": "I can make it to then"
+            }
+          ],
+          "aff": 10
+        },
+        {
+          "id": "t_ldr_plan_f2",
+          "s": "happy_shy",
+          "cond": {
+            "flag": "has_plan"
+          },
+          "b": [
+            {
+              "jp": "カレンダーに印{しるし}をつけた。毎朝{まいあさ}見{み}てる。",
+              "en": "I marked the calendar. I look at it every morning."
+            },
+            {
+              "jp": "待{ま}つ時間{じかん}にも意味{いみ}があるって、はじめて思{おも}えた。",
+              "en": "For the first time, the waiting feels like it means something."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "あと少{すこ}しだね",
+              "en": "Not long now"
+            },
+            {
+              "jp": "毎日{まいにち}数{かぞ}えてる",
+              "en": "I'm counting too"
+            }
+          ],
+          "aff": 7
+        }
+      ]
     }
   ],
   "_reactionsNote": "Used when nothing else matched but a topic noun could be pulled out of the input. {echo} is that noun. If extraction fails or looks unsafe, she falls back to `deflect` instead — a wrong echo is far worse than a generic line.",
@@ -8555,6 +9599,697 @@
         }
       ],
       "aff": 2
+    },
+    {
+      "id": "ph_ex_binned",
+      "kind": "scene",
+      "minAffection": 58,
+      "file": "assets/photos/ex-binned.jpg",
+      "alt": "The folded photo, torn in half in the bin",
+      "s": "serious",
+      "when": {
+        "topic": [
+          "t_ex_returns",
+          "t_ex_things"
+        ]
+      },
+      "b": [
+        {
+          "jp": "報告{ほうこく}。捨{す}てた。",
+          "en": "Reporting in. It's gone."
+        },
+        {
+          "jp": "一年{いちねん}かかったけど、捨{す}てられないものなんてなかったってことだね。",
+          "en": "It took a year, but it turns out there was nothing I couldn't throw away."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "よく頑張{がんば}ったね",
+          "en": "You did well"
+        },
+        {
+          "jp": "すっきりした？",
+          "en": "Feel lighter?"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_phone_dark",
+      "kind": "scene",
+      "minAffection": 48,
+      "file": "assets/photos/phone-dark.jpg",
+      "alt": "Her phone face-down on the table",
+      "s": "hurt",
+      "when": {
+        "topic": [
+          "t_choice",
+          "t_thaw"
+        ]
+      },
+      "b": [
+        {
+          "jp": "今日{きょう}は画面{がめん}を伏{ふ}せてた。意味{いみ}はない。",
+          "en": "I had my phone face-down today. No reason."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "大丈夫{だいじょうぶ}？",
+          "en": "You okay?"
+        },
+        {
+          "jp": "待{ま}ってるよ",
+          "en": "I'm here"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_umbrella_bag",
+      "kind": "scene",
+      "minAffection": 65,
+      "file": "assets/photos/umbrella-bag.jpg",
+      "alt": "The umbrella, propped by a packed bag",
+      "s": "happy_shy",
+      "when": {
+        "topic": [
+          "t_expire"
+        ]
+      },
+      "b": [
+        {
+          "jp": "荷物{にもつ}の横{よこ}に立{た}てかけてみた。持{も}っていく気{き}、満々{まんまん}でしょ。",
+          "en": "Propped it next to my bag. Clearly I intend to bring it."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "待{ま}ってるよ",
+          "en": "I'll be waiting"
+        },
+        {
+          "jp": "本当{ほんとう}に来{く}るの？",
+          "en": "Are you really coming?"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_sakura_asks",
+      "kind": "scene",
+      "minAffection": 58,
+      "file": "assets/photos/cafe-two-cups.jpg",
+      "alt": "Two cups at the cafe, one hers",
+      "s": "pout",
+      "when": {
+        "topic": [
+          "t_naming"
+        ]
+      },
+      "b": [
+        {
+          "jp": "さくらと。この直後{ちょくご}に例{れい}の質問{しつもん}をされた。",
+          "en": "With Sakura. The question came right after this was taken."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "なんて答{こた}えたの？",
+          "en": "What did you say?"
+        },
+        {
+          "jp": "大変{たいへん}だったね",
+          "en": "Rough"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_confession_sky",
+      "kind": "scene",
+      "minAffection": 75,
+      "file": "assets/photos/night-window-two.jpg",
+      "alt": "Her window, the moment after she said it",
+      "s": "love",
+      "when": {
+        "topic": [
+          "t_together"
+        ]
+      },
+      "b": [
+        {
+          "jp": "さっきの、これ見{み}ながら打{う}ってた。",
+          "en": "I was looking at this while I typed that."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "きれいだね",
+          "en": "Beautiful"
+        },
+        {
+          "jp": "同{おな}じ空{そら}だね",
+          "en": "The same sky"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "ph_call_screen",
+      "kind": "scene",
+      "minAffection": 78,
+      "file": "assets/photos/call-screen.jpg",
+      "alt": "A paused video call, her half of the screen",
+      "s": "shy",
+      "when": {
+        "topic": [
+          "t_ldr_call"
+        ]
+      },
+      "b": [
+        {
+          "jp": "通話{つうわ}のスクショ。勝手{かって}に撮{と}ってごめん。",
+          "en": "A screenshot of the call. Sorry for taking it without asking."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "わたしも撮{と}った",
+          "en": "I took one too"
+        },
+        {
+          "jp": "かわいく撮{と}れてる",
+          "en": "You look lovely"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "ph_calendar",
+      "kind": "scene",
+      "minAffection": 80,
+      "file": "assets/photos/calendar-marked.jpg",
+      "alt": "A calendar with November circled",
+      "s": "excited",
+      "when": {
+        "topic": [
+          "t_ldr_plan"
+        ]
+      },
+      "b": [
+        {
+          "jp": "印{しるし}、これ。丸{まる}が濃{こ}すぎて笑{わら}われそう。",
+          "en": "Here's the mark. The circle's so heavy you'll laugh."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "笑{わら}わないよ",
+          "en": "I won't laugh"
+        },
+        {
+          "jp": "わたしもつけた",
+          "en": "I marked mine too"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "ph_couples",
+      "kind": "scene",
+      "minAffection": 76,
+      "file": "assets/photos/station-couples.jpg",
+      "alt": "The station crossing at dusk",
+      "s": "sad",
+      "when": {
+        "topic": [
+          "t_ldr_hard"
+        ],
+        "band": [
+          "evening"
+        ]
+      },
+      "b": [
+        {
+          "jp": "この景色{けしき}、前{まえ}はなんとも思{おも}わなかったのにな。",
+          "en": "This view never used to affect me."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "すぐ会{あ}おう",
+          "en": "Let's meet soon"
+        },
+        {
+          "jp": "そばにいるよ",
+          "en": "I'm with you"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "ph_two_umbrellas",
+      "kind": "scene",
+      "minAffection": 85,
+      "file": "assets/photos/two-umbrellas.jpg",
+      "alt": "Two umbrellas by her door",
+      "s": "happy_shy",
+      "when": {
+        "topic": [
+          "t_ldr_plan",
+          "t_umbrella"
+        ],
+        "intent": [
+          "weather"
+        ]
+      },
+      "b": [
+        {
+          "jp": "自分{じぶん}のを買{か}った。並{なら}べたら、ちょっといい感{かん}じ。",
+          "en": "I bought my own. Side by side, they look rather good."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "並{なら}んでるね",
+          "en": "They match"
+        },
+        {
+          "jp": "返{かえ}さなくていいよ",
+          "en": "Keep mine"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "ph_typhoon",
+      "kind": "scene",
+      "minAffection": 8,
+      "file": "assets/photos/typhoon-window.jpg",
+      "alt": "Rain sheeting sideways past her window",
+      "s": "surprised",
+      "when": {
+        "intent": [
+          "weather"
+        ],
+        "band": [
+          "evening",
+          "night"
+        ]
+      },
+      "b": [
+        {
+          "jp": "横{よこ}から降{ふ}ってる。傘{かさ}の意味{いみ}がない。",
+          "en": "It's coming in sideways. Umbrellas are pointless."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "家{いえ}にいてね",
+          "en": "Stay in"
+        },
+        {
+          "jp": "すごい雨{あめ}",
+          "en": "That's wild"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_breath",
+      "kind": "scene",
+      "minAffection": 12,
+      "file": "assets/photos/cold-breath.jpg",
+      "alt": "White breath on the walk to the station",
+      "s": "sleepy",
+      "when": {
+        "intent": [
+          "weather"
+        ],
+        "band": [
+          "morning"
+        ]
+      },
+      "b": [
+        {
+          "jp": "見{み}えるかな。今朝{けさ}の息{いき}。",
+          "en": "Can you see it? This morning's breath."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "冬{ふゆ}だね",
+          "en": "Winter"
+        },
+        {
+          "jp": "寒{さむ}そう",
+          "en": "Looks freezing"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_station_piano",
+      "kind": "scene",
+      "minAffection": 14,
+      "file": "assets/photos/station-piano.jpg",
+      "alt": "The public piano at the station",
+      "s": "neutral",
+      "when": {
+        "topic": [
+          "t_music",
+          "t_showme"
+        ],
+        "band": [
+          "evening"
+        ]
+      },
+      "b": [
+        {
+          "jp": "これ。誰{だれ}でも弾{ひ}いていいピアノ。",
+          "en": "This. The piano anyone's allowed to play."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "弾{ひ}いたの？",
+          "en": "Did you play?"
+        },
+        {
+          "jp": "いいね",
+          "en": "Nice"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_office_cake",
+      "kind": "scene",
+      "minAffection": 10,
+      "file": "assets/photos/office-cake.jpg",
+      "alt": "A slice of cake on a paper plate",
+      "s": "excited",
+      "when": {
+        "intent": [
+          "food_talk",
+          "work_talk"
+        ],
+        "topic": [
+          "t_work"
+        ],
+        "band": [
+          "afternoon"
+        ]
+      },
+      "b": [
+        {
+          "jp": "戦利品{せんりひん}。名前{なまえ}も知{し}らない人{ひと}の誕生日{たんじょうび}。",
+          "en": "Spoils. From the birthday of someone whose name I don't know."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "ちゃっかり",
+          "en": "Cheeky"
+        },
+        {
+          "jp": "おいしそう",
+          "en": "Looks good"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_guitar_new",
+      "kind": "scene",
+      "minAffection": 16,
+      "file": "assets/photos/guitar-new.jpg",
+      "alt": "A guitar leaning against her wall",
+      "s": "excited",
+      "when": {
+        "topic": [
+          "t_music"
+        ],
+        "intent": [
+          "hobby",
+          "happy"
+        ]
+      },
+      "b": [
+        {
+          "jp": "これが三{さん}ヶ月{かげつ}の悩{なや}みの結果{けっか}。",
+          "en": "Behold, the result of three months' deliberation."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "かっこいい",
+          "en": "It's lovely"
+        },
+        {
+          "jp": "弾{ひ}いて聞{き}かせて",
+          "en": "Play me something"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_fingers",
+      "kind": "scene",
+      "minAffection": 18,
+      "file": "assets/photos/fingertips.jpg",
+      "alt": "Her fingertips, red from the strings",
+      "s": "pout",
+      "when": {
+        "topic": [
+          "t_music"
+        ]
+      },
+      "b": [
+        {
+          "jp": "指{ゆび}、こうなった。誰{だれ}も教{おし}えてくれなかった。",
+          "en": "My fingers are like this now. Nobody warned me."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "痛{いた}そう",
+          "en": "Ouch"
+        },
+        {
+          "jp": "その痛{いた}みは勲章{くんしょう}",
+          "en": "Badge of honour"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_laundry_sun",
+      "kind": "scene",
+      "minAffection": 8,
+      "file": "assets/photos/laundry-sun.jpg",
+      "alt": "Washing on the balcony in strong sun",
+      "s": "smile",
+      "when": {
+        "intent": [
+          "weather",
+          "happy"
+        ],
+        "band": [
+          "morning",
+          "afternoon"
+        ]
+      },
+      "b": [
+        {
+          "jp": "この天気{てんき}を待{ま}ってた。二週間{にしゅうかん}ぶり。",
+          "en": "I'd been waiting for this weather. Two weeks."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "気持{きも}ちいいね",
+          "en": "Feels good"
+        },
+        {
+          "jp": "洗濯日和{せんたくびより}",
+          "en": "Perfect drying day"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_book",
+      "kind": "scene",
+      "minAffection": 12,
+      "file": "assets/photos/book-open.jpg",
+      "alt": "A paperback face-down on the sofa arm",
+      "s": "neutral",
+      "when": {
+        "intent": [
+          "hobby"
+        ],
+        "topic": [
+          "t_home"
+        ],
+        "band": [
+          "night"
+        ]
+      },
+      "b": [
+        {
+          "jp": "読{よ}みかけ。もう三{さん}ヶ月{かげつ}このページ。",
+          "en": "Half-read. Same page for three months. — 〜かけ"
+        }
+      ],
+      "sug": [
+        {
+          "jp": "進{すす}んでないね",
+          "en": "No progress"
+        },
+        {
+          "jp": "何{なに}の本{ほん}？",
+          "en": "What is it?"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_dawn_konbini",
+      "kind": "scene",
+      "minAffection": 14,
+      "file": "assets/photos/dawn-konbini.jpg",
+      "alt": "The konbini at first light",
+      "s": "sleepy",
+      "when": {
+        "band": [
+          "morning"
+        ],
+        "intent": [
+          "food_talk",
+          "tired"
+        ]
+      },
+      "b": [
+        {
+          "jp": "寝{ね}てない日{ひ}の朝{あさ}のコンビニ。妙{みょう}に静{しず}か。",
+          "en": "The konbini on a no-sleep morning. Oddly quiet."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "寝{ね}てないの？",
+          "en": "You didn't sleep?"
+        },
+        {
+          "jp": "きれいな光{ひかり}",
+          "en": "Beautiful light"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_minami_move",
+      "kind": "scene",
+      "minAffection": 20,
+      "file": "assets/photos/minami-boxes.jpg",
+      "alt": "Cardboard boxes and two coffees",
+      "s": "tired",
+      "when": {
+        "topic": [
+          "t_minami"
+        ],
+        "intent": [
+          "weekend"
+        ]
+      },
+      "b": [
+        {
+          "jp": "みなみの引{ひ}っ越{こ}し。荷物{にもつ}、多{おお}すぎ。",
+          "en": "Minami's move. Far too much stuff."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "お疲{つか}れさま",
+          "en": "Well done"
+        },
+        {
+          "jp": "仲{なか}いいね",
+          "en": "You two are close"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_two_cups_home",
+      "kind": "scene",
+      "minAffection": 76,
+      "file": "assets/photos/two-cups-home.jpg",
+      "alt": "Two mugs on her counter, one unused",
+      "s": "love",
+      "when": {
+        "topic": [
+          "t_ldr_hard",
+          "t_ldr_time"
+        ],
+        "band": [
+          "night"
+        ]
+      },
+      "b": [
+        {
+          "jp": "マグカップ、二{ふた}つ買{か}っちゃった。使{つか}うのは一{ひと}つなのに。",
+          "en": "I bought two mugs. I only use one."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "いつか使{つか}うよ",
+          "en": "One day you'll use both"
+        },
+        {
+          "jp": "泣{な}かせる",
+          "en": "You'll make me cry"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "ph_airport_wear",
+      "kind": "selfie",
+      "minAffection": 82,
+      "file": "assets/photos/outfit-airport.jpg",
+      "alt": "An outfit laid out on the bed",
+      "s": "shy",
+      "when": {
+        "topic": [
+          "t_ldr_plan"
+        ]
+      },
+      "b": [
+        {
+          "jp": "空港{くうこう}に着{き}ていく候補{こうほ}、その一{いち}。",
+          "en": "Airport outfit, candidate one."
+        },
+        {
+          "jp": "まだ何{なん}ヶ月{かげつ}も先{さき}なのは分{わ}かってる。分{わ}かってるけど。",
+          "en": "I know it's months away. I know, but still. — 〜けど"
+        }
+      ],
+      "sug": [
+        {
+          "jp": "それがいい",
+          "en": "That one"
+        },
+        {
+          "jp": "気{き}が早{はや}いよ",
+          "en": "Bit early!"
+        }
+      ],
+      "aff": 2
     }
   ],
   "proactive": [
@@ -11155,6 +12890,961 @@
         "minAff": 55,
         "chance": 0.3
       }
+    },
+    {
+      "id": "pp_1",
+      "s": "hurt",
+      "cond": {
+        "minAff": 45,
+        "flag": "chose_go",
+        "chance": 0.3
+      },
+      "b": [
+        {
+          "jp": "昨日{きのう}のこと、まだ少{すこ}し引{ひ}きずってる。ごめん。",
+          "en": "Still a bit hung up on yesterday. Sorry."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "話{はな}そう",
+          "en": "Let's talk"
+        },
+        {
+          "jp": "待{ま}つよ",
+          "en": "I'll wait"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "pp_2",
+      "s": "smug",
+      "cond": {
+        "minAff": 55,
+        "flag": "ex_returned",
+        "chance": 0.3
+      },
+      "b": [
+        {
+          "jp": "あのあと、あの人{ひと}からもう一度{いちど}来{き}た。既読{きどく}だけつけて閉{と}じた。",
+          "en": "He messaged once more after that. I read it and closed the app."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "それでいい",
+          "en": "Good"
+        },
+        {
+          "jp": "強{つよ}いね",
+          "en": "Strong"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "pp_3",
+      "s": "serious",
+      "cond": {
+        "minAff": 65,
+        "flag": "ready",
+        "chance": 0.35
+      },
+      "b": [
+        {
+          "jp": "傘{かさ}、まだ玄関{げんかん}にある。返{かえ}すつもりがないわけじゃないの。",
+          "en": "The umbrella's still by my door. It's not that I don't intend to return it. — 〜わけじゃない"
+        },
+        {
+          "jp": "直接{ちょくせつ}渡{わた}したいだけ。それだけ。",
+          "en": "I just want to hand it over in person. That's all."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "そうしよう",
+          "en": "Let's do that"
+        },
+        {
+          "jp": "約束{やくそく}ね",
+          "en": "It's a promise"
+        }
+      ],
+      "aff": 4
+    },
+    {
+      "id": "pt_1",
+      "s": "love",
+      "cond": {
+        "flag": "together",
+        "chance": 0.3
+      },
+      "b": [
+        {
+          "jp": "おはよう、って言{い}いたいだけ。そっちは夜{よる}だけど。",
+          "en": "Just wanted to say good morning. Even though it's night for you."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "おやすみ、って返{かえ}すね",
+          "en": "I'll say good night back"
+        },
+        {
+          "jp": "嬉{うれ}しい",
+          "en": "That made me happy"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "pt_2",
+      "s": "sad",
+      "cond": {
+        "flag": "together",
+        "band": [
+          "night"
+        ],
+        "chance": 0.25
+      },
+      "b": [
+        {
+          "jp": "今日{きょう}は声{こえ}が聞{き}きたい日{ひ}。でも、そっち朝{あさ}だよね。",
+          "en": "Today's a day I want to hear your voice. But it's morning there."
+        },
+        {
+          "jp": "我慢{がまん}する。えらいでしょ。",
+          "en": "I'll bear it. Impressive, right."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "えらい",
+          "en": "Very"
+        },
+        {
+          "jp": "夜{よる}にかけるね",
+          "en": "I'll call tonight"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "pt_3",
+      "s": "jealous",
+      "cond": {
+        "flag": "together",
+        "chance": 0.25
+      },
+      "b": [
+        {
+          "jp": "さくらに彼氏{かれし}の話{はなし}をされて、普通{ふつう}に羨{うらや}ましかった。",
+          "en": "Sakura talked about her boyfriend and I was plainly envious."
+        },
+        {
+          "jp": "会{あ}おうと思{おも}えば今日{きょう}会{あ}える人{ひと}がいるって、すごいことだよ。",
+          "en": "Having someone you could see today if you wanted — that's remarkable."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "いつか当{あ}たり前{まえ}になるよ",
+          "en": "One day that'll be us"
+        },
+        {
+          "jp": "ごめんね",
+          "en": "I'm sorry"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "pt_4",
+      "s": "happy_shy",
+      "cond": {
+        "flag": "has_plan",
+        "chance": 0.35
+      },
+      "b": [
+        {
+          "jp": "あと何日{なんにち}か、また数{かぞ}えちゃった。",
+          "en": "I counted the days again."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "わたしも数{かぞ}えてる",
+          "en": "So am I"
+        },
+        {
+          "jp": "何日{なんにち}？",
+          "en": "How many?"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "px_typhoon",
+      "s": "surprised",
+      "b": [
+        {
+          "jp": "台風{たいふう}、明日{あした}直撃{ちょくげき}らしい。",
+          "en": "A typhoon's supposed to hit tomorrow."
+        },
+        {
+          "jp": "こういう時{とき}に限{かぎ}って、早出{はやで}なんだよね。",
+          "en": "And of all days, that's when I start early. — 〜に限って"
+        }
+      ],
+      "sug": [
+        {
+          "jp": "気{き}をつけて",
+          "en": "Be careful"
+        },
+        {
+          "jp": "休{やす}めないの？",
+          "en": "Can't you stay home?"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "px_firstcold",
+      "s": "sleepy",
+      "b": [
+        {
+          "jp": "今朝{けさ}、はじめて息{いき}が白{しろ}かった。",
+          "en": "This morning my breath was white for the first time."
+        },
+        {
+          "jp": "毎年{まいとし}この瞬間{しゅんかん}で、冬{ふゆ}が来{き}たって思{おも}う。",
+          "en": "Every year that moment is when winter arrives."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "そっちはもう冬{ふゆ}なんだ",
+          "en": "Winter already"
+        },
+        {
+          "jp": "暖{あたた}かくしてね",
+          "en": "Wrap up warm"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "px_humid",
+      "s": "tired",
+      "b": [
+        {
+          "jp": "湿気{しっけ}がすごい。髪{かみ}が言{い}うことを聞{き}かない。",
+          "en": "The humidity's awful. My hair won't obey."
+        },
+        {
+          "jp": "日本{にほん}の夏{なつ}、嫌{きら}いじゃないけど、これだけは無理{むり}。",
+          "en": "I don't dislike Japanese summers, but this part is unbearable."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "わかる",
+          "en": "I know"
+        },
+        {
+          "jp": "こっちも暑{あつ}い",
+          "en": "Hot here too"
+        }
+      ]
+    },
+    {
+      "id": "px_clearday",
+      "s": "excited",
+      "b": [
+        {
+          "jp": "空気{くうき}が澄{す}んでて、遠{とお}くの山{やま}まで見{み}えた。",
+          "en": "The air's so clear I could see the mountains."
+        },
+        {
+          "jp": "こういう日{ひ}は、カメラ持{も}ってこなかったことを後悔{こうかい}する。",
+          "en": "On days like this I regret not bringing the camera."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "写真{しゃしん}見{み}たかった",
+          "en": "Wish I could've seen it"
+        },
+        {
+          "jp": "明日{あした}持{も}っていきなよ",
+          "en": "Bring it tomorrow"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "px_missedtrain",
+      "s": "angry",
+      "b": [
+        {
+          "jp": "目{め}の前{まえ}でドアが閉{し}まった。三十秒{さんじゅうびょう}の差{さ}。",
+          "en": "The doors shut right in front of me. Thirty seconds."
+        },
+        {
+          "jp": "次{つぎ}まで八分{はっぷん}。八分{はっぷん}って、こんなに長{なが}かったっけ。",
+          "en": "Eight minutes to the next. Were eight minutes always this long?"
+        }
+      ],
+      "sug": [
+        {
+          "jp": "ついてないね",
+          "en": "Bad luck"
+        },
+        {
+          "jp": "落{お}ち着{つ}いて",
+          "en": "Breathe"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "px_seat",
+      "s": "smug",
+      "b": [
+        {
+          "jp": "座{すわ}れた。この時間{じかん}に座{すわ}れるの、月{つき}に二回{にかい}くらい。",
+          "en": "Got a seat. Happens maybe twice a month at this hour."
+        },
+        {
+          "jp": "今日{きょう}はいい日{ひ}になる気{き}がする。単純{たんじゅん}でしょ。",
+          "en": "I've decided today will be a good day. Simple, aren't I."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "いい日{ひ}になるよ",
+          "en": "It will be"
+        },
+        {
+          "jp": "単純{たんじゅん}でいいと思{おも}う",
+          "en": "Simple is good"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "px_piano",
+      "s": "neutral",
+      "b": [
+        {
+          "jp": "駅{えき}のピアノ、知{し}らない人{ひと}が弾{ひ}いてた。上手{うま}かった。",
+          "en": "Someone was playing the station piano. They were good."
+        },
+        {
+          "jp": "足{あし}を止{と}めて最後{さいご}まで聞{き}いちゃった。遅刻{ちこく}した。",
+          "en": "I stopped and listened to the end. I was late."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "いい話{はなし}だね",
+          "en": "Lovely"
+        },
+        {
+          "jp": "遅刻{ちこく}したんかい",
+          "en": "You were late?!"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "px_printer",
+      "s": "angry",
+      "b": [
+        {
+          "jp": "プリンターが紙詰{かみづ}まり。三回目{さんかいめ}。",
+          "en": "Paper jam. Third time."
+        },
+        {
+          "jp": "これのために生{う}まれてきたわけじゃないんだけどな。",
+          "en": "I wasn't born for this, you know. — 〜わけじゃない"
+        }
+      ],
+      "sug": [
+        {
+          "jp": "お疲{つか}れ",
+          "en": "Poor you"
+        },
+        {
+          "jp": "蹴{け}っていいよ",
+          "en": "Kick it"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "px_cake",
+      "s": "excited",
+      "b": [
+        {
+          "jp": "誰{だれ}かの誕生日{たんじょうび}でケーキが出{で}た。名前{なまえ}は知{し}らない人{ひと}。",
+          "en": "Cake appeared for someone's birthday. I don't know whose."
+        },
+        {
+          "jp": "ちゃっかりもらった。おいしかった。",
+          "en": "I took a slice regardless. It was good."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "ちゃっかりしてる",
+          "en": "Cheeky"
+        },
+        {
+          "jp": "よかったね",
+          "en": "Nice"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "px_meeting",
+      "s": "tired",
+      "b": [
+        {
+          "jp": "三十分{さんじゅっぷん}の予定{よてい}の会議{かいぎ}が二時間{にじかん}。",
+          "en": "A thirty-minute meeting ran to two hours."
+        },
+        {
+          "jp": "結論{けつろん}は「また今度{こんど}」。……本当{ほんとう}に、また今度{こんど}なんだ。",
+          "en": "The conclusion was 'let's revisit'. …We are genuinely revisiting it."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "あるある",
+          "en": "Classic"
+        },
+        {
+          "jp": "生{い}きてる？",
+          "en": "Still alive?"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "px_praise",
+      "s": "happy_shy",
+      "b": [
+        {
+          "jp": "珍{めずら}しく田中{たなか}さんに褒{ほ}められた。",
+          "en": "Tanaka praised me, which never happens."
+        },
+        {
+          "jp": "嬉{うれ}しいというより、明日{あした}雪{ゆき}でも降{ふ}るのかと思{おも}った。",
+          "en": "Less pleased than suspicious that it'll snow tomorrow."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "素直{すなお}に喜{よろこ}びなよ",
+          "en": "Just be happy"
+        },
+        {
+          "jp": "さすが",
+          "en": "Well earned"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "px_newitem",
+      "s": "excited",
+      "b": [
+        {
+          "jp": "コンビニの新作{しんさく}、全部{ぜんぶ}試{ため}すのが密{ひそ}かな趣味{しゅみ}。",
+          "en": "Trying every new konbini item is a quiet hobby of mine."
+        },
+        {
+          "jp": "今週{こんしゅう}は三勝{さんしょう}一敗{いっぱい}。",
+          "en": "This week: three wins, one loss."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "負{ま}けたのは何{なに}？",
+          "en": "What lost?"
+        },
+        {
+          "jp": "報告{ほうこく}続{つづ}けて",
+          "en": "Keep the reports coming"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "px_cookfail",
+      "s": "pout",
+      "b": [
+        {
+          "jp": "自炊{じすい}に挑戦{ちょうせん}して、見事{みごと}に失敗{しっぱい}した。",
+          "en": "Attempted cooking. Failed spectacularly."
+        },
+        {
+          "jp": "味{あじ}はともかく、色{いろ}がおかしい。食{た}べたけど。",
+          "en": "Taste aside, the colour is wrong. I ate it anyway."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "食{た}べたんだ",
+          "en": "You ate it?"
+        },
+        {
+          "jp": "次{つぎ}は成功{せいこう}するよ",
+          "en": "Next time"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "px_delivery",
+      "s": "sleepy",
+      "b": [
+        {
+          "jp": "結局{けっきょく}デリバリー。作{つく}る気{き}力{りょく}が尽{つ}きた。",
+          "en": "Ended up ordering in. Ran out of will to cook."
+        },
+        {
+          "jp": "こういう日{ひ}があってもいいことにしてる。",
+          "en": "I've decided days like this are allowed."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "いいと思{おも}う",
+          "en": "Quite right"
+        },
+        {
+          "jp": "何頼{なにたの}んだの？",
+          "en": "What did you get?"
+        }
+      ]
+    },
+    {
+      "id": "px_cat2",
+      "s": "happy_shy",
+      "b": [
+        {
+          "jp": "しっぽが今日{きょう}は先{さき}に近{ちか}づいてきた。進歩{しんぽ}。",
+          "en": "Shippo approached me first today. Progress."
+        },
+        {
+          "jp": "一年{いちねん}かかったことになる。猫{ねこ}って気{き}が長{なが}い。",
+          "en": "That took a year. Cats are patient."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "信頼{しんらい}されてる",
+          "en": "He trusts you"
+        },
+        {
+          "jp": "一年{いちねん}はすごい",
+          "en": "A year is impressive"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "px_neighbour",
+      "s": "neutral",
+      "b": [
+        {
+          "jp": "下{した}の階{かい}の人{ひと}と、はじめて挨拶{あいさつ}した。三年{さんねん}住{す}んでて。",
+          "en": "Said hello to my downstairs neighbour for the first time. After three years."
+        },
+        {
+          "jp": "東京{とうきょう}ってそういうところだよね。",
+          "en": "That's Tokyo for you."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "三年{さんねん}！",
+          "en": "Three years!"
+        },
+        {
+          "jp": "こっちも同{おな}じだよ",
+          "en": "Same where I live"
+        }
+      ]
+    },
+    {
+      "id": "px_brother",
+      "s": "tired",
+      "b": [
+        {
+          "jp": "兄{あに}から電話{でんわ}。用件{ようけん}は、やっぱり頼{たの}みごとだった。",
+          "en": "My brother called. The reason was, as expected, a favour."
+        },
+        {
+          "jp": "断{ことわ}れないんだよね、あの人{ひと}には。",
+          "en": "I can never say no to him."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "優{やさ}しいね",
+          "en": "You're kind"
+        },
+        {
+          "jp": "たまには断{ことわ}りなよ",
+          "en": "Say no sometimes"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "px_mother",
+      "s": "neutral",
+      "b": [
+        {
+          "jp": "実家{じっか}から電話{でんわ}。「誰{だれ}かいい人{ひと}いないの」って、毎回{まいかい}言{い}われる。",
+          "en": "Mum called. 'Isn't there someone nice?' — every single time."
+        },
+        {
+          "jp": "なんて答{こた}えればいいと思{おも}う？",
+          "en": "What do you think I should say?"
+        }
+      ],
+      "sug": [
+        {
+          "jp": "正直{しょうじき}に言{い}えば？",
+          "en": "Tell her the truth"
+        },
+        {
+          "jp": "いるって言{い}っちゃいなよ",
+          "en": "Tell her there is"
+        }
+      ],
+      "aff": 2,
+      "ask": true
+    },
+    {
+      "id": "px_minami2",
+      "s": "excited",
+      "b": [
+        {
+          "jp": "みなみの引{ひ}っ越{こ}し、来週{らいしゅう}に決{き}まった。手伝{てつだ}いに行{い}く。",
+          "en": "Minami's move is set for next week. I'm helping."
+        },
+        {
+          "jp": "荷物{にもつ}の多{おお}さで喧嘩{けんか}する未来{みらい}が見{み}える。",
+          "en": "I can foresee us arguing about how much stuff she has."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "楽{たの}しそう",
+          "en": "Sounds fun"
+        },
+        {
+          "jp": "喧嘩{けんか}しないで",
+          "en": "Don't fight"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "px_guitar_buy",
+      "s": "excited",
+      "b": [
+        {
+          "jp": "買{か}った。ついに買{か}った。ギター。",
+          "en": "I bought it. I finally bought it. The guitar."
+        },
+        {
+          "jp": "三{さん}ヶ月{かげつ}悩{なや}んだ末{すえ}に、五分{ごふん}で決{き}めた。",
+          "en": "After three months of agonising, I decided in five minutes. — 〜末に"
+        }
+      ],
+      "sug": [
+        {
+          "jp": "おめでとう",
+          "en": "Congratulations"
+        },
+        {
+          "jp": "弾{ひ}けるの？",
+          "en": "Can you play?"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "px_guitar_pain",
+      "s": "pout",
+      "b": [
+        {
+          "jp": "指{ゆび}が痛{いた}い。Fが押{お}さえられない。",
+          "en": "My fingers hurt. I can't hold an F."
+        },
+        {
+          "jp": "挫折{ざせつ}する人{ひと}の気持{きも}ちが、三日{みっか}で分{わ}かった。",
+          "en": "In three days I understood everyone who gives up."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "みんな通{とお}る道{みち}",
+          "en": "Everyone goes through that"
+        },
+        {
+          "jp": "続{つづ}けて",
+          "en": "Keep at it"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "px_english",
+      "s": "shy",
+      "b": [
+        {
+          "jp": "英語{えいご}の勉強{べんきょう}、こっそり始{はじ}めた。三日{みっか}坊主{ぼうず}になりそう。",
+          "en": "I quietly started studying English. I'll probably last three days."
+        },
+        {
+          "jp": "発音{はつおん}って、どうやって覚{おぼ}えたの？",
+          "en": "How did you learn pronunciation?"
+        }
+      ],
+      "sug": [
+        {
+          "jp": "聞{き}くのが一番{いちばん}",
+          "en": "Listening, mostly"
+        },
+        {
+          "jp": "教{おし}えるよ",
+          "en": "I'll teach you"
+        }
+      ],
+      "aff": 2,
+      "ask": true
+    },
+    {
+      "id": "px_slip",
+      "s": "surprised",
+      "b": [
+        {
+          "jp": "今日{きょう}、会社{かいしゃ}でうっかり英語{えいご}が出{で}た。誰{だれ}も気{き}づかなかったけど。",
+          "en": "I accidentally used English at work today. Nobody noticed."
+        },
+        {
+          "jp": "誰{だれ}のせいだと思{おも}ってるの。",
+          "en": "And whose fault do you suppose that is."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "わたし？",
+          "en": "Mine?"
+        },
+        {
+          "jp": "いい傾向{けいこう}だね",
+          "en": "A good sign"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "px_dict",
+      "s": "neutral",
+      "b": [
+        {
+          "jp": "辞書{じしょ}で調{しら}べた言葉{ことば}、次{つぎ}の日{ひ}には忘{わす}れてる。",
+          "en": "Words I look up are gone by the next day."
+        },
+        {
+          "jp": "そっちはどうやって覚{おぼ}えてる？",
+          "en": "How do you make them stick?"
+        }
+      ],
+      "sug": [
+        {
+          "jp": "使{つか}うのが一番{いちばん}",
+          "en": "Use them"
+        },
+        {
+          "jp": "わたしも忘{わす}れる",
+          "en": "I forget too"
+        }
+      ],
+      "aff": 1,
+      "ask": true
+    },
+    {
+      "id": "px_battery",
+      "s": "angry",
+      "b": [
+        {
+          "jp": "充電{じゅうでん}三{さん}パーセント。今{いま}この瞬間{しゅんかん}に気{き}づいた。",
+          "en": "Battery at three percent. Noticed this very second."
+        },
+        {
+          "jp": "返事{へんじ}が途切{とぎ}れたら、そういうことだから。",
+          "en": "If I go quiet, that's why."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "急{いそ}いで充電{じゅうでん}",
+          "en": "Charge it!"
+        },
+        {
+          "jp": "待{ま}ってるよ",
+          "en": "I'll wait"
+        }
+      ]
+    },
+    {
+      "id": "px_package",
+      "s": "excited",
+      "b": [
+        {
+          "jp": "頼{たの}んだ覚{おぼ}えのない荷物{にもつ}が届{とど}いた。",
+          "en": "A package arrived that I don't remember ordering."
+        },
+        {
+          "jp": "……三週間前{さんしゅうかんまえ}の自分{じぶん}だった。",
+          "en": "…It was me, three weeks ago."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "何{なに}だったの？",
+          "en": "What was it?"
+        },
+        {
+          "jp": "よくある",
+          "en": "Happens"
+        }
+      ],
+      "aff": 1
+    },
+    {
+      "id": "px_earring",
+      "s": "sad",
+      "b": [
+        {
+          "jp": "ピアス、片方{かたほう}なくした。安{やす}いやつなんだけどね。",
+          "en": "Lost one earring. It was a cheap one, mind you."
+        },
+        {
+          "jp": "安{やす}いからこそ、代{か}わりがない気{き}がする。",
+          "en": "Precisely because it was cheap, it feels irreplaceable. — 〜からこそ"
+        }
+      ],
+      "sug": [
+        {
+          "jp": "出{で}てくるよ",
+          "en": "It'll turn up"
+        },
+        {
+          "jp": "わかる気{き}がする",
+          "en": "I think I understand"
+        }
+      ],
+      "aff": 2
+    },
+    {
+      "id": "px_tog_domestic",
+      "s": "love",
+      "b": [
+        {
+          "jp": "スーパーで二人分{ふたりぶん}買{か}いそうになった。一人{ひとり}なのに。",
+          "en": "I nearly bought for two at the supermarket. Living alone."
+        },
+        {
+          "jp": "先{さき}が思{おも}いやられる、って自分{じぶん}で思{おも}った。",
+          "en": "'This bodes ill,' I thought, about myself."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "かわいい",
+          "en": "That's sweet"
+        },
+        {
+          "jp": "いつかそうなるよ",
+          "en": "One day it will be"
+        }
+      ],
+      "aff": 3,
+      "cond": {
+        "flag": "together",
+        "chance": 0.3
+      }
+    },
+    {
+      "id": "px_tog_show",
+      "s": "happy_shy",
+      "b": [
+        {
+          "jp": "同{おな}じドラマ、そっちでも見{み}られる？",
+          "en": "Can you get the same drama over there?"
+        },
+        {
+          "jp": "同{おな}じ話{はなし}で笑{わら}えたら、距離{きょり}が少{すこ}し縮{ちぢ}む気{き}がする。",
+          "en": "If we can laugh at the same episode, the distance shrinks a little."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "探{さが}してみる",
+          "en": "I'll look"
+        },
+        {
+          "jp": "一緒{いっしょ}に見{み}よう",
+          "en": "Let's watch together"
+        }
+      ],
+      "aff": 3,
+      "cond": {
+        "flag": "together",
+        "chance": 0.3
+      },
+      "ask": true
+    },
+    {
+      "id": "px_tog_ring",
+      "s": "shy",
+      "b": [
+        {
+          "jp": "空港{くうこう}で何{なに}を着{き}ていくか、もう三回{さんかい}変{か}えた。",
+          "en": "I've changed my mind three times about what to wear to the airport."
+        },
+        {
+          "jp": "まだ何{なん}ヶ月{かげつ}も先{さき}なのにね。",
+          "en": "And it's still months away."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "何{なに}でも似合{にあ}うよ",
+          "en": "Anything suits you"
+        },
+        {
+          "jp": "わたしも考{かんが}えてる",
+          "en": "I'm thinking about it too"
+        }
+      ],
+      "aff": 4,
+      "cond": {
+        "flag": "has_plan",
+        "chance": 0.25
+      }
     }
   ],
   "scheduled": [
@@ -11776,6 +14466,236 @@
         }
       ],
       "aff": 4
+    },
+    {
+      "id": "sc_tog_night",
+      "at": "23:00",
+      "window": 55,
+      "s": "love",
+      "cond": {
+        "flag": "together"
+      },
+      "b": [
+        {
+          "jp": "おやすみ。そっちはまだ昼{ひる}だろうけど、こっちは今日{きょう}が終{お}わる。",
+          "en": "Good night. It's still daytime there, but my day is ending."
+        },
+        {
+          "jp": "時差{じさ}のぶんだけ、先{さき}に明日{あした}に行{い}っておくね。",
+          "en": "I'll go on ahead into tomorrow by the difference."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "先{さき}に行{い}ってて",
+          "en": "Go on ahead"
+        },
+        {
+          "jp": "おやすみ",
+          "en": "Sleep well"
+        }
+      ],
+      "aff": 3
+    },
+    {
+      "id": "sc_tog_morning",
+      "at": "06:00",
+      "window": 150,
+      "s": "happy_shy",
+      "cond": {
+        "flag": "together"
+      },
+      "b": [
+        {
+          "jp": "おはよう。起{お}きた瞬間{しゅんかん}に{name}のこと考{かんが}えるの、もう癖{くせ}になった。",
+          "en": "Morning. Thinking of you the moment I wake is a habit now."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "こっちもだよ",
+          "en": "Same here"
+        },
+        {
+          "jp": "おやすみ中{ちゅう}だった",
+          "en": "I was asleep"
+        }
+      ],
+      "aff": 3
+    }
+  ],
+  "withdrawn": [
+    {
+      "id": "w_1",
+      "s": "hurt",
+      "b": [
+        {
+          "jp": "うん。",
+          "en": "Mm."
+        }
+      ]
+    },
+    {
+      "id": "w_2",
+      "s": "hurt",
+      "b": [
+        {
+          "jp": "そう。",
+          "en": "I see."
+        }
+      ]
+    },
+    {
+      "id": "w_3",
+      "s": "pout",
+      "b": [
+        {
+          "jp": "べつに。なんでもない。",
+          "en": "Nothing. It's nothing."
+        }
+      ]
+    },
+    {
+      "id": "w_4",
+      "s": "hurt",
+      "b": [
+        {
+          "jp": "ごめん、今日{きょう}はうまく喋{しゃべ}れないかも。",
+          "en": "Sorry, I might not talk well today."
+        }
+      ]
+    },
+    {
+      "id": "w_5",
+      "s": "sad",
+      "b": [
+        {
+          "jp": "うん、大丈夫{だいじょうぶ}。……大丈夫{だいじょうぶ}だってば。",
+          "en": "Yeah, I'm fine. …I said I'm fine."
+        }
+      ]
+    },
+    {
+      "id": "w_6",
+      "s": "hurt",
+      "b": [
+        {
+          "jp": "怒{おこ}ってるわけじゃないの。それだけ言{い}っておく。",
+          "en": "It's not that I'm angry. I'll say that much. — 〜わけじゃない"
+        }
+      ]
+    },
+    {
+      "id": "w_7",
+      "s": "neutral",
+      "b": [
+        {
+          "jp": "また後{あと}で。",
+          "en": "Later."
+        }
+      ]
+    }
+  ],
+  "thaw": [
+    {
+      "id": "th_1",
+      "s": "hurt",
+      "clearCold": true,
+      "aff": 4,
+      "b": [
+        {
+          "jp": "……ずるいなあ、そういうこと言{い}うの。",
+          "en": "…That's unfair, saying that."
+        },
+        {
+          "jp": "怒{おこ}り続{つづ}けるつもりだったのに、続{つづ}けようがないじゃん。",
+          "en": "I meant to stay angry, and now there's no way to. — 〜ようがない"
+        }
+      ],
+      "sug": [
+        {
+          "jp": "仲直{なかなお}り？",
+          "en": "Friends again?"
+        },
+        {
+          "jp": "まだ怒{おこ}ってていいよ",
+          "en": "You can stay angry"
+        }
+      ]
+    },
+    {
+      "id": "th_2",
+      "s": "sad",
+      "clearCold": true,
+      "aff": 4,
+      "b": [
+        {
+          "jp": "待{ま}っててくれたんだ。……それだけで、だいぶ違{ちが}う。",
+          "en": "You waited. …That alone changes a lot."
+        },
+        {
+          "jp": "ごめん、子{こ}どもみたいだった。",
+          "en": "Sorry. I was being childish."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "子{こ}どもじゃないよ",
+          "en": "You weren't"
+        },
+        {
+          "jp": "いつでも待{ま}つよ",
+          "en": "I'll always wait"
+        }
+      ]
+    },
+    {
+      "id": "th_3",
+      "s": "love",
+      "clearCold": true,
+      "aff": 5,
+      "b": [
+        {
+          "jp": "こういう時{とき}に逃{に}げない人{ひと}、はじめて。",
+          "en": "You're the first person who doesn't leave at moments like this. — 〜てはじめて"
+        },
+        {
+          "jp": "……もう大丈夫{だいじょうぶ}。ほんとに。",
+          "en": "…I'm okay now. Really."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "よかった",
+          "en": "Good"
+        },
+        {
+          "jp": "無理{むり}しないでね",
+          "en": "Don't force it"
+        }
+      ]
+    },
+    {
+      "id": "th_4",
+      "s": "happy_shy",
+      "clearCold": true,
+      "aff": 4,
+      "b": [
+        {
+          "jp": "拗{す}ねてただけ。分{わ}かってたでしょ。",
+          "en": "I was only sulking. You knew that."
+        }
+      ],
+      "sug": [
+        {
+          "jp": "知{し}ってた",
+          "en": "I did"
+        },
+        {
+          "jp": "かわいかったよ",
+          "en": "It was cute"
+        }
+      ]
     }
   ]
 }

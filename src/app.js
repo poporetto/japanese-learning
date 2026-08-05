@@ -128,6 +128,8 @@ function addTeach(g) {
   el.innerHTML = `
     <details class="teach">
       <summary><span class="tag">N2</span> ${ruby(g.point)} — ${esc(g.en)}</summary>
+      ${g.line ? `<p class="said">${ruby(g.line)}</p>
+      <p class="saidnote">${ruby('↑ 結衣{ゆい}がたった今{いま}使{つか}った文{ぶん}')}</p>` : ''}
       <p class="ex">${ruby(g.ex)}</p>
       <p class="exen">${esc(g.exEn)}</p>
       ${g.note ? `<p class="note">${esc(g.note)}</p>` : ''}

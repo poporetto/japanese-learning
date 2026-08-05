@@ -4,10 +4,20 @@
 import { recall, callbackCandidates, slotsSatisfied } from './memory.js';
 import { stageOf, localDate } from './state.js';
 
-/** Filter authored variants by their conditions, then prefer unseen ones. */
-export function pick(variants, state) {
+/**
+ * Filter authored variants by their conditions, then prefer unseen ones.
+ * `ctx.intentId` is the intent matched on *this* turn, which lets a follow-up
+ * branch on the answer you just gave — the difference between a question and
+ * a choice.
+ */
+export function pick(variants, state, ctx = {}) {
   const usable = (variants || []).filter((v) => {
     const c = v.cond || {};
+    if (c.afterIntent && !c.afterIntent.includes(ctx.intentId)) return false;
+    // Quick-reply chips are authored sentences, and most match no intent at
+    // all — so a branch that depends on *which* answer you gave has to look at
+    // the words. Substring/regex against the raw message.
+    if (c.afterText && !new RegExp(c.afterText).test(ctx.userText || '')) return false;
     if (c.minAff != null && state.affection < c.minAff) return false;
     if (c.maxAff != null && state.affection >= c.maxAff) return false;
     if (c.stage && stageOf(state).id !== c.stage) return false;
@@ -45,6 +55,10 @@ export function pick(variants, state) {
   return freshest[Math.floor(Math.random() * freshest.length)];
 }
 
+// What counts as actually reaching out, rather than just talking at her.
+const RE_REACHING_OUT =
+  /ごめん|すまな|悪{わる}?かった|謝|話(そう|そっか)|待って|ここにいる|そばにいる|大丈夫\?|大丈夫？|愛して|好きだよ/;
+
 /**
  * Chooses the turn plan. Returns { kind, variant, extra }.
  * Order here IS the personality: she prioritizes her own thread over
@@ -65,6 +79,21 @@ export function direct(ctx) {
     }
     const v = pick(dialogue.greetings[band], state);
     if (v) return { kind: 'greet', variant: v };
+  }
+
+  // 1.5 She's withdrawn. This deliberately pre-empts her own threads: the
+  //     point of the beat is that she isn't engaging, and a warm topic firing
+  //     mid-sulk would undo it. Expires on its own clock.
+  if (state.coldUntil && Date.now() < state.coldUntil && !sessionStart) {
+    // Reaching out properly ends it. Without this the only way through a sulk
+    // is the wall clock, which makes the beat something that happens *to* you
+    // and leaves the reconciliation lines unreachable.
+    if (RE_REACHING_OUT.test(ctx.userText || '')) {
+      const v = pick(dialogue.thaw, state);
+      if (v) return { kind: 'thawed', variant: v };
+    }
+    const v = pick(dialogue.withdrawn, state);
+    if (v) return { kind: 'withdrawn', variant: v };
   }
 
   // 2. A direct question about her outranks everything. Failing to answer one
@@ -94,8 +123,17 @@ export function direct(ctx) {
   // 4. She asked something and is waiting — follow her own thread.
   if (state.pendingTopic) {
     const topic = dialogue.topics.find((t) => t.id === state.pendingTopic);
-    const v = topic && pick(topic.follow, state);
-    if (v) return { kind: 'topic_follow', variant: v, topic };
+    if (topic) {
+      const turn = { intentId, userText: ctx.userText };
+      // Two passes: a follow that declares which answer it responds to wins
+      // outright. Otherwise the generic follows would tie with it in the draw
+      // and your choice would only be honoured a third of the time.
+      const branching = topic.follow.filter((f) => f.cond?.afterText || f.cond?.afterIntent);
+      const v = pick(branching, state, turn) || pick(
+        topic.follow.filter((f) => !f.cond?.afterText && !f.cond?.afterIntent), state, turn
+      );
+      if (v) return { kind: 'topic_follow', variant: v, topic };
+    }
   }
 
   // 5. Nothing matched — bring up something he told her earlier.
@@ -271,20 +309,24 @@ export function teachPlan(state, grammar, ctx = {}) {
   if (state.turns < 3) return null;
   if (state.turns - state.lastTeachTurn < 4) return null;
 
-  const unseen = grammar.filter(
-    (g) => !state.learned.includes(g.id) && !(g.cond?.minAff > state.affection)
-  );
-  const pool = unseen.length ? unseen : grammar.filter((g) => !(g.cond?.minAff > state.affection));
-  if (!pool.length) return null;
+  const allowed = grammar.filter((g) => !(g.cond?.minAff > state.affection));
 
-  // Topic matters as much as intent: most of the conversation happens inside
-  // her topic threads, where intentId is null and an intent-only match would
-  // fall through to a random card every time.
-  const relevant = pool.filter(
-    (g) =>
-      g.when?.intent?.includes(ctx.intentId) ||
-      g.when?.topic?.includes(ctx.topicId)
-  );
-  const from = relevant.length ? relevant : pool;
-  return from[Math.floor(Math.random() * from.length)];
+  // A point she just used beats everything. Explaining the sentence that is
+  // still on screen is the entire value of the card; teaching an unrelated
+  // pattern next to it is what made the two feel disconnected.
+  const used = (ctx.usedHits || [])
+    .map((h) => {
+      const g = allowed.find((x) => x.id === h.id);
+      return g && { ...g, line: h.line };
+    })
+    .filter(Boolean);
+
+  // No card unless it explains a sentence that is still on the screen. Falling
+  // back to a topical card is what made the grammar feel bolted on: measured,
+  // only 1% of cards described anything she had actually said.
+  if (!used.length) return null;
+
+  const fresh = used.filter((g) => !state.learned.includes(g.id));
+  const from = fresh.length ? fresh : used;
+  return { ...from[Math.floor(Math.random() * from.length)], used: true };
 }

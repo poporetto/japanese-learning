@@ -20,7 +20,13 @@ function cleanSlotAnswer(raw) {
 // A free-text answer is a bare noun, not a sentence. Case-marking particles or
 // a verb ending mean they answered with a whole clause — 「昨日は美術館に行った」
 // is a story about their day, not their name.
-const RE_SENTENCEY = /[はをにへとでもがや]|から|まで|(った|てる|ます|ない|だった)$/;
+// Sentence-final particles and て-form endings were missing, so an imperative
+// reply to 「なんて呼べばいい？」 sailed through the check: answering
+// 「行ってきなよ」 filed *that* as the user's name, and every {name} line after
+// it read 「行ってきなよね。じゃあこれからそう呼ぶから。」 A missed capture just
+// means she asks again; a wrong one is permanent, so this errs strict.
+const RE_SENTENCEY =
+  /[はをにへとでもがや]|から|まで|(った|てる|ます|ない|だった|して|きて|なよ|ないで|ください)$|[よねぞぜわさ]$/;
 
 function looksLikeBareNoun(value) {
   return value.length >= 1 && value.length <= 10 && !RE_SENTENCEY.test(value);

@@ -476,3 +476,15 @@ svg { max-width: 100%; }
 /* Native controls default to the browser's blue; hand them the brand green. */
 input[type="checkbox"], input[type="radio"], progress { accent-color: var(--brand); }
 ::selection { background: color-mix(in srgb, var(--brand) 30%, transparent); }
+
+/* The line she just said, quoted inside the grammar card. This is the whole
+   point of the card — the generic example is the secondary illustration. */
+.teach .said {
+  margin: 8px 0 2px;
+  padding: 7px 10px;
+  background: var(--panel);
+  border-left: 2px solid var(--brand);
+  border-radius: 0 8px 8px 0;
+  font-size: 15.5px;
+}
+.teach .saidnote { margin: 0 0 8px; font-size: 10.5px; color: var(--dim); }

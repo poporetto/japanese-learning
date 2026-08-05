@@ -13,6 +13,10 @@ export const STAGES = [
   { id: 'special', min: 70, jp: '大切な人', en: 'Special' },
 ];
 
+// Being together isn't a score, it's an event. Once she's said it out loud the
+// stage stops tracking affection and reports the relationship instead.
+export const PARTNER_STAGE = { id: 'partner', min: 100, jp: '恋人', en: 'Together' };
+
 function fresh() {
   return {
     affection: 0,
@@ -33,6 +37,7 @@ function fresh() {
     unanswered: 0,       // proactive messages sent since he last replied
     history: [],         // recent turns, verbatim — the LLM's short-term memory
     scheduled: {},       // "HH:MM" -> the date it last fired, so once per day
+    coldUntil: 0,        // she's withdrawn until this timestamp — see dialogue.withdrawn
     transcript: [],      // rendered chat log, so you can scroll back after a reload
     gallery: [],         // every photo she's sent, deduped
     recent: [],          // variant ids used lately — short-term repeat guard
@@ -113,6 +118,7 @@ export function markUsed(state, id) {
 }
 
 export function stageOf(state) {
+  if (state.flags?.together) return PARTNER_STAGE;
   return [...STAGES].reverse().find((s) => state.affection >= s.min);
 }
 
