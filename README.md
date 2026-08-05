@@ -170,6 +170,26 @@ Two gates enforce it, and a validator proves them:
 Swept across 300 sessions each at affection 0 / 30 / 55: **zero** intimate lines
 or photos. At 75 and 95 the whole set is reachable.
 
+## Depth over breadth
+
+47 topic threads is already close to the number of subjects a real couple
+actually cycles through — the gap was never breadth, it was how many turns each
+thread could sustain before drying up. Fourteen threads had a single follow.
+
+Every thread now has **at least two, most have four**, concentrated on the
+everyday ones you return to most: work, meals, sleep, music, home, weekends,
+the cat, her boss. Measured, each of those now sustains **15–17 distinct
+replies** before repeating.
+
+```
+follows per topic:  2 → 20 threads   3 → 7   4 → 14   5 → 3   6 → 2   7 → 1
+```
+
+The authored layer is the *character*, not the volume. Real couples say the same
+twenty things ten thousand times with different specifics — that's what the API
+leg is for. What the authored side has to do is never run out of ways to be
+herself, and that's what depth buys.
+
 ## The arc
 
 Six beats that turn the relationship into a story with an ending, gated on flags
@@ -434,7 +454,7 @@ she'd send it:
 - A photo with no `when` only appears on the low-probability random path.
 - Ask too often and she deflects (`photoDeny`) rather than spamming.
 
-Currently **110 photos — 80 scenes and 30 selfies.** The scenes are her
+Currently **123 photos — 92 scenes and 31 selfies.** The scenes are her
 surroundings: konbini hauls, ramen, gyoza, her desk at work and at home, the
 empty office floor, the train window, the shopping street at dusk, the konbini
 at 1am, the sky, rain, umbrellas, laundry, Nakameguro station, the Meguro river
