@@ -454,7 +454,7 @@ she'd send it:
 - A photo with no `when` only appears on the low-probability random path.
 - Ask too often and she deflects (`photoDeny`) rather than spamming.
 
-Currently **123 photos — 92 scenes and 31 selfies.** The scenes are her
+Currently **131 photos — 100 scenes and 31 selfies.** The scenes are her
 surroundings: konbini hauls, ramen, gyoza, her desk at work and at home, the
 empty office floor, the train window, the shopping street at dusk, the konbini
 at 1am, the sky, rain, umbrellas, laundry, Nakameguro station, the Meguro river
@@ -508,8 +508,16 @@ haircut, shy for the dress and the last one.
 
 ## N2 grammar
 
-All **162 points** of the standard JLPT N2 list are in `grammar-n2.json`. They
-ride along as a collapsible side note, never as the main message.
+**201 points** in `grammar-n2.json`, covering the N2 grammar taught across Shin
+Kanzen Master, Sou Matome and Try! — measured 52/52 against a reference list.
+They ride along as a collapsible side note, never as the main message.
+
+Each entry also carries `aliases`: the other ways the same point gets written.
+〜わけではない answers to 〜わけじゃない, 〜たとたん(に) to 〜たとたん and 〜た瞬間に,
+every kanji headword to its all-kana spelling. Without them the card matched
+only the exact headword, and **43 annotations pointed at nothing** — twelve of
+them on 〜わけじゃない alone, which meant those lines could never teach. 201
+points now answer to **294 written forms**.
 
 **A card only ever appears when it explains a sentence she just said, and it
 quotes that sentence.** This is the whole design: previously the card was chosen
@@ -563,6 +571,24 @@ and hiragana readings so most pair properly in the first place.
   "cond": { "minAff": 40 }                  // 42 points sit in the ex thread
 }
 ```
+
+## What she remembers about you
+
+Nine slots, each with a lexicon, an acknowledgement and a callback: **name,
+food, drink, hobby, sport, job, place, music, pet** — plus free-text `today`
+and `weekend`.
+
+It used to be five, and it dropped facts silently. Told ten things about
+myself, she kept five — and two of those were wrong, because drinks were filed
+under `food` and sports under `hobby`, so 「コーヒーをよく飲む」 overwrote
+「ラーメンが好き」. Splitting the lexicon fixed the collisions; the count is
+now **9 of 10 retained**.
+
+One engine fix came out of the same test. A statement like 「犬を飼ってる」
+matches the *pet* Q&A entry, which suppressed the memory scan and threw the
+fact away. The guard exists so 「ラーメン好き？」 asked *of her* isn't filed as
+your favourite — but that reasoning only holds for an actual question, so it's
+now conditioned on one.
 
 ## Relationship model
 

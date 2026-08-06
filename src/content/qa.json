@@ -231,8 +231,8 @@
           "s": "smile",
           "b": [
             {
-              "jp": "フィルムカメラ。父{ちち}のお下{さ}がりで撮{と}ってる。",
-              "en": "Film photography. I shoot with my dad's old camera."
+              "jp": "フィルムカメラ。兄{あに}のお下{さ}がりで撮{と}ってる。",
+              "en": "Film photography. I shoot with my brother's old camera."
             },
             {
               "jp": "あとは目黒川{めぐろがわ}沿{ぞ}いを意味{いみ}もなく歩{ある}くこと。趣味{しゅみ}って言{い}えるのかな、これ。",
@@ -389,8 +389,8 @@
           "s": "smile",
           "b": [
             {
-              "jp": "妹{いもうと}が一人{ひとり}。三{みっ}つ下{した}で、私{わたし}よりずっとしっかりしてる。",
-              "en": "One younger sister. Three years younger, and far more together than me."
+              "jp": "兄{あに}が一人{ひとり}。三{みっ}つ上{うえ}で、名古屋{なごや}で働{はたら}いてる。",
+              "en": "One older brother. Three years younger, and far more together than me."
             },
             {
               "jp": "実家{じっか}は埼玉{さいたま}。月{つき}に一回{いっかい}くらい帰{かえ}ってる。",
@@ -1103,6 +1103,708 @@
             }
           ],
           "aff": 3
+        }
+      ]
+    },
+    {
+      "id": "qa_birthday",
+      "kw": [
+        "誕生日",
+        "たんじょうび",
+        "いつ生まれ",
+        "birthday"
+      ],
+      "a": [
+        {
+          "id": "qa_bd_1",
+          "s": "smile",
+          "b": [
+            {
+              "jp": "四月{しがつ}十二日{じゅうににち}。桜{さくら}が終{お}わったあたり。",
+              "en": "April 12th. Around when the blossom finishes."
+            },
+            {
+              "jp": "覚{おぼ}えなくていいよ。……覚{おぼ}えてくれてもいいけど。",
+              "en": "You needn't remember. …You may, though."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "覚{おぼ}えた",
+              "en": "Noted"
+            },
+            {
+              "jp": "何{なに}がほしい？",
+              "en": "What would you want?"
+            }
+          ],
+          "aff": 2
+        }
+      ]
+    },
+    {
+      "id": "qa_height",
+      "kw": [
+        "身長",
+        "何センチ",
+        "背は",
+        "how tall"
+      ],
+      "a": [
+        {
+          "id": "qa_ht_1",
+          "s": "neutral",
+          "b": [
+            {
+              "jp": "百五十八{ひゃくごじゅうはち}。あと二{に}センチほしかった。",
+              "en": "158. I'd have liked two more."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "ちょうどいいよ",
+              "en": "That's just right"
+            },
+            {
+              "jp": "わたしは…",
+              "en": "I'm…"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_bloodtype",
+      "kw": [
+        "血液型",
+        "けつえきがた",
+        "blood type"
+      ],
+      "a": [
+        {
+          "id": "qa_bt_1",
+          "s": "smug",
+          "b": [
+            {
+              "jp": "A型{えーがた}。几帳面{きちょうめん}だと思{おも}うでしょ。部屋{へや}見{み}せたら驚{おどろ}くよ。",
+              "en": "Type A. You'd assume I'm tidy. My flat would surprise you."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "見{み}てみたい",
+              "en": "I'd like to see"
+            },
+            {
+              "jp": "信{しん}じてないでしょ",
+              "en": "You don't believe in it"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_color",
+      "kw": [
+        "好きな色",
+        "色は",
+        "favourite colour",
+        "favorite color"
+      ],
+      "a": [
+        {
+          "id": "qa_col_1",
+          "s": "smile",
+          "b": [
+            {
+              "jp": "紺{こん}。制服{せいふく}が紺{こん}だったせいか、落{お}ち着{つ}くんだよね。",
+              "en": "Navy. Perhaps because my uniform was navy, it calms me. — 〜せいか"
+            }
+          ],
+          "sug": [
+            {
+              "jp": "似合{にあ}いそう",
+              "en": "It'd suit you"
+            },
+            {
+              "jp": "意外{いがい}",
+              "en": "Unexpected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_movie",
+      "kw": [
+        "好きな映画",
+        "映画は",
+        "favourite film",
+        "favorite movie"
+      ],
+      "a": [
+        {
+          "id": "qa_mv_1",
+          "s": "neutral",
+          "b": [
+            {
+              "jp": "派手{はで}じゃないやつが好{す}き。何{なに}も起{お}きない二時間{にじかん}とか。",
+              "en": "I like the undramatic ones. Two hours where nothing happens."
+            },
+            {
+              "jp": "寝{ね}てるって言{い}われるけど、ちゃんと見{み}てる。",
+              "en": "People say I'm asleep. I'm watching."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "おすすめある？",
+              "en": "Any recommendations?"
+            },
+            {
+              "jp": "わかる",
+              "en": "I get that"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_cook",
+      "kw": [
+        "料理できる",
+        "料理は",
+        "作れる",
+        "can you cook"
+      ],
+      "a": [
+        {
+          "id": "qa_ck_1",
+          "s": "pout",
+          "b": [
+            {
+              "jp": "できないことはない。ただ、成功率{せいこうりつ}が低{ひく}い。",
+              "en": "It's not that I can't. The success rate is low. — 〜ことはない"
+            }
+          ],
+          "sug": [
+            {
+              "jp": "食{た}べてみたい",
+              "en": "I'd try it"
+            },
+            {
+              "jp": "正直{しょうじき}だね",
+              "en": "Honest"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_drink",
+      "kw": [
+        "お酒",
+        "飲める",
+        "酒は",
+        "do you drink"
+      ],
+      "a": [
+        {
+          "id": "qa_dr_1",
+          "s": "smile",
+          "b": [
+            {
+              "jp": "弱{よわ}いくせに、飲{の}み会{かい}には行{い}っちゃう。",
+              "en": "I'm a lightweight and yet I go to the drinks anyway. — 〜くせに"
+            },
+            {
+              "jp": "二杯{にはい}で顔{かお}が赤{あか}くなる。",
+              "en": "Two glasses and my face goes red."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "かわいい",
+              "en": "That's cute"
+            },
+            {
+              "jp": "気{き}をつけて",
+              "en": "Be careful"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_wakeup",
+      "kw": [
+        "何時に起き",
+        "起きる時間",
+        "朝は何時",
+        "what time do you wake"
+      ],
+      "a": [
+        {
+          "id": "qa_wk_1",
+          "s": "sleepy",
+          "b": [
+            {
+              "jp": "六時半{ろくじはん}。……に鳴{な}らして、七時{しちじ}に起{お}きる。",
+              "en": "Six thirty. …Is when it rings; I get up at seven."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "わかる",
+              "en": "Relatable"
+            },
+            {
+              "jp": "早{はや}いね",
+              "en": "That's early"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_dream_job",
+      "kw": [
+        "何になりたかった",
+        "夢は",
+        "将来の夢",
+        "childhood dream"
+      ],
+      "a": [
+        {
+          "id": "qa_dj_1",
+          "s": "smile",
+          "b": [
+            {
+              "jp": "パン屋{や}さん。理由{りゆう}は匂{にお}い。今{いま}思{おも}えば単純{たんじゅん}。",
+              "en": "A baker. Reason: the smell. Simple, in hindsight."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "かわいい理由{りゆう}",
+              "en": "Lovely reason"
+            },
+            {
+              "jp": "今{いま}は？",
+              "en": "And now?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_marriage",
+      "kw": [
+        "結婚",
+        "けっこん",
+        "marriage",
+        "married"
+      ],
+      "a": [
+        {
+          "id": "qa_mr_low",
+          "s": "surprised",
+          "b": [
+            {
+              "jp": "えっ、話{はなし}が飛{と}びすぎ。",
+              "en": "Whoa, that's a leap."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "ごめん",
+              "en": "Sorry"
+            },
+            {
+              "jp": "いつかの話{はなし}",
+              "en": "Someday, I mean"
+            }
+          ],
+          "cond": {
+            "maxAff": 55
+          }
+        },
+        {
+          "id": "qa_mr_high",
+          "s": "shy",
+          "b": [
+            {
+              "jp": "考{かんが}えないわけじゃないよ。ただ、こわい。",
+              "en": "It's not that I don't think about it. It's just frightening. — 〜わけじゃない"
+            },
+            {
+              "jp": "一回{いっかい}失敗{しっぱい}してるからね、人{ひと}を信{しん}じるところで。",
+              "en": "I've failed once already — at the trusting-someone part."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "ゆっくりでいい",
+              "en": "No rush"
+            },
+            {
+              "jp": "一緒{いっしょ}に考{かんが}えよう",
+              "en": "We'll think together"
+            }
+          ],
+          "aff": 4,
+          "cond": {
+            "minAff": 65
+          }
+        }
+      ]
+    },
+    {
+      "id": "qa_kids",
+      "kw": [
+        "子供",
+        "こども",
+        "kids",
+        "children"
+      ],
+      "a": [
+        {
+          "id": "qa_kd_1",
+          "s": "neutral",
+          "b": [
+            {
+              "jp": "どっちでもいい、が正直{しょうじき}なところ。",
+              "en": "'Either way' is the honest answer."
+            },
+            {
+              "jp": "相手{あいて}によって変{か}わる気{き}がする。",
+              "en": "I suspect it depends on the person. — 〜によって"
+            }
+          ],
+          "sug": [
+            {
+              "jp": "正直{しょうじき}だね",
+              "en": "Honest"
+            },
+            {
+              "jp": "それでいいと思{おも}う",
+              "en": "That seems right"
+            }
+          ],
+          "cond": {
+            "minAff": 50
+          }
+        }
+      ]
+    },
+    {
+      "id": "qa_fear",
+      "kw": [
+        "怖いもの",
+        "こわいもの",
+        "苦手なもの",
+        "afraid of"
+      ],
+      "a": [
+        {
+          "id": "qa_fr_1",
+          "s": "concerned",
+          "b": [
+            {
+              "jp": "高{たか}いところと、期待{きたい}させて裏切{うらぎ}られること。",
+              "en": "Heights, and being let down after being given hope."
+            },
+            {
+              "jp": "……後{あと}のほうは、最近{さいきん}マシになった。",
+              "en": "…The latter has got better lately."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "誰{だれ}のおかげ？",
+              "en": "Thanks to whom?"
+            },
+            {
+              "jp": "わかるよ",
+              "en": "I understand"
+            }
+          ],
+          "aff": 3,
+          "cond": {
+            "minAff": 40
+          }
+        }
+      ]
+    },
+    {
+      "id": "qa_badhabit",
+      "kw": [
+        "悪い癖",
+        "くせは",
+        "直したい",
+        "bad habit"
+      ],
+      "a": [
+        {
+          "id": "qa_bh_1",
+          "s": "pout",
+          "b": [
+            {
+              "jp": "すぐ「別{べつ}に」って言{い}うところ。自覚{じかく}はある。",
+              "en": "Saying 'never mind' immediately. I'm aware of it."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "知{し}ってる",
+              "en": "I'd noticed"
+            },
+            {
+              "jp": "かわいいけどね",
+              "en": "It's endearing"
+            }
+          ],
+          "aff": 2
+        }
+      ]
+    },
+    {
+      "id": "qa_first_impression",
+      "kw": [
+        "第一印象",
+        "最初どう思った",
+        "first impression"
+      ],
+      "a": [
+        {
+          "id": "qa_fi_1",
+          "s": "happy_shy",
+          "b": [
+            {
+              "jp": "傘{かさ}を押{お}しつけて逃{に}げてった人{ひと}、って印象{いんしょう}。",
+              "en": "'The person who shoved an umbrella at me and fled.'"
+            },
+            {
+              "jp": "悪{わる}い意味{いみ}じゃないよ。むしろ、そこがよかった。",
+              "en": "Not a bad thing. Rather, that was the good part."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "逃{に}げてないよ",
+              "en": "I didn't flee"
+            },
+            {
+              "jp": "よかった",
+              "en": "Glad to hear it"
+            }
+          ],
+          "aff": 3
+        }
+      ]
+    },
+    {
+      "id": "qa_move",
+      "kw": [
+        "引っ越",
+        "住むなら",
+        "move abroad",
+        "こっち来る"
+      ],
+      "a": [
+        {
+          "id": "qa_mv2_1",
+          "s": "serious",
+          "b": [
+            {
+              "jp": "こっちを離{はな}れるのは、正直{しょうじき}こわい。",
+              "en": "Leaving here frightens me, honestly."
+            },
+            {
+              "jp": "でも、こわいからってやらない理由{りゆう}にはならないよね。",
+              "en": "But being frightened isn't a reason not to."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "焦{あせ}らなくていい",
+              "en": "No hurry"
+            },
+            {
+              "jp": "一緒{いっしょ}に考{かんが}えよう",
+              "en": "Let's think it through"
+            }
+          ],
+          "aff": 4,
+          "cond": {
+            "minAff": 60
+          }
+        }
+      ]
+    },
+    {
+      "id": "qa_weekend_do",
+      "kw": [
+        "休みの日は",
+        "週末は何",
+        "days off"
+      ],
+      "a": [
+        {
+          "id": "qa_wd_1",
+          "s": "sleepy",
+          "b": [
+            {
+              "jp": "寝{ね}てばかりいる。たまに散歩{さんぽ}。",
+              "en": "I do nothing but sleep. Occasionally a walk. — 〜てばかりいる"
+            }
+          ],
+          "sug": [
+            {
+              "jp": "それも大事{だいじ}",
+              "en": "That matters"
+            },
+            {
+              "jp": "散歩{さんぽ}いいね",
+              "en": "Walks are good"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_siblings",
+      "kw": [
+        "兄弟",
+        "きょうだい",
+        "siblings",
+        "お兄さん"
+      ],
+      "a": [
+        {
+          "id": "qa_sb_1",
+          "s": "tired",
+          "b": [
+            {
+              "jp": "三{みっ}つ上{うえ}の兄{あに}が一人{ひとり}。名古屋{なごや}で働{はたら}いてる。",
+              "en": "One brother, three years older. Works in Nagoya."
+            },
+            {
+              "jp": "カメラはその人{ひと}のお下{さ}がり。",
+              "en": "The camera is his hand-me-down."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "仲{なか}いいの？",
+              "en": "Are you close?"
+            },
+            {
+              "jp": "いいお兄{にい}さんだね",
+              "en": "Sounds like a good brother"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_pet",
+      "kw": [
+        "ペット",
+        "飼ってる",
+        "動物好き",
+        "pet"
+      ],
+      "a": [
+        {
+          "id": "qa_pt_1",
+          "s": "happy_shy",
+          "b": [
+            {
+              "jp": "飼{か}ってない。駅裏{えきうら}のしっぽが、勝手{かって}にうちの子{こ}扱{あつか}い。",
+              "en": "None. Shippo behind the station is unilaterally treated as mine."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "飼{か}えばいいのに",
+              "en": "You should adopt him"
+            },
+            {
+              "jp": "かわいい",
+              "en": "Sweet"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_season_do",
+      "kw": [
+        "夏は何",
+        "冬は何",
+        "季節",
+        "春は"
+      ],
+      "a": [
+        {
+          "id": "qa_sd_1",
+          "s": "neutral",
+          "b": [
+            {
+              "jp": "冬{ふゆ}が好{す}き。厚着{あつぎ}できるし、空気{くうき}が澄{す}んでるから。",
+              "en": "Winter. You can layer up, and the air is clear."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "こっちは逆{ぎゃく}",
+              "en": "Opposite for me"
+            },
+            {
+              "jp": "わかる",
+              "en": "Agreed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qa_why_me",
+      "kw": [
+        "なんでわたし",
+        "なぜ僕",
+        "why me",
+        "どうして話してくれる"
+      ],
+      "a": [
+        {
+          "id": "qa_wm_1",
+          "s": "shy",
+          "b": [
+            {
+              "jp": "最初{さいしょ}は、わたしを知{し}らない人{ひと}だったから。",
+              "en": "At first, because you didn't know me."
+            },
+            {
+              "jp": "今{いま}は理由{りゆう}が変{か}わった。それは、まだ言{い}わない。",
+              "en": "Now the reason has changed. I'm not saying it yet."
+            }
+          ],
+          "sug": [
+            {
+              "jp": "いつか聞{き}かせて",
+              "en": "Tell me one day"
+            },
+            {
+              "jp": "待{ま}つよ",
+              "en": "I'll wait"
+            }
+          ],
+          "aff": 4,
+          "cond": {
+            "minAff": 45
+          }
         }
       ]
     }

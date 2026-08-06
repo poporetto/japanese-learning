@@ -32,7 +32,10 @@
         "t_ex_things",
         "t_highschool"
       ]
-    }
+    },
+    "aliases": [
+      "〜わけじゃない"
+    ]
   },
   {
     "id": "n2_wake_ganai",
@@ -48,7 +51,10 @@
       "topic": [
         "t_boss"
       ]
-    }
+    },
+    "aliases": [
+      "〜わけない"
+    ]
   },
   {
     "id": "n2_wake_niwaikanai",
@@ -95,7 +101,10 @@
       "topic": [
         "t_sleep"
       ]
-    }
+    },
+    "aliases": [
+      "〜せい"
+    ]
   },
   {
     "id": "n2_seika",
@@ -140,7 +149,10 @@
       "intent": [
         "work_talk"
       ]
-    }
+    },
+    "aliases": [
+      "〜いじょうは"
+    ]
   },
   {
     "id": "n2_karaniwa",
@@ -252,7 +264,13 @@
       "topic": [
         "t_cat"
       ]
-    }
+    },
+    "aliases": [
+      "〜たとたん",
+      "〜たとたんに",
+      "〜た瞬間に",
+      "〜瞬間に"
+    ]
   },
   {
     "id": "n2_katoomouto",
@@ -265,7 +283,10 @@
       "intent": [
         "weather"
       ]
-    }
+    },
+    "aliases": [
+      "〜かとおもうと"
+    ]
   },
   {
     "id": "n2_kanaikanouchini",
@@ -294,7 +315,10 @@
       "intent": [
         "ask_photo"
       ]
-    }
+    },
+    "aliases": [
+      "〜しだい"
+    ]
   },
   {
     "id": "n2_tabini",
@@ -312,7 +336,11 @@
     },
     "cond": {
       "minAff": 35
-    }
+    },
+    "aliases": [
+      "〜たび",
+      "〜たびに"
+    ]
   },
   {
     "id": "n2_teirai",
@@ -326,7 +354,11 @@
         "t_highschool",
         "t_camera"
       ]
-    }
+    },
+    "aliases": [
+      "〜ていらい",
+      "〜以来"
+    ]
   },
   {
     "id": "n2_naiuchini",
@@ -371,7 +403,10 @@
       "topic": [
         "t_work"
       ]
-    }
+    },
+    "aliases": [
+      "〜さいちゅうに"
+    ]
   },
   {
     "id": "n2_tokoroni",
@@ -397,7 +432,10 @@
       "topic": [
         "t_home"
       ]
-    }
+    },
+    "aliases": [
+      "〜さいに"
+    ]
   },
   {
     "id": "n2_uede",
@@ -413,7 +451,10 @@
     },
     "cond": {
       "minAff": 40
-    }
+    },
+    "aliases": [
+      "〜うえで"
+    ]
   },
   {
     "id": "n2_tsuideni",
@@ -486,7 +527,10 @@
       "intent": [
         "sorry"
       ]
-    }
+    },
+    "aliases": [
+      "〜つつも"
+    ]
   },
   {
     "id": "n2_tsutsuaru",
@@ -518,7 +562,10 @@
       "topic": [
         "t_work"
       ]
-    }
+    },
+    "aliases": [
+      "〜いっぽうで"
+    ]
   },
   {
     "id": "n2_ippouda",
@@ -534,7 +581,10 @@
       "topic": [
         "t_work"
       ]
-    }
+    },
+    "aliases": [
+      "〜いっぽうだ"
+    ]
   },
   {
     "id": "n2_hanmen",
@@ -547,7 +597,10 @@
       "topic": [
         "t_camera"
       ]
-    }
+    },
+    "aliases": [
+      "〜はんめん"
+    ]
   },
   {
     "id": "n2_nagaramo",
@@ -560,7 +613,12 @@
       "topic": [
         "t_home"
       ]
-    }
+    },
+    "aliases": [
+      "〜ながら",
+      "〜ながらに",
+      "〜ながらも"
+    ]
   },
   {
     "id": "n2_monono",
@@ -656,7 +714,10 @@
         "t_travel",
         "t_work"
       ]
-    }
+    },
+    "aliases": [
+      "〜どころじゃない"
+    ]
   },
   {
     "id": "n2_nihanshite",
@@ -669,7 +730,10 @@
       "topic": [
         "t_boss"
       ]
-    }
+    },
+    "aliases": [
+      "〜にはんして"
+    ]
   },
   {
     "id": "n2_nitaishite",
@@ -686,7 +750,10 @@
     },
     "cond": {
       "minAff": 35
-    }
+    },
+    "aliases": [
+      "〜にたいして"
+    ]
   },
   {
     "id": "n2_warini",
@@ -702,7 +769,14 @@
       "topic": [
         "t_meals"
       ]
-    }
+    },
+    "aliases": [
+      "〜わりに",
+      "〜わりに(は)",
+      "〜わりには",
+      "〜割に",
+      "〜割には"
+    ]
   },
   {
     "id": "n2_nishitewa",
@@ -731,7 +805,10 @@
         "compliment",
         "teach_request"
       ]
-    }
+    },
+    "aliases": [
+      "〜にくらべて"
+    ]
   },
   {
     "id": "n2_ueni",
@@ -744,7 +821,10 @@
       "intent": [
         "weather"
       ]
-    }
+    },
+    "aliases": [
+      "〜うえに"
+    ]
   },
   {
     "id": "n2_bakarika",
@@ -808,7 +888,10 @@
       "topic": [
         "t_work"
       ]
-    }
+    },
+    "aliases": [
+      "〜にくわえて"
+    ]
   },
   {
     "id": "n2_sae",
@@ -925,7 +1008,10 @@
         "tired",
         "howareyou"
       ]
-    }
+    },
+    "aliases": [
+      "〜ぎみ"
+    ]
   },
   {
     "id": "n2_gachi",
@@ -1009,7 +1095,10 @@
       "intent": [
         "deny"
       ]
-    }
+    },
+    "aliases": [
+      "〜える"
+    ]
   },
   {
     "id": "n2_kkonai",
@@ -1022,7 +1111,10 @@
       "topic": [
         "t_sleep"
       ]
-    }
+    },
+    "aliases": [
+      "〜っこないよ"
+    ]
   },
   {
     "id": "n2_youganai",
@@ -1055,7 +1147,10 @@
     },
     "cond": {
       "minAff": 40
-    }
+    },
+    "aliases": [
+      "〜ざるをえない"
+    ]
   },
   {
     "id": "n2_shikanai",
@@ -1103,7 +1198,12 @@
     },
     "cond": {
       "minAff": 35
-    }
+    },
+    "aliases": [
+      "〜べきじゃない",
+      "〜べきだった",
+      "〜べきではない"
+    ]
   },
   {
     "id": "n2_kotoda",
@@ -1132,7 +1232,11 @@
       "intent": [
         "sorry"
       ]
-    }
+    },
+    "aliases": [
+      "〜ないことはない",
+      "〜ほどのことはない"
+    ]
   },
   {
     "id": "n2_nikimatteiru",
@@ -1145,7 +1249,11 @@
       "intent": [
         "food_talk"
       ]
-    }
+    },
+    "aliases": [
+      "〜にきまっている",
+      "〜に決まってる"
+    ]
   },
   {
     "id": "n2_nichigainai",
@@ -1158,7 +1266,11 @@
       "intent": [
         "howareyou"
       ]
-    }
+    },
+    "aliases": [
+      "〜にちがいない",
+      "〜に違いないね"
+    ]
   },
   {
     "id": "n2_hazuganai",
@@ -1190,7 +1302,10 @@
     },
     "cond": {
       "minAff": 45
-    }
+    },
+    "aliases": [
+      "〜にすぎない"
+    ]
   },
   {
     "id": "n2_mai",
@@ -1405,7 +1520,10 @@
     },
     "cond": {
       "minAff": 40
-    }
+    },
+    "aliases": [
+      "〜にかんして"
+    ]
   },
   {
     "id": "n2_nitsuite",
@@ -1447,7 +1565,10 @@
     },
     "cond": {
       "minAff": 35
-    }
+    },
+    "aliases": [
+      "〜からいうと"
+    ]
   },
   {
     "id": "n2_karashite",
@@ -1473,7 +1594,10 @@
       "intent": [
         "meaning_question"
       ]
-    }
+    },
+    "aliases": [
+      "〜かぎり"
+    ]
   },
   {
     "id": "n2_nikakawarazu",
@@ -1541,7 +1665,10 @@
       "topic": [
         "t_music"
       ]
-    }
+    },
+    "aliases": [
+      "〜におうじて"
+    ]
   },
   {
     "id": "n2_nishitagatte",
@@ -1580,7 +1707,10 @@
       "intent": [
         "weather"
       ]
-    }
+    },
+    "aliases": [
+      "〜にともなって"
+    ]
   },
   {
     "id": "n2_totomoni",
@@ -1629,7 +1759,10 @@
     },
     "cond": {
       "minAff": 45
-    }
+    },
+    "aliases": [
+      "〜をつうじて"
+    ]
   },
   {
     "id": "n2_wohajime",
@@ -1671,7 +1804,10 @@
       "intent": [
         "work_talk"
       ]
-    }
+    },
+    "aliases": [
+      "〜にもとづいて"
+    ]
   },
   {
     "id": "n2_nioite",
@@ -1726,7 +1862,10 @@
       "topic": [
         "t_work"
       ]
-    }
+    },
+    "aliases": [
+      "〜にさきだって"
+    ]
   },
   {
     "id": "n2_nisaishite",
@@ -1739,7 +1878,10 @@
       "topic": [
         "t_work"
       ]
-    }
+    },
+    "aliases": [
+      "〜にさいして"
+    ]
   },
   {
     "id": "n2_nikawatte",
@@ -1753,7 +1895,10 @@
         "t_boss",
         "t_work"
       ]
-    }
+    },
+    "aliases": [
+      "〜にかわって"
+    ]
   },
   {
     "id": "n2_kawarini",
@@ -1766,7 +1911,10 @@
       "intent": [
         "food_talk"
       ]
-    }
+    },
+    "aliases": [
+      "〜かわりに"
+    ]
   },
   {
     "id": "n2_nikotaete",
@@ -1783,7 +1931,10 @@
     },
     "cond": {
       "minAff": 40
-    }
+    },
+    "aliases": [
+      "〜にこたえて"
+    ]
   },
   {
     "id": "n2_muke",
@@ -1796,7 +1947,10 @@
       "intent": [
         "teach_request"
       ]
-    }
+    },
+    "aliases": [
+      "〜むけ"
+    ]
   },
   {
     "id": "n2_muki",
@@ -1809,7 +1963,10 @@
       "topic": [
         "t_home"
       ]
-    }
+    },
+    "aliases": [
+      "〜むき"
+    ]
   },
   {
     "id": "n2_nitsuki",
@@ -1878,7 +2035,11 @@
       "topic": [
         "t_weekend"
       ]
-    }
+    },
+    "aliases": [
+      "〜しだいだ",
+      "〜次第で"
+    ]
   },
   {
     "id": "n2_moshinaraba",
@@ -1986,7 +2147,10 @@
       "intent": [
         "hobby"
       ]
-    }
+    },
+    "aliases": [
+      "〜きる"
+    ]
   },
   {
     "id": "n2_kirenai",
@@ -2002,7 +2166,10 @@
       "topic": [
         "t_meals"
       ]
-    }
+    },
+    "aliases": [
+      "〜きれない"
+    ]
   },
   {
     "id": "n2_nuku",
@@ -2015,7 +2182,10 @@
       "intent": [
         "work_talk"
       ]
-    }
+    },
+    "aliases": [
+      "〜ぬく"
+    ]
   },
   {
     "id": "n2_nuki",
@@ -2028,7 +2198,10 @@
       "intent": [
         "confess"
       ]
-    }
+    },
+    "aliases": [
+      "〜ぬきで"
+    ]
   },
   {
     "id": "n2_kotoninatteiru",
@@ -2068,7 +2241,11 @@
         "t_boss",
         "t_work"
       ]
-    }
+    },
+    "aliases": [
+      "〜とおり",
+      "〜とおりに"
+    ]
   },
   {
     "id": "n2_toiukoto",
@@ -2113,7 +2290,11 @@
     },
     "cond": {
       "minAff": 45
-    }
+    },
+    "aliases": [
+      "〜うとしない",
+      "〜ようとしない"
+    ]
   },
   {
     "id": "n2_youdewanaika",
@@ -2126,7 +2307,14 @@
       "intent": [
         "weekend"
       ]
-    }
+    },
+    "aliases": [
+      "〜(よ)うじゃないか",
+      "〜うじゃないか",
+      "〜うではないか",
+      "〜ようじゃないか",
+      "〜ようではないか"
+    ]
   },
   {
     "id": "n2_youni",
@@ -2155,7 +2343,10 @@
       "topic": [
         "t_meals"
       ]
-    }
+    },
+    "aliases": [
+      "〜をこめて"
+    ]
   },
   {
     "id": "n2_dokkoi",
@@ -2217,7 +2408,10 @@
     },
     "cond": {
       "minAff": 50
-    }
+    },
+    "aliases": [
+      "〜もどうぜん"
+    ]
   },
   {
     "id": "n2_ttara",
@@ -2338,7 +2532,10 @@
     },
     "cond": {
       "minAff": 40
-    }
+    },
+    "aliases": [
+      "〜としても"
+    ]
   },
   {
     "id": "n2_kara_toitte",
@@ -2371,5 +2568,606 @@
         "t_album"
       ]
     }
+  },
+  {
+    "id": "n2_ageku",
+    "point": "〜あげく",
+    "en": "after all that, in the end",
+    "ex": "散々{さんざん}悩{なや}んだあげく、結局{けっきょく}買{か}わなかった。",
+    "exEn": "After agonising endlessly, in the end I didn't buy it.",
+    "note": "A long, usually tiring process ending badly. Always past tense.",
+    "when": {
+      "intent": [
+        "work_talk"
+      ],
+      "topic": [
+        "t_work"
+      ]
+    }
+  },
+  {
+    "id": "n2_osore",
+    "point": "〜おそれがある",
+    "en": "there's a risk that",
+    "ex": "台風{たいふう}で電車{でんしゃ}が止{と}まるおそれがある。",
+    "exEn": "There's a risk the trains stop because of the typhoon.",
+    "note": "Formal warning of a bad possibility. Common in news and notices.",
+    "when": {
+      "intent": [
+        "weather"
+      ]
+    }
+  },
+  {
+    "id": "n2_gatai",
+    "point": "〜がたい",
+    "en": "hard to bring oneself to",
+    "ex": "あの説明{せつめい}は、正直{しょうじき}理解{りかい}しがたい。",
+    "exEn": "That explanation is honestly hard to accept.",
+    "note": "Not physically difficult — psychologically resistant. 信じがたい is the common one.",
+    "when": {
+      "topic": [
+        "t_boss",
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 35
+    }
+  },
+  {
+    "id": "n2_kiraigaaru",
+    "point": "〜きらいがある",
+    "en": "has a tendency to (bad)",
+    "ex": "わたしは考{かんが}えすぎるきらいがある。",
+    "exEn": "I have a tendency to overthink.",
+    "note": "A criticised habitual tendency. Formal, and never about good traits.",
+    "when": {
+      "topic": [
+        "t_ex",
+        "t_trust"
+      ]
+    },
+    "cond": {
+      "minAff": 35
+    }
+  },
+  {
+    "id": "n2_dakenokoto",
+    "point": "〜だけのことはある",
+    "en": "living up to it, no wonder",
+    "ex": "毎日{まいにち}練習{れんしゅう}してるだけのことはある。",
+    "exEn": "No wonder — you practise every day.",
+    "note": "Praise: the result justifies the effort. Warmer than 〜だけあって.",
+    "when": {
+      "intent": [
+        "compliment",
+        "teach_request"
+      ]
+    }
+  },
+  {
+    "id": "n2_toiumonoda",
+    "point": "〜というものだ",
+    "en": "that's just what ... is",
+    "ex": "焦{あせ}っても仕方{しかた}ないよ。人生{じんせい}ってそういうものだ。",
+    "exEn": "No use rushing. That's just what life is.",
+    "note": "States a general truth with a touch of resignation or admonishment.",
+    "when": {
+      "intent": [
+        "sad",
+        "tired"
+      ]
+    }
+  },
+  {
+    "id": "n2_toiumonodewanai",
+    "point": "〜というものではない",
+    "en": "it's not necessarily that",
+    "ex": "高{たか}ければいいというものではない。",
+    "exEn": "It isn't necessarily the case that expensive is better.",
+    "note": "Rejects an over-simple rule. Pairs with ば or たら.",
+    "when": {
+      "intent": [
+        "food_talk"
+      ]
+    },
+    "aliases": [
+      "〜というものじゃない"
+    ]
+  },
+  {
+    "id": "n2_naidehairarenai",
+    "point": "〜ないではいられない",
+    "en": "can't help but",
+    "ex": "この写真{しゃしん}を見{み}ると、笑{わら}わないではいられない。",
+    "exEn": "Looking at this photo I can't help laughing.",
+    "note": "Same force as 〜ずにはいられない, slightly more colloquial.",
+    "when": {
+      "topic": [
+        "t_camera"
+      ]
+    }
+  },
+  {
+    "id": "n2_nisouinai",
+    "point": "〜に相違{そうい}ない",
+    "en": "without a doubt",
+    "ex": "この字{じ}は兄{あに}のに相違{そうい}ない。",
+    "exEn": "This handwriting is without doubt my brother's.",
+    "note": "Formal, written 〜に違いない. Rare in speech — she uses it half-jokingly.",
+    "when": {
+      "topic": [
+        "t_album",
+        "t_highschool"
+      ]
+    },
+    "aliases": [
+      "〜にそういない"
+    ]
+  },
+  {
+    "id": "n2_nikatakunai",
+    "point": "〜に難{かた}くない",
+    "en": "easy to imagine",
+    "ex": "あの人{ひと}が怒{おこ}ったのは、想像{そうぞう}に難{かた}くない。",
+    "exEn": "It isn't hard to imagine he was angry.",
+    "note": "Almost always 想像に難くない. Written register.",
+    "when": {
+      "topic": [
+        "t_boss",
+        "t_ex"
+      ]
+    },
+    "aliases": [
+      "〜にかたくない"
+    ],
+    "cond": {
+      "minAff": 35
+    }
+  },
+  {
+    "id": "n2_monogaaru",
+    "point": "〜ものがある",
+    "en": "there's something ... about it",
+    "ex": "この曲{きょく}には、胸{むね}に来{く}るものがある。",
+    "exEn": "There's something about this song that gets to you.",
+    "note": "Names a quality you feel but can't fully specify.",
+    "when": {
+      "topic": [
+        "t_music"
+      ]
+    }
+  },
+  {
+    "id": "n2_yamuwoenai",
+    "point": "〜やむを得{え}ない",
+    "en": "unavoidable",
+    "ex": "この天気{てんき}じゃ中止{ちゅうし}もやむを得{え}ない。",
+    "exEn": "In this weather, cancelling is unavoidable.",
+    "note": "Formal acceptance of a bad but necessary outcome.",
+    "when": {
+      "intent": [
+        "weather",
+        "work_talk"
+      ]
+    },
+    "aliases": [
+      "〜やむをえない"
+    ]
+  },
+  {
+    "id": "n2_wokikkakeni",
+    "point": "〜をきっかけに",
+    "en": "triggered by",
+    "ex": "引{ひ}っ越{こ}しをきっかけに、写真{しゃしん}を撮{と}り始{はじ}めた。",
+    "exEn": "Moving house is what got me into photography.",
+    "note": "The specific event that started something. Neutral in tone.",
+    "when": {
+      "topic": [
+        "t_camera"
+      ]
+    }
+  },
+  {
+    "id": "n2_wokeikini",
+    "point": "〜を契機{けいき}に",
+    "en": "on the occasion of, prompted by",
+    "ex": "転職{てんしょく}を契機{けいき}に、生活{せいかつ}が変{か}わった。",
+    "exEn": "Changing jobs was the turning point for my routine.",
+    "note": "Formal 〜をきっかけに. Business and written Japanese.",
+    "when": {
+      "topic": [
+        "t_promotion",
+        "t_work"
+      ]
+    },
+    "aliases": [
+      "〜をけいきに"
+    ]
+  },
+  {
+    "id": "n2_wotowazu",
+    "point": "〜を問{と}わず",
+    "en": "regardless of",
+    "ex": "経験{けいけん}を問{と}わず応募{おうぼ}できるらしい。",
+    "exEn": "Apparently you can apply regardless of experience.",
+    "note": "Formal 'irrespective of'. Common in notices and job ads.",
+    "when": {
+      "topic": [
+        "t_work"
+      ]
+    },
+    "aliases": [
+      "〜をとわず"
+    ]
+  },
+  {
+    "id": "n2_watomokaku",
+    "point": "〜はともかく",
+    "en": "setting aside",
+    "ex": "味{あじ}はともかく、見{み}た目{め}がひどい。",
+    "exEn": "Taste aside, it looks terrible.",
+    "note": "Parks one issue to get to the one that matters.",
+    "when": {
+      "intent": [
+        "food_talk"
+      ],
+      "topic": [
+        "t_meals"
+      ]
+    }
+  },
+  {
+    "id": "n2_wasatateoki",
+    "point": "〜はさておき",
+    "en": "leaving that aside",
+    "ex": "冗談{じょうだん}はさておき、本題{ほんだい}に入{はい}ろう。",
+    "exEn": "Joking aside, let's get to the point.",
+    "note": "Sets a whole subject down. 冗談はさておき is the set phrase.",
+    "when": {
+      "intent": [
+        "work_talk"
+      ]
+    }
+  },
+  {
+    "id": "n2_kotonashini",
+    "point": "〜ことなしに",
+    "en": "without doing",
+    "ex": "努力{どりょく}することなしに、上達{じょうたつ}はしない。",
+    "exEn": "Without making an effort, you don't improve.",
+    "note": "Formal 〜ないで. Usually followed by a negative.",
+    "when": {
+      "intent": [
+        "teach_request"
+      ],
+      "topic": [
+        "t_swap"
+      ]
+    }
+  },
+  {
+    "id": "n2_temade",
+    "point": "〜てまで",
+    "en": "going so far as to",
+    "ex": "睡眠{すいみん}を削{けず}ってまで、やることじゃない。",
+    "exEn": "It's not worth going so far as to cut your sleep.",
+    "note": "Marks an extreme the speaker finds excessive.",
+    "when": {
+      "intent": [
+        "tired",
+        "work_talk"
+      ]
+    }
+  },
+  {
+    "id": "n2_buri",
+    "point": "〜ぶり",
+    "en": "after an interval of",
+    "ex": "三年{さんねん}ぶりに実家{じっか}に帰{かえ}った。",
+    "exEn": "I went home for the first time in three years.",
+    "note": "Time elapsed since the last occurrence. Very common in speech.",
+    "when": {
+      "topic": [
+        "t_childhood",
+        "t_minami"
+      ]
+    }
+  },
+  {
+    "id": "n2_sueni",
+    "point": "〜末{すえ}に",
+    "en": "after much ...",
+    "ex": "三{さん}ヶ月{かげつ}悩{なや}んだ末{すえ}に、やっと買{か}った。",
+    "exEn": "After three months of agonising, I finally bought it.",
+    "note": "A long deliberate process reaching a decision. 〜あげく is its negative twin.",
+    "when": {
+      "topic": [
+        "t_music"
+      ]
+    },
+    "aliases": [
+      "〜すえに"
+    ]
+  },
+  {
+    "id": "n2_uewa",
+    "point": "〜上{うえ}は",
+    "en": "now that",
+    "ex": "引{ひ}き受{う}けた上{うえ}は、きちんとやる。",
+    "exEn": "Now that I've taken it on, I'll do it properly.",
+    "note": "Resolve following from a commitment. Close to 〜以上は, slightly stiffer.",
+    "when": {
+      "topic": [
+        "t_promotion",
+        "t_work"
+      ]
+    },
+    "aliases": [
+      "〜うえは"
+    ]
+  },
+  {
+    "id": "n2_kagirida",
+    "point": "〜限{かぎ}りだ",
+    "en": "couldn't be more",
+    "ex": "一人{ひとり}で過{す}ごす正月{しょうがつ}は、寂{さび}しい限{かぎ}りだ。",
+    "exEn": "A New Year spent alone is as lonely as it gets.",
+    "note": "Intensifies an emotion adjective. Slightly literary.",
+    "when": {
+      "topic": [
+        "t_ldr_hard",
+        "t_missing"
+      ]
+    },
+    "aliases": [
+      "〜かぎりだ"
+    ]
+  },
+  {
+    "id": "n2_zujimai",
+    "point": "〜ずじまい",
+    "en": "ended up never doing",
+    "ex": "結局{けっきょく}、言{い}えずじまいだった。",
+    "exEn": "In the end I never managed to say it.",
+    "note": "Regret that an intention was never carried out.",
+    "when": {
+      "topic": [
+        "t_ex",
+        "t_ex_things"
+      ]
+    },
+    "cond": {
+      "minAff": 35
+    }
+  },
+  {
+    "id": "n2_souninai",
+    "point": "〜そうにない",
+    "en": "doesn't look like it will",
+    "ex": "この量{りょう}じゃ、今日{きょう}は終{お}わりそうにない。",
+    "exEn": "At this volume it doesn't look like finishing today.",
+    "note": "Negative of 〜そうだ — appearances say no.",
+    "when": {
+      "intent": [
+        "work_talk"
+      ],
+      "topic": [
+        "t_deadline"
+      ]
+    }
+  },
+  {
+    "id": "n2_tatokorode",
+    "point": "〜たところで",
+    "en": "even if you did",
+    "ex": "今{いま}から急{いそ}いだところで、間{ま}に合{あ}わない。",
+    "exEn": "Even if I hurry now, I won't make it.",
+    "note": "A pointless hypothetical. Always followed by a negative outcome.",
+    "when": {
+      "intent": [
+        "tired"
+      ],
+      "topic": [
+        "t_deadline"
+      ]
+    }
+  },
+  {
+    "id": "n2_tsumoride",
+    "point": "〜つもりで",
+    "en": "under the impression that",
+    "ex": "軽{かる}い気持{きも}ちのつもりで始{はじ}めたのに、本気{ほんき}になってる。",
+    "exEn": "I started meaning it lightly and now I'm serious.",
+    "note": "You believed X, though reality differed. Also 'with the intention of'.",
+    "when": {
+      "topic": [
+        "t_camera",
+        "t_flirt"
+      ]
+    }
+  },
+  {
+    "id": "n2_temiseru",
+    "point": "〜てみせる",
+    "en": "I'll show you I can",
+    "ex": "今年{ことし}こそ、弾{ひ}けるようになってみせる。",
+    "exEn": "This year I'll show you I can play it.",
+    "note": "Determination with an audience in mind. Stronger than 〜する.",
+    "when": {
+      "topic": [
+        "t_music"
+      ]
+    }
+  },
+  {
+    "id": "n2_towaie",
+    "point": "〜とはいえ",
+    "en": "that said",
+    "ex": "春{はる}とはいえ、まだ風{かぜ}が冷{つめ}たい。",
+    "exEn": "Spring though it may be, the wind is still cold.",
+    "note": "Concedes a label then contradicts it. Written-leaning but used in speech.",
+    "when": {
+      "intent": [
+        "weather"
+      ]
+    }
+  },
+  {
+    "id": "n2_niatatte",
+    "point": "〜に当{あ}たって",
+    "en": "on the occasion of",
+    "ex": "新{あたら}しい担当{たんとう}を受{う}けるに当{あ}たって、少{すこ}し不安{ふあん}もある。",
+    "exEn": "On taking the new accounts, I do have some anxiety.",
+    "note": "Formal 'when doing (something significant)'. Business register.",
+    "when": {
+      "topic": [
+        "t_promotion"
+      ]
+    },
+    "aliases": [
+      "〜にあたって"
+    ]
+  },
+  {
+    "id": "n2_niseyo",
+    "point": "〜にせよ",
+    "en": "whether ... or",
+    "ex": "行{い}くにせよ行{い}かないにせよ、早{はや}めに決{き}めたい。",
+    "exEn": "Whether I go or not, I want to decide soon.",
+    "note": "Formal 〜にしても. Often doubled for either/or.",
+    "when": {
+      "topic": [
+        "t_fujii",
+        "t_choice"
+      ]
+    }
+  },
+  {
+    "id": "n2_nitodomarazu",
+    "point": "〜にとどまらず",
+    "en": "not limited to",
+    "ex": "影響{えいきょう}は仕事{しごと}にとどまらず、生活{せいかつ}全体{ぜんたい}に及{およ}んでる。",
+    "exEn": "The effect isn't limited to work; it reaches my whole life.",
+    "note": "Formal escalation — reaches beyond the obvious scope.",
+    "when": {
+      "topic": [
+        "t_work",
+        "t_ex"
+      ]
+    },
+    "cond": {
+      "minAff": 35
+    }
+  },
+  {
+    "id": "n2_beku",
+    "point": "〜べく",
+    "en": "in order to",
+    "ex": "間{ま}に合{あ}わせるべく、朝{あさ}から動{うご}いてる。",
+    "exEn": "I've been at it since morning in order to make the deadline.",
+    "note": "Formal 〜ために. Written Japanese; she uses it wryly.",
+    "when": {
+      "topic": [
+        "t_deadline",
+        "t_work"
+      ]
+    }
+  },
+  {
+    "id": "n2_youdewa",
+    "point": "〜ようでは",
+    "en": "if things are like this",
+    "ex": "ここで諦{あきら}めるようでは、続{つづ}かないよね。",
+    "exEn": "If I give up here, it won't last.",
+    "note": "A negative condition leading to a bad conclusion. Mildly critical.",
+    "when": {
+      "topic": [
+        "t_music",
+        "t_swap"
+      ]
+    }
+  },
+  {
+    "id": "n2_mokamawazu",
+    "point": "〜も構{かま}わず",
+    "en": "without caring about",
+    "ex": "人目{ひとめ}も構{かま}わず、駅{えき}で泣{な}いてる人{ひと}がいた。",
+    "exEn": "Someone was crying at the station, heedless of onlookers.",
+    "note": "Ignoring something one normally would mind.",
+    "when": {
+      "topic": [
+        "t_ldr_hard"
+      ]
+    },
+    "aliases": [
+      "〜もかまわず"
+    ]
+  },
+  {
+    "id": "n2_mama",
+    "point": "〜まま",
+    "en": "as it is, unchanged",
+    "ex": "電気{でんき}をつけたまま寝{ね}てしまった。",
+    "exEn": "I fell asleep with the light still on.",
+    "note": "A state left unchanged while something else happens.",
+    "when": {
+      "topic": [
+        "t_sleep",
+        "t_home"
+      ]
+    }
+  },
+  {
+    "id": "n2_nomi",
+    "point": "〜のみ",
+    "en": "only (formal)",
+    "ex": "残{のこ}るはあと一日{いちにち}のみ。",
+    "exEn": "Only one day remains.",
+    "note": "Formal だけ. Notices, signage, and deliberate emphasis.",
+    "when": {
+      "topic": [
+        "t_ldr_plan",
+        "t_deadline"
+      ]
+    }
+  },
+  {
+    "id": "n2_nikagiru",
+    "point": "〜に限{かぎ}る",
+    "en": "nothing beats",
+    "ex": "疲{つか}れた日{ひ}は、早{はや}く寝{ね}るに限{かぎ}る。",
+    "exEn": "On a tiring day, nothing beats an early night.",
+    "note": "The speaker's confident recommendation.",
+    "when": {
+      "intent": [
+        "tired",
+        "weather"
+      ],
+      "topic": [
+        "t_rainy"
+      ]
+    },
+    "aliases": [
+      "〜にかぎる"
+    ]
+  },
+  {
+    "id": "n2_nikagitte",
+    "point": "〜に限{かぎ}って",
+    "en": "of all times, precisely when",
+    "ex": "急{いそ}いでる日{ひ}に限{かぎ}って、電車{でんしゃ}が遅{おく}れる。",
+    "exEn": "It's precisely on the days I'm rushing that the train is late.",
+    "note": "Bad luck landing on the worst possible occasion.",
+    "when": {
+      "intent": [
+        "tired",
+        "weather"
+      ]
+    },
+    "aliases": [
+      "〜にかぎって"
+    ]
   }
 ]

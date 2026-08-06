@@ -38,17 +38,19 @@ const NO_RUBY = /\{[ぁ-んー]+\}/g;
 function usedGrammar(bubbles, grammar) {
   const hits = [];
   for (const g of grammar) {
-    const point = g.point.replace(NO_RUBY, '');
-    const surface = point.replace(/^〜/, '').split('(')[0].trim();
+    // `aliases` carries the other ways the same point gets written — 〜わけじゃない
+    // for 〜わけではない, 〜たとたん for 〜たとたん(に), the all-kana spelling. Exact
+    // matching alone missed 43 annotations, twelve of them on one point, and
+    // those lines could never produce a card.
+    const forms = [g.point.replace(NO_RUBY, ''), ...(g.aliases || [])];
+    const surfaces = forms
+      .map((f) => f.replace(/^〜/, '').split('(')[0].trim())
+      .filter((sfc) => sfc.length >= 3 && !sfc.includes('〜'));
 
     for (const b of bubbles) {
       const named = [...String(b.en || '').matchAll(/—\s*(〜[^\s,.;、。]+)/g)].map((m) => m[1]);
       const plain = b.jp.replace(NO_RUBY, '');
-      // Short forms like 〜ほど or 〜さえ appear inside ordinary words far too
-      // often to be evidence, and a multi-part point can't be matched whole.
-      const bySurface =
-        surface.length >= 3 && !surface.includes('〜') && plain.includes(surface);
-      if (named.includes(point) || bySurface) {
+      if (named.some((n) => forms.includes(n)) || surfaces.some((sfc) => plain.includes(sfc))) {
         hits.push({ id: g.id, line: b.jp });   // keep the sentence, ruby and all
         break;
       }
@@ -199,8 +201,11 @@ export class Companion {
     const qaEntry = qaWins ? this.qa.find((e) => e.id === qaHit.id) : null;
 
     const newMemories = ingest(state, raw, this.lexicon, {
-      // 「ラーメン好き？」 asked OF her must not file ramen as HIS favourite.
-      skipScan: !!qaEntry || (match && SCAN_BLOCKING.includes(match.id)),
+      // 「ラーメン好き？」 asked OF her must not file ramen as HIS favourite —
+      // but that reasoning only holds for an actual question. A statement like
+      // 「犬を飼ってる」 also matches the pet Q&A, and suppressing the scan there
+      // silently threw the fact away instead of remembering it.
+      skipScan: (!!qaEntry && a.question) || (match && SCAN_BLOCKING.includes(match.id)),
       intentId: match?.id ?? null,
     });
 
