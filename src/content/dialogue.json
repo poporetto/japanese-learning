@@ -16000,6 +16000,54 @@
       ],
       "sug": [{ "jp": "いつか届{とど}くといいな", "en": "I hope it arrives someday" }, { "jp": "その名前{なまえ}、気{き}になる", "en": "Now I'm curious about the name" }],
       "aff": 2
+    },
+    {
+      "id": "ph_daily_basil_rescue",
+      "kind": "selfie",
+      "minAffection": 8,
+      "file": "assets/photos/daily-basil-rescue.png",
+      "alt": "Yui trying to rescue her drooping balcony basil",
+      "s": "concerned",
+      "when": { "intent": ["weekend", "weather", "happy"], "topic": ["t_daily_basil", "t_home"], "band": ["morning", "afternoon"] },
+      "b": [{ "jp": "今{いま}のバジル。私{わたし}まで一緒{いっしょ}にしおれて見{み}える？", "en": "The basil right now. Do I look like I'm wilting with it?" }, { "jp": "言{い}われた通{とお}りにやってみるから、復活{ふっかつ}したら一緒{いっしょ}に喜{よろこ}んで。", "en": "I'll try what you suggested, so celebrate with me if it recovers." }],
+      "sug": [{ "jp": "二人{ふたり}とも頑張{がんば}れ", "en": "Hang in there, both of you" }, { "jp": "ちゃんと見守{みまも}るよ", "en": "I'll keep watching" }],
+      "aff": 1
+    },
+    {
+      "id": "ph_daily_laundry_sock",
+      "kind": "selfie",
+      "minAffection": 6,
+      "file": "assets/photos/daily-laundry-sock.png",
+      "alt": "Yui accusing the lone surviving sock on laundry day",
+      "s": "smug",
+      "when": { "intent": ["weekend", "happy"], "topic": ["t_daily_sock", "t_home"], "band": ["morning", "afternoon"] },
+      "b": [{ "jp": "容疑者{ようぎしゃ}の片方{かたほう}。何{なに}か知{し}ってそうな顔{かお}してるでしょ。", "en": "The surviving suspect. It looks like it knows something, right?" }, { "jp": "こういうどうでもいい事件{じけん}を報告{ほうこく}できる相手{あいて}がいるの、意外{いがい}といいね。", "en": "It's surprisingly nice having someone I can report completely trivial cases to." }],
+      "sug": [{ "jp": "重要事件{じゅうようじけん}だよ", "en": "This is an important case" }, { "jp": "捜査{そうさ}を続{つづ}けよう", "en": "Continue the investigation" }],
+      "aff": 1
+    },
+    {
+      "id": "ph_daily_leftover_bento",
+      "kind": "selfie",
+      "minAffection": 10,
+      "file": "assets/photos/daily-leftover-bento.png",
+      "alt": "Yui proudly showing her curry-leftover bento",
+      "s": "excited",
+      "when": { "intent": ["food_talk", "work_talk", "happy"], "topic": ["t_daily_leftovers", "t_meals", "t_home"], "band": ["morning", "afternoon"] },
+      "b": [{ "jp": "完成{かんせい}。昨日{きのう}のカレーだった面影{おもかげ}、ほとんどないでしょ。", "en": "Finished. You can barely tell it used to be last night's curry, right?" }, { "jp": "写真{しゃしん}撮{と}ってから食{た}べる癖{くせ}、完全{かんぜん}についた。見{み}せたい人{ひと}がいるからかな。", "en": "I've completely developed the habit of photographing food before eating. Maybe because there's someone I want to show." }],
+      "sug": [{ "jp": "毎回{まいかい}見{み}せて", "en": "Show me every time" }, { "jp": "食{た}べる係{かかり}もやるよ", "en": "I'll be the taste tester too" }],
+      "aff": 2
+    },
+    {
+      "id": "ph_daily_shelf_assembly",
+      "kind": "selfie",
+      "minAffection": 12,
+      "file": "assets/photos/daily-shelf-assembly.png",
+      "alt": "Yui surrounded by bookshelf parts and an upside-down instruction sheet",
+      "s": "tired",
+      "when": { "intent": ["tired", "weekend", "sad"], "topic": ["t_daily_shelf", "t_home"], "band": ["evening", "night"] },
+      "b": [{ "jp": "現在地{げんざいち}。説明書{せつめいしょ}が上下逆{じょうげぎゃく}なのは、写真{しゃしん}を撮{と}ってから気{き}づいた。", "en": "Current situation. I noticed the instructions were upside down only after taking this." }, { "jp": "笑{わら}っていいけど、最後{さいご}まで応援{おうえん}すること。", "en": "You may laugh, but you have to cheer me on to the end." }],
+      "sug": [{ "jp": "笑{わら}わないで応援{おうえん}する", "en": "I'll cheer without laughing" }, { "jp": "少{すこ}しだけ笑{わら}った", "en": "I laughed a little" }],
+      "aff": 1
     }
   ],
   "proactive": [

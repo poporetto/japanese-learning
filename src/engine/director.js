@@ -243,7 +243,7 @@ export function proactivePlan(state, dialogue, band) {
 
 // Snapshots of her surroundings are cheap and frequent; pictures of herself
 // are the rarer, more loaded thing.
-const COOLDOWN = { scene: 5, selfie: 12 };
+const COOLDOWN = { scene: 5, selfie: 9 };
 
 // A 2-character keyword scores 4 — just over the matcher's threshold, and a
 // pure guess. Good enough to pick a reply, not good enough to pick a picture:
@@ -288,7 +288,7 @@ export function photoPlan(state, dialogue, ctx = {}) {
   }
 
   const relevant = eligible.filter((p) => fitsContext(p, ctx));
-  if (relevant.length && Math.random() < 0.65) return pick(relevant, state);
+  if (relevant.length && Math.random() < 0.72) return pick(relevant, state);
 
   // Otherwise, occasionally, unprompted — she just felt like sharing.
   // Not when the API wrote the turn, though: an improvised reply about your
