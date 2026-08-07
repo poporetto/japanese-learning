@@ -537,6 +537,20 @@ function openLightbox(photo) {
 }
 
 $('#gallery').addEventListener('click', openGallery);
+const profile = $('#sprite');
+const openProfile = () => {
+  const img = $('#sprite-img');
+  if (!img.hidden && img.src) {
+    openLightbox({ file: img.currentSrc || img.src, alt: `結衣 Yui · ${spriteLabel}` });
+  }
+};
+profile.addEventListener('click', openProfile);
+profile.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    openProfile();
+  }
+});
 $('#lightbox').addEventListener('click', () => $('#lightbox').close());
 
 /* ---------- settings ---------- */

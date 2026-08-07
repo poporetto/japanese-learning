@@ -30,10 +30,10 @@ const NO_RUBY = /\{[ぁ-んー]+\}/g;
  * 「休めるどころか、仕事が増えていく一方」 and the card would teach 〜わけにはいかない,
  * with the real answer sitting in her own sentence.
  *
- * Two detectors. Authored lines and API replies both name their pattern at the
- * end of the English gloss (" — 〜どころか"), which is exact. Older lines that
- * predate that convention are caught by matching the point's surface form
- * against the Japanese.
+ * Authored lines and API replies name their pattern at the end of the English
+ * gloss (" — 〜どころか"). Requiring that exact annotation is deliberate:
+ * substring matching confuses ordinary こと / として / くらい with unrelated
+ * N2 constructions and makes the teaching card stray from what Yui just said.
  */
 function usedGrammar(bubbles, grammar) {
   const hits = [];
@@ -43,14 +43,9 @@ function usedGrammar(bubbles, grammar) {
     // matching alone missed 43 annotations, twelve of them on one point, and
     // those lines could never produce a card.
     const forms = [g.point.replace(NO_RUBY, ''), ...(g.aliases || [])];
-    const surfaces = forms
-      .map((f) => f.replace(/^〜/, '').split('(')[0].trim())
-      .filter((sfc) => sfc.length >= 3 && !sfc.includes('〜'));
-
     for (const b of bubbles) {
       const named = [...String(b.en || '').matchAll(/—\s*(〜[^\s,.;、。]+)/g)].map((m) => m[1]);
-      const plain = b.jp.replace(NO_RUBY, '');
-      if (named.some((n) => forms.includes(n)) || surfaces.some((sfc) => plain.includes(sfc))) {
+      if (named.some((n) => forms.includes(n))) {
         hits.push({ id: g.id, line: b.jp });   // keep the sentence, ruby and all
         break;
       }
@@ -337,6 +332,11 @@ export class Companion {
       markUsed(state, v.id);
       if (v.q) state.pendingSlot = v.q;
       if (v.setFlag) state.flags[v.setFlag] = true;
+      if (v.clearFlag) delete state.flags[v.clearFlag];
+      // Some everyday stories need more than one reply to breathe. A variant
+      // can deliberately keep (or move) the thread forward for the next user
+      // message instead of every topic being forced to end after one answer.
+      if (v.nextTopic) state.pendingTopic = v.nextTopic;
       // `coldHours` starts the withdrawal. Real hours, not turns: the point is
       // that a day passes and she comes back to it, which turn counts can't say.
       if (v.coldHours) state.coldUntil = Date.now() + v.coldHours * 3600 * 1000;
@@ -360,7 +360,7 @@ export class Companion {
       direction.goal.push('相手の話に反応したあと、自分からも話題を少し広げる。');
       direction.refs.push(open.b.map((b) => b.jp).join(' '));
       if (open.q) direction.askAbout = open.q;
-    } else if (plan.kind === 'topic_follow') {
+    } else if (plan.kind === 'topic_follow' && !v?.nextTopic) {
       state.pendingTopic = null;
     } else if (plan.kind !== 'greet' && plan.kind !== 'proactive' && plan.kind !== 'scheduled') {
       // A proactive nudge is her talking into silence — it must not wipe the

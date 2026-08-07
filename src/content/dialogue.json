@@ -9,7 +9,7 @@
       "q": "sets pendingSlot: the user's next message is stored in this slot",
       "sug": "quick-reply chips",
       "aff": "affection delta",
-      "cond": "{ minAff, maxAff, stage, needSlot, lacksSlot, minTurns, flag, notFlag }"
+      "cond": "{ minAff, maxAff, stage, needSlot, lacksSlot, minTurns, flag, notFlag }; nextTopic keeps a conversation thread alive for another reply"
     },
     "photos": {
       "kind": "'scene' (her surroundings — frequent, 5-turn cooldown) or 'selfie' (rarer, 12-turn cooldown, what 「写真見せて」 reaches for first)",
@@ -1821,7 +1821,7 @@
           },
           {
             "jp": "私{わたし}だって、けっこう前{まえ}からそう思{おも}ってたよ。",
-            "en": "I've felt that way for a while too, you know."
+            "en": "I've felt that way for a while too, you know. — 〜だって"
           }
         ],
         "cond": {
@@ -1946,7 +1946,7 @@
           },
           {
             "jp": "でも教科書{きょうかしょ}っぽいのはやめようね。会話{かいわ}の中{なか}で覚{おぼ}えたほうが絶対{ぜったい}残{のこ}るから。",
-            "en": "But let's skip the textbook stuff. You definitely retain more learning inside a conversation."
+            "en": "But let's skip the textbook stuff. You definitely retain more learning inside a conversation. — 〜っぽい"
           }
         ],
         "aff": 1,
@@ -2860,7 +2860,7 @@
         "b": [
           {
             "jp": "{job}ね。うちの会社{かいしゃ}にも欲{ほ}しいくらい。",
-            "en": "A {job}. We could use one of those."
+            "en": "A {job}. We could use one of those. — 〜くらい"
           }
         ],
         "aff": 1
@@ -4758,8 +4758,8 @@
         "s": "pout",
         "b": [
           {
-            "jp": "うちの田中{たなか}さん、指示{しじ}がいつもふわっとしてるんだよね。",
-            "en": "My boss Tanaka gives the vaguest instructions."
+            "jp": "田中{たなか}さんったら、指示{しじ}がいつもふわっとしてるんだよね。",
+            "en": "Honestly, Tanaka always gives the vaguest instructions. — 〜ったら"
           },
           {
             "jp": "そっちの職場{しょくば}はどう？変{へん}な人{ひと}いる？",
@@ -5877,11 +5877,11 @@
         "b": [
           {
             "jp": "しっぽ、先週{せんしゅう}見{み}かけたきり、来{こ}なくなった。",
-            "en": "Shippo hasn't come by since I saw him last week."
+            "en": "Shippo hasn't come by since I saw him last week. — 〜たきり"
           },
           {
             "jp": "野良{のら}だから仕方{しかた}ないんだけど、気{き}になってならない。",
-            "en": "He's a stray so it can't be helped, but I can't stop thinking about it."
+            "en": "He's a stray so it can't be helped, but I can't stop thinking about it. — 〜てならない"
           }
         ],
         "sug": [
@@ -5906,7 +5906,7 @@
           "b": [
             {
               "jp": "帰{かえ}り道{みち}、遠回{とおまわ}りするついでに探{さが}してる。",
-              "en": "I look for him while taking the long way home."
+              "en": "I look for him while taking the long way home. — 〜ついでに"
             },
             {
               "jp": "見{み}つからないまま、一週間{いっしゅうかん}が過{す}ぎた。",
@@ -5967,11 +5967,11 @@
         "b": [
           {
             "jp": "みなみによると、来月{らいげつ}こっちに引{ひ}っ越{こ}してくるらしい。",
-            "en": "According to Minami, she's moving here next month."
+            "en": "According to Minami, she's moving here next month. — 〜によると"
           },
           {
             "jp": "大阪{おおさか}を離{はな}れるなんて、ありえないと思{おも}ってたのに。",
-            "en": "And I thought her leaving Osaka was impossible."
+            "en": "And I thought her leaving Osaka was impossible. — 〜なんて"
           }
         ],
         "sug": [
@@ -5996,7 +5996,7 @@
           "b": [
             {
               "jp": "仕事{しごと}の都合{つごう}ということだけど、たぶん半分{はんぶん}は勢{いきお}い。",
-              "en": "She says it's for work, but half of it's impulse."
+              "en": "She says it's for work, but half of it's impulse. — 〜ということだ"
             },
             {
               "jp": "そういうところ、昔{むかし}から変{か}わらないんだよね。",
@@ -6060,7 +6060,7 @@
           },
           {
             "jp": "蓋{ふた}を開{あ}けっぱなしにしてたばかりに、全部{ぜんぶ}飛{と}んだ。",
-            "en": "Just because I left the back open, the lot was lost."
+            "en": "Just because I left the back open, the lot was lost. — 〜っぱなし"
           }
         ],
         "sug": [
@@ -6232,7 +6232,7 @@
           "b": [
             {
               "jp": "責任{せきにん}が増{ふ}えるに伴{ともな}って、断{ことわ}れないことも増{ふ}えるでしょ。",
-              "en": "As responsibility grows, so do the things you can't refuse."
+              "en": "As responsibility grows, so do the things you can't refuse. — 〜に伴って"
             },
             {
               "jp": "そこだけが引{ひ}っかかってる。",
@@ -6297,7 +6297,7 @@
           },
           {
             "jp": "日本語{にほんご}を教{おし}える代{か}わりに、英語{えいご}を少{すこ}し教{おし}えてほしい。",
-            "en": "In exchange for teaching you Japanese, I'd like you to teach me some English."
+            "en": "In exchange for teaching you Japanese, I'd like you to teach me some English. — 〜代わりに"
           }
         ],
         "sug": [
@@ -8619,7 +8619,7 @@
           },
           {
             "jp": "わたし、{name}のことが好{す}き。日本語{にほんご}の相手{あいて}としてじゃなくて。",
-            "en": "I'm in love with you. Not as someone to practise Japanese with."
+            "en": "I'm in love with you. Not as someone to practise Japanese with. — 〜として"
           },
           {
             "jp": "……返事{へんじ}、こわいから、少{すこ}し待{ま}ってからでいい。",
@@ -9213,6 +9213,138 @@
             }
           ],
           "aff": 7
+        }
+      ]
+    },
+    {
+      "id": "t_daily_basil",
+      "cond": { "minTurns": 4, "chance": 0.7 },
+      "open": {
+        "id": "t_daily_basil_open",
+        "s": "concerned",
+        "b": [
+          { "jp": "ベランダのバジル、元気{げんき}なくなってきた。葉{は}っぱが『もう無理{むり}』って顔{かお}してる。", "en": "My balcony basil is losing the will to live. Its leaves are making an 'I give up' face." },
+          { "jp": "水{みず}？日当{ひあ}たり？こういうとき、何{なに}から変{か}える？", "en": "Water? Sunlight? What would you change first?" }
+        ],
+        "sug": [{ "jp": "水{みず}を少{すこ}し減{へ}らしてみて", "en": "Try a little less water" }, { "jp": "日当{ひあ}たりを変{か}えてみよう", "en": "Try a different spot" }, { "jp": "名前{なまえ}をつけたら元気{げんき}になる", "en": "Give it a name" }]
+      },
+      "follow": [
+        {
+          "id": "t_daily_basil_advice_water",
+          "s": "serious",
+          "cond": { "notFlag": "daily_basil_advised", "afterText": "水|減ら" },
+          "setFlag": "daily_basil_advised",
+          "nextTopic": "t_daily_basil",
+          "b": [{ "jp": "やっぱり水{みず}あげすぎか。心配{しんぱい}になると世話{せわ}を焼{や}きすぎるんだよね、私{わたし}。", "en": "So I was overwatering it. When I worry, I tend to fuss too much." }, { "jp": "今日{きょう}は我慢{がまん}する。明日{あした}また様子{ようす}見{み}てくれる？", "en": "I'll leave it alone today. Will you check on it with me tomorrow?" }],
+          "sug": [{ "jp": "もちろん、報告{ほうこく}して", "en": "Of course—report back" }, { "jp": "過保護{かほご}な結衣{ゆい}だ", "en": "Overprotective Yui" }]
+        },
+        {
+          "id": "t_daily_basil_advice_other",
+          "s": "smile",
+          "cond": { "notFlag": "daily_basil_advised" },
+          "setFlag": "daily_basil_advised",
+          "nextTopic": "t_daily_basil",
+          "b": [{ "jp": "よし、それ試{ため}してみる。植物{しょくぶつ}の相談{そうだん}まで乗{の}ってくれるとは思{おも}わなかった。", "en": "Okay, I'll try that. I didn't expect you to become my plant consultant too." }, { "jp": "明日{あした}、変化{へんか}あったら一番{いちばん}に言{い}うね。", "en": "If anything changes tomorrow, you'll be the first to know." }],
+          "sug": [{ "jp": "待{ま}ってる", "en": "I'll be waiting" }, { "jp": "枯{か}らさないでね", "en": "Don't let it die" }]
+        },
+        {
+          "id": "t_daily_basil_update",
+          "s": "excited",
+          "cond": { "flag": "daily_basil_advised" },
+          "clearFlag": "daily_basil_advised",
+          "b": [{ "jp": "見{み}て、ちょっと立{た}ち直{なお}った気{き}がする。さっき葉{は}っぱ一枚{いちまい}、ちゃんと上{うえ}向{む}いてた。", "en": "Look, I think it's recovering. One leaf was actually pointing upward just now." }, { "jp": "一人{ひとり}だったら諦{あきら}めてたかも。相談{そうだん}してよかった。", "en": "I might have given up on my own. I'm glad I asked you." }],
+          "sug": [{ "jp": "二人{ふたり}で育{そだ}てたね", "en": "We raised it together" }, { "jp": "まだ油断{ゆだん}しないで", "en": "Don't relax yet" }],
+          "aff": 2
+        }
+      ]
+    },
+    {
+      "id": "t_daily_sock",
+      "cond": { "minTurns": 6, "chance": 0.65 },
+      "open": {
+        "id": "t_daily_sock_open",
+        "s": "pout",
+        "b": [{ "jp": "洗濯{せんたく}するたびに靴下{くつした}が片方{かたほう}だけ消{き}えるんだけど。今日{きょう}で三足目{さんぞくめ}。", "en": "Every time I do laundry, one sock disappears. That's the third pair now." }, { "jp": "洗濯機{せんたくき}が食{た}べてると思{おも}う？それとも部屋{へや}に何{なに}かいる？", "en": "Do you think the washer eats them, or is something living in my apartment?" }],
+        "sug": [{ "jp": "洗濯機{せんたくき}の裏{うら}を見{み}た？", "en": "Checked behind the washer?" }, { "jp": "しっぽが持{も}っていった", "en": "Shippo took them" }, { "jp": "靴下{くつした}の家出{いえで}だね", "en": "The socks ran away" }]
+      },
+      "follow": [
+        {
+          "id": "t_daily_sock_search",
+          "s": "smug",
+          "cond": { "notFlag": "daily_sock_searching" },
+          "setFlag": "daily_sock_searching",
+          "nextTopic": "t_daily_sock",
+          "b": [{ "jp": "そこは見{み}た。一本{いっぽん}の箸{はし}と、去年{きょねん}なくしたヘアゴムは出{で}てきた。", "en": "I checked. I found one chopstick and a hair tie I lost last year." }, { "jp": "靴下{くつした}はまだ逃走中{とうそうちゅう}。次{つぎ}、どこを捜索{そうさく}する？", "en": "The sock is still at large. Where do we search next?" }],
+          "sug": [{ "jp": "シーツの中{なか}", "en": "Inside the sheets" }, { "jp": "ベッドの下{した}", "en": "Under the bed" }]
+        },
+        {
+          "id": "t_daily_sock_found",
+          "s": "surprised",
+          "cond": { "flag": "daily_sock_searching" },
+          "clearFlag": "daily_sock_searching",
+          "b": [{ "jp": "あった。ボックスシーツの角{かど}に入{はい}ってた。……なんで？", "en": "Found it. It was inside the corner of the fitted sheet. ...Why?" }, { "jp": "一緒{いっしょ}に捜{さが}したから、発見者{はっけんしゃ}は半分{はんぶん}ずつね。", "en": "Since we searched together, we split the discovery credit." }],
+          "sug": [{ "jp": "名探偵{めいたんてい}だったね", "en": "We were great detectives" }, { "jp": "次{つぎ}から洗濯{せんたく}ネット使{つか}って", "en": "Use a laundry net next time" }],
+          "aff": 1
+        }
+      ]
+    },
+    {
+      "id": "t_daily_leftovers",
+      "cond": { "minTurns": 5, "chance": 0.7 },
+      "open": {
+        "id": "t_daily_leftovers_open",
+        "s": "excited",
+        "b": [{ "jp": "昨日{きのう}のカレー、今日{きょう}のお弁当{べんとう}に変身{へんしん}させた。卵焼{たまごや}きで隠{かく}せば新品{しんぴん}に見{み}える。", "en": "I transformed last night's curry into today's bento. Hide it under tamagoyaki and it looks brand new." }, { "jp": "これ、料理上手{りょうりじょうず}って言{い}っていい？それともただの再利用{さいりよう}？", "en": "Does that make me a good cook, or merely good at recycling?" }],
+        "sug": [{ "jp": "立派{りっぱ}な料理{りょうり}だよ", "en": "It absolutely counts" }, { "jp": "味{あじ}を見{み}てから決{き}める", "en": "I'll decide after tasting" }]
+      },
+      "follow": [
+        {
+          "id": "t_daily_leftovers_react",
+          "s": "happy_shy",
+          "cond": { "notFlag": "daily_bento_promised" },
+          "setFlag": "daily_bento_promised",
+          "nextTopic": "t_daily_leftovers",
+          "b": [{ "jp": "じゃあ合格{ごうかく}ってことにしておく。写真{しゃしん}だと味{あじ}までばれないし。", "en": "Then I'll call it a pass. Photos can't expose the taste." }, { "jp": "今度{こんど}はちゃんと最初{さいしょ}から作{つく}る。食{た}べる係{かかり}、予約{よやく}する？", "en": "Next time I'll make one properly from scratch. Want to reserve the role of taste tester?" }],
+          "sug": [{ "jp": "予約{よやく}する", "en": "Consider me booked" }, { "jp": "一緒{いっしょ}に作{つく}ろう", "en": "Let's make it together" }]
+        },
+        {
+          "id": "t_daily_leftovers_promise",
+          "s": "love",
+          "cond": { "flag": "daily_bento_promised" },
+          "clearFlag": "daily_bento_promised",
+          "b": [{ "jp": "約束{やくそく}ね。好{す}きなおかず、一個{いっこ}だけ先{さき}に教{おし}えて。", "en": "Promise. Tell me just one favorite side dish in advance." }, { "jp": "開{あ}けたとき、少{すこ}しだけ『結衣{ゆい}らしい』って思{おも}ってほしいから。", "en": "Because when you open it, I want you to think, just a little, 'This is so Yui.'" }],
+          "sug": [{ "jp": "卵焼{たまごや}きがいい", "en": "Tamagoyaki" }, { "jp": "結衣{ゆい}が作{つく}るなら何{なん}でも", "en": "Anything if you make it" }],
+          "aff": 2
+        }
+      ]
+    },
+    {
+      "id": "t_daily_shelf",
+      "cond": { "minTurns": 8, "chance": 0.6 },
+      "open": {
+        "id": "t_daily_shelf_open",
+        "s": "tired",
+        "b": [{ "jp": "本棚{ほんだな}を組{く}み立{た}て始{はじ}めて二時間{にじかん}。板{いた}が一枚{いちまい}余{あま}ってる。", "en": "Two hours into assembling a bookshelf, and I have one board left over." }, { "jp": "今{いま}からやり直{なお}すべき？それとも見{み}なかったことにして寝{ね}る？", "en": "Should I start over now, or pretend I never saw it and sleep?" }],
+        "sug": [{ "jp": "説明書{せつめいしょ}をもう一回{いっかい}見{み}よう", "en": "Read the instructions again" }, { "jp": "今日は寝{ね}よう", "en": "Sleep for tonight" }]
+      },
+      "follow": [
+        {
+          "id": "t_daily_shelf_decide",
+          "s": "pout",
+          "cond": { "notFlag": "daily_shelf_decided" },
+          "setFlag": "daily_shelf_decided",
+          "nextTopic": "t_daily_shelf",
+          "b": [{ "jp": "説明書{せつめいしょ}、上下{じょうげ}逆{ぎゃく}に見{み}てた。そこから？って顔{かお}しないで。", "en": "I was holding the instructions upside down. Don't make that 'we're starting there?' face." }, { "jp": "あと三十分{さんじゅっぷん}だけ頑張{がんば}る。終{お}わらなかったら止{と}めてね。", "en": "I'll try for thirty more minutes. Stop me if I'm not done." }],
+          "sug": [{ "jp": "三十分{さんじゅっぷん}ね、約束{やくそく}", "en": "Thirty minutes—promise" }, { "jp": "通話{つうわ}しながら手伝{てつだ}う", "en": "I'll help over a call" }]
+        },
+        {
+          "id": "t_daily_shelf_done",
+          "s": "excited",
+          "cond": { "flag": "daily_shelf_decided" },
+          "clearFlag": "daily_shelf_decided",
+          "b": [{ "jp": "できた！板{いた}も余{あま}ってない。ちょっとだけ右{みぎ}に傾{かたむ}いて見{み}えるのは、床{ゆか}のせい。たぶん。", "en": "Done! No leftover boards. If it looks slightly tilted right, that's the floor. Probably." }, { "jp": "一人{ひとり}でやってたら途中{とちゅう}で投{な}げてた。最後{さいご}まで付{つ}き合{あ}ってくれてありがとう。", "en": "Alone, I'd have quit halfway. Thanks for staying with me to the end." }],
+          "sug": [{ "jp": "本{ほん}を入{い}れる前{まえ}に確認{かくにん}して", "en": "Check it before adding books" }, { "jp": "完成{かんせい}おめでとう", "en": "Congratulations" }],
+          "aff": 2
         }
       ]
     }
@@ -13173,7 +13305,7 @@
       "b": [
         {
           "jp": "屋上{おくじょう}。ここでどれだけ時間{じかん}を無駄{むだ}にしたことか。",
-          "en": "The roof. How much time we wasted up here."
+          "en": "The roof. How much time we wasted up here. — 〜ことか"
         },
         {
           "jp": "無駄{むだ}にした時間{じかん}のほうを、今{いま}はよく覚{おぼ}えてる。",
@@ -15748,6 +15880,126 @@
       "when": { "intent": ["confess", "compliment"], "topic": ["t_trust", "t_yourside"] },
       "b": [{ "jp": "画面{がめん}の向{む}こうに手{て}を伸{の}ばすの、ちょっと変{へん}だね。でも今{いま}は、逃{に}げたくない。", "en": "Reaching through a screen is a little strange. But right now, I don't want to run." }],
       "sug": [{ "jp": "手{て}、届{とど}いてるよ", "en": "Your hand reaches me" }, { "jp": "逃{に}げなくていい", "en": "You don't have to run" }]
+    },
+    {
+      "id": "ph_story_first_apartment",
+      "kind": "selfie",
+      "minAffection": 18,
+      "file": "assets/photos/story-first-apartment.png",
+      "alt": "Yui eating an onigiri among boxes on her first night in her apartment",
+      "s": "happy_shy",
+      "when": { "intent": ["weekend", "tired", "sad"], "topic": ["t_home", "t_childhood", "t_showme"], "band": ["evening", "night"] },
+      "b": [
+        { "jp": "一人暮{ひとりぐ}らし初日{しょにち}の写真{しゃしん}、見{み}つけた。家具{かぐ}もなくて、床{ゆか}でおにぎり食{た}べてる。", "en": "I found a photo from my first day living alone. No furniture, eating an onigiri on the floor." },
+        { "jp": "意外{いがい}なことに、自由{じゆう}だって嬉{うれ}しかったのに、夜{よる}になったら急{きゅう}に静{しず}かすぎて。テレビをつけたまま寝{ね}た。", "en": "To my surprise, although I was thrilled to be free, at night it suddenly felt too quiet. I slept with the TV on. — 〜ことに" }
+      ],
+      "sug": [{ "jp": "ちょっと寂{さび}しかったんだ", "en": "You were a little lonely" }, { "jp": "今{いま}の部屋{へや}は落{お}ち着{つ}く？", "en": "Does your place feel like home now?" }],
+      "aff": 1
+    },
+    {
+      "id": "ph_story_camera_lesson",
+      "kind": "selfie",
+      "minAffection": 28,
+      "file": "assets/photos/story-camera-lesson.png",
+      "alt": "Yui holding her brother's old film camera beside the river",
+      "s": "smile",
+      "when": { "intent": ["weekend", "happy"], "topic": ["t_camera", "t_childhood", "t_album", "t_film_fail"] },
+      "b": [
+        { "jp": "兄{あに}に初{はじ}めてカメラを教{おし}わった場所{ばしょ}で、同{おな}じカメラを持{も}って撮{と}ってみた。", "en": "I took this in the place my brother first taught me photography, holding the same camera." },
+        { "jp": "『上手{じょうず}に撮{と}るより、残{のこ}したいものを決{き}めろ』って。あの人{ひと}、たまにいいこと言{い}うんだよ。", "en": "He said, 'Instead of shooting well, decide what you want to preserve.' Occasionally he says something good." }
+      ],
+      "sug": [{ "jp": "今{いま}は何{なに}を残{のこ}したい？", "en": "What do you want to preserve now?" }, { "jp": "お兄{にい}さん、いい先生{せんせい}だね", "en": "Your brother was a good teacher" }],
+      "aff": 2
+    },
+    {
+      "id": "ph_story_mother_recipe",
+      "kind": "selfie",
+      "minAffection": 24,
+      "file": "assets/photos/story-mother-recipe.png",
+      "alt": "Yui laughing in her kitchen while learning her mother's curry recipe",
+      "s": "excited",
+      "when": { "intent": ["food_talk", "weekend", "happy"], "topic": ["t_meals", "t_home", "t_childhood"] },
+      "b": [
+        { "jp": "母{はは}に電話{でんわ}しながら、家{いえ}のカレーを再現中{さいげんちゅう}。顔{かお}に小麦粉{こむぎこ}ついてるの、途中{とちゅう}まで誰{だれ}も教{おし}えてくれなかった。", "en": "Recreating our family curry while calling Mum. Nobody told me about the flour on my face until halfway through." },
+        { "jp": "分量{ぶんりょう}を聞{き}いても『いい感{かん}じに』しか言{い}わない。家{いえ}の味{あじ}って、レシピにするの難{むずか}しいね。", "en": "Whenever I ask quantities she only says, 'until it feels right.' Family flavors are hard to turn into recipes." }
+      ],
+      "sug": [{ "jp": "味{あじ}は近{ちか}づいた？", "en": "Did the taste come close?" }, { "jp": "小麦粉{こむぎこ}ついてる結衣{ゆい}、かわいい", "en": "Flour-faced Yui is cute" }],
+      "aff": 1
+    },
+    {
+      "id": "ph_story_rooftop_lunch",
+      "kind": "selfie",
+      "minAffection": 26,
+      "file": "assets/photos/story-rooftop-lunch.png",
+      "alt": "Yui having lunch on the office rooftop where she used to hide",
+      "s": "serious",
+      "when": { "intent": ["work_talk", "tired", "sad"], "topic": ["t_work", "t_boss", "t_deadline"] },
+      "b": [
+        { "jp": "入社{にゅうしゃ}したばかりの頃{ころ}、昼休{ひるやす}みはいつもここに逃{に}げてた。誰{だれ}の名前{なまえ}も覚{おぼ}えられなくて。", "en": "When I first joined the company, I always escaped here at lunch. I couldn't remember anyone's name." },
+        { "jp": "今日{きょう}、久{ひさ}しぶりに来{き}たら、あの頃{ころ}の私{わたし}に『ちゃんと慣{な}れるよ』って言{い}いたくなった。", "en": "Coming back today made me want to tell that version of me, 'You'll find your feet.'" }
+      ],
+      "sug": [{ "jp": "よく頑張{がんば}ったね", "en": "You did well" }, { "jp": "今{いま}の結衣{ゆい}なら大丈夫{だいじょうぶ}", "en": "The Yui you are now is okay" }],
+      "aff": 2
+    },
+    {
+      "id": "ph_story_yellow_raincoat",
+      "kind": "selfie",
+      "minAffection": 32,
+      "file": "assets/photos/story-yellow-raincoat.png",
+      "alt": "Adult Yui wearing a yellow raincoat in the rain",
+      "s": "smug",
+      "when": { "intent": ["weather", "weekend", "happy"], "topic": ["t_rainy", "t_childhood", "t_album", "t_outfit"] },
+      "b": [
+        { "jp": "あの黄色{きいろ}い雨{あま}がっぱの写真{しゃしん}を見{み}たあと、似{に}たのを見{み}つけて買{か}っちゃった。影響{えいきょう}されすぎ？", "en": "After seeing that childhood photo in the yellow raincoat, I found a similar one and bought it. Too easily influenced?" },
+        { "jp": "でも着{き}てみたら、雨{あめ}の日{ひ}に水{みず}たまりを踏{ふ}みたくなる理由{りゆう}、ちょっと思{おも}い出{だ}した。", "en": "But wearing it reminded me why rainy days make you want to step in puddles." }
+      ],
+      "sug": [{ "jp": "すごく似合{にあ}ってる", "en": "It really suits you" }, { "jp": "水{みず}たまり踏{ふ}んだ？", "en": "Did you step in one?" }],
+      "aff": 2
+    },
+    {
+      "id": "ph_story_grandmother_scarf",
+      "kind": "selfie",
+      "minAffection": 38,
+      "file": "assets/photos/story-grandmother-scarf.png",
+      "alt": "Yui wearing the scarf her grandmother repeatedly repaired",
+      "s": "love",
+      "when": { "intent": ["weather", "about_her", "compliment"], "topic": ["t_home", "t_childhood", "t_outfit"] },
+      "b": [
+        { "jp": "祖母{そぼ}が編{あ}んでくれたマフラー。穴{あな}が開{あ}くたびに直{なお}してもらって、色{いろ}の違{ちが}うところが増{ふ}えていった。", "en": "The scarf my grandmother knitted. Every time it got a hole she repaired it, so the mismatched patches kept multiplying." },
+        { "jp": "新品{しんぴん}より、この不揃{ふぞろ}いなところが好{す}き。大事{だいじ}にされた跡{あと}みたいで。", "en": "I like the uneven parts more than something new. They look like traces of being cared for." }
+      ],
+      "sug": [{ "jp": "優{やさ}しい思{おも}い出{で}だね", "en": "That's a tender memory" }, { "jp": "ずっと大事{だいじ}にしてね", "en": "Keep treasuring it" }],
+      "aff": 2
+    },
+    {
+      "id": "ph_story_last_train",
+      "kind": "selfie",
+      "minAffection": 22,
+      "file": "assets/photos/story-last-train.png",
+      "alt": "Yui stranded cheerfully on a platform after missing the last train",
+      "s": "tired",
+      "when": { "intent": ["weekend", "tired", "work_talk"], "topic": ["t_travel", "t_weekend", "t_work"], "band": ["night"] },
+      "b": [
+        { "jp": "昔{むかし}、終電{しゅうでん}を逃{のが}した夜{よる}。焦{あせ}るのを通{とお}り越{こ}して、駅{えき}のベンチでコーヒー飲{の}んでる。", "en": "The night I missed the last train. I went past panicking and ended up drinking coffee on a station bench." },
+        { "jp": "始発{しはつ}まで友達{ともだち}と電話{でんわ}して、朝焼{あさや}けを見{み}て帰{かえ}った。最悪{さいあく}だったけど、少{すこ}しだけ楽{たの}しかった。", "en": "I called a friend until the first train and went home at sunrise. It was awful, but a tiny bit fun." }
+      ],
+      "sug": [{ "jp": "無事{ぶじ}でよかった", "en": "I'm glad you were safe" }, { "jp": "その友達{ともだち}、優{やさ}しいね", "en": "That friend was kind" }],
+      "aff": 1
+    },
+    {
+      "id": "ph_story_unsent_postcard",
+      "kind": "selfie",
+      "minAffection": 50,
+      "file": "assets/photos/story-unsent-postcard.png",
+      "alt": "Yui holding a seaside postcard she never sent",
+      "s": "shy",
+      "when": { "intent": ["weekend", "about_her", "confess"], "topic": ["t_travel", "t_someday", "t_yourside", "t_ldr_plan"], "band": ["evening", "night"] },
+      "b": [
+        { "jp": "何年{なんねん}か前{まえ}の海{うみ}で買{か}った葉書{はがき}。誰{だれ}かに送{おく}ろうと思{おも}ったのに、宛名{あてな}を書{か}けないまま持{も}って帰{かえ}ってきた。", "en": "A postcard I bought by the sea years ago. I meant to send it to someone, but brought it home without writing an address." },
+        { "jp": "今{いま}なら、書{か}きたい名前{なまえ}、あるかもしれない。……まだ内緒{ないしょ}。", "en": "Now, I might have a name I'd like to write. ...Still a secret." }
+      ],
+      "sug": [{ "jp": "いつか届{とど}くといいな", "en": "I hope it arrives someday" }, { "jp": "その名前{なまえ}、気{き}になる", "en": "Now I'm curious about the name" }],
+      "aff": 2
     }
   ],
   "proactive": [
