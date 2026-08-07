@@ -65,10 +65,21 @@ function remember(entry) {
 function addUserBubble(text) {
   const el = document.createElement('div');
   el.className = 'row me';
-  el.innerHTML = `<div class="bubble me">${esc(text)}</div>`;
+  el.innerHTML = `
+    <div class="mine">
+      <div class="bubble me">${esc(text)}</div>
+      <small class="receipt" ${replaying ? '' : 'hidden'}>既読</small>
+    </div>`;
   log.append(el);
   remember({ t: 'me', jp: text });
   scrollDown();
+}
+
+/** Mark only the newest message as read, like a real chat receipt. */
+function markLatestRead() {
+  const receipts = log.querySelectorAll('.row.me .receipt');
+  const receipt = receipts[receipts.length - 1];
+  if (receipt) receipt.hidden = false;
 }
 
 function addHerBubble(bubble) {
@@ -196,12 +207,18 @@ const svgIcon = (name, cls = 'ico') => {
 /* ---------- chrome: sprite, meter, suggestions ---------- */
 
 const PROFILE_FALLBACK = 'assets/portraits/yui-chat-profile.png';
+let spriteLabel = '';
+
+function setPresence(text) {
+  $('#sprite-label').textContent = text || spriteLabel;
+}
 
 function setSprite(key) {
   const def = yui.sprites[key] || yui.sprites.neutral;
   const wrap = $('#sprite');
   wrap.style.setProperty('--hue', def.hue ?? 210);
-  $('#sprite-label').textContent = def.label;
+  spriteLabel = def.label;
+  setPresence();
   const img = $('#sprite-img');
   img.hidden = false;
   img.dataset.profileFallback = '0';
@@ -249,18 +266,22 @@ async function play(turn) {
   setSprite(turn.sprite);
 
   for (const bubble of turn.bubbles) {
+    setPresence('入力中…');
     const dots = typingIndicator();
     const chars = stripRuby(bubble.jp).length;
     await sleep(Math.min(1600, 320 + chars * 45));
     dots.remove();
+    setPresence();
     addHerBubble(bubble);
-    await sleep(180);
+    await sleep(220 + Math.random() * 260);
   }
 
   if (turn.photo) {
+    setPresence('写真を選んでる…');
     const dots = typingIndicator();
-    await sleep(900);
+    await sleep(700 + Math.random() * 650);
     dots.remove();
+    setPresence();
     addPhoto(turn.photo);
   }
 
@@ -291,6 +312,10 @@ async function send(text) {
   ensureNotifyPermission();
   // Held from here so a slow API call can't be raced by the idle timer.
   busy = true;
+  setPresence('読んでる…');
+  await sleep(280 + Math.random() * 520);
+  markLatestRead();
+  setPresence('入力中…');
   // The API round trip — plus any wait for the per-minute gap — happens before
   // play() draws anything, so without this the screen sits dead for seconds and
   // reads as her ignoring you. Show she's typing for the whole wait.
@@ -300,6 +325,7 @@ async function send(text) {
     turn = await yui.respond(value, state);
   } finally {
     waiting.remove();
+    setPresence();
     busy = false;
   }
   await play(turn);

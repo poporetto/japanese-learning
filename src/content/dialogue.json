@@ -500,7 +500,7 @@
         ]
       },
       {
-        "id": "r_greet_2",
+        "id": "r_greet_5",
         "s": "smile",
         "b": [
           {
@@ -997,7 +997,7 @@
         ]
       },
       {
-        "id": "r_tired_2",
+        "id": "r_tired_5",
         "s": "tired",
         "b": [
           {
@@ -1651,7 +1651,7 @@
         ]
       },
       {
-        "id": "r_comp_2",
+        "id": "r_comp_5",
         "s": "happy_shy",
         "b": [
           {
@@ -6205,6 +6205,28 @@
       },
       "follow": [
         {
+          "id": "t_promotion_f_try",
+          "s": "concerned",
+          "cond": { "afterText": "価値|やってみ|大丈夫|だいじょうぶ" },
+          "b": [
+            { "jp": "やってみたい気持{きも}ちはある。失敗{しっぱい}した時{とき}に「やっぱり」って思{おも}われるのが怖{こわ}いだけ。", "en": "I do want to try. I'm only afraid people will say 'I knew it' if I fail." },
+            { "jp": "でも、その怖{こわ}さだけで断{ことわ}るのも違{ちが}うよね。", "en": "But turning it down only because of that fear doesn't feel right either." }
+          ],
+          "sug": [{ "jp": "失敗{しっぱい}しても価値{かち}は変{か}わらない", "en": "Failure wouldn't change your worth" }, { "jp": "一緒{いっしょ}に考{かんが}えよう", "en": "Let's think it through together" }],
+          "aff": 5
+        },
+        {
+          "id": "t_promotion_f_restraint",
+          "s": "serious",
+          "cond": { "afterText": "無理|むり|押さなく|断って" },
+          "b": [
+            { "jp": "そう言{い}ってもらえると、断{ことわ}る選択肢{せんたくし}もちゃんと見{み}える。", "en": "Hearing that helps me see that saying no is a real option too." },
+            { "jp": "受{う}けるにしても、条件{じょうけん}は交渉{こうしょう}してみる。全部{ぜんぶ}抱{かか}える必要{ひつよう}はないもんね。", "en": "Even if I accept, I'll negotiate the terms. I don't have to carry everything." }
+          ],
+          "sug": [{ "jp": "それがいいと思{おも}う", "en": "That sounds right" }, { "jp": "条件{じょうけん}、一緒{いっしょ}に整理{せいり}する？", "en": "Want to sort the conditions together?" }],
+          "aff": 5
+        },
+        {
           "id": "t_promotion_f1",
           "s": "neutral",
           "b": [
@@ -6703,7 +6725,7 @@
       },
       "open": {
         "id": "t_jealous_open",
-        "s": "pout",
+        "s": "jealous",
         "b": [
           {
             "jp": "最近{さいきん}、返事{へんじ}が遅{おそ}い日{ひ}があるでしょ。",
@@ -6730,6 +6752,28 @@
         ]
       },
       "follow": [
+        {
+          "id": "t_jealous_f_reassured",
+          "s": "happy_shy",
+          "cond": { "afterText": "誰もいない|だれもいない|忙しかった|いそがしかった" },
+          "b": [
+            { "jp": "……そっか。聞{き}けてよかった。", "en": "…I see. I'm glad I asked." },
+            { "jp": "勝手{かって}に想像{そうぞう}して、勝手{かって}に不安{ふあん}になるの、やめたいんだ。", "en": "I want to stop imagining things and making myself anxious." }
+          ],
+          "sug": [{ "jp": "これからは聞{き}いて", "en": "Ask me next time" }, { "jp": "一緒{いっしょ}に慣{な}れよう", "en": "We'll learn together" }],
+          "aff": 7
+        },
+        {
+          "id": "t_jealous_f_calledout",
+          "s": "jealous",
+          "cond": { "afterText": "嫉妬|しっと|やきもち" },
+          "b": [
+            { "jp": "……してる。認{みと}めたくなかったけど。", "en": "…I am. I didn't want to admit it." },
+            { "jp": "でも、縛{しば}りたいわけじゃない。そこは間違{まちが}えたくない。", "en": "But I don't want to control you. I don't want to get that wrong." }
+          ],
+          "sug": [{ "jp": "正直{しょうじき}に言{い}ってくれて嬉{うれ}しい", "en": "I'm glad you were honest" }, { "jp": "縛{しば}られてるとは思{おも}わない", "en": "I don't feel controlled" }],
+          "aff": 6
+        },
         {
           "id": "t_jealous_f1",
           "s": "concerned",
@@ -7776,6 +7820,28 @@
         ]
       },
       "follow": [
+        {
+          "id": "t_fujii_f_why",
+          "s": "serious",
+          "cond": { "afterText": "なんで|なぜ|どうして" },
+          "b": [
+            { "jp": "自分{じぶん}でも確認{かくにん}したかったの。誰{だれ}に最初{さいしょ}に言{い}いたくなるのか。", "en": "I wanted to confirm it for myself—who I'd want to tell first." },
+            { "jp": "……答{こた}え、もう出{で}てるよね。", "en": "…The answer's already obvious, isn't it?" }
+          ],
+          "sug": [{ "jp": "わたしでよかった", "en": "I'm glad it was me" }, { "jp": "ちゃんと言{い}って", "en": "Say it clearly" }],
+          "aff": 6
+        },
+        {
+          "id": "t_fujii_f_going",
+          "s": "hurt",
+          "cond": { "afterText": "行くの|行く？|いくの|いい人" },
+          "b": [
+            { "jp": "その返{かえ}し、正{ただ}しいのに少{すこ}し寂{さび}しい。", "en": "That's a perfectly reasonable answer, and somehow it still makes me lonely." },
+            { "jp": "行{い}ってほしくないって、一回{いっかい}くらい言{い}ってほしかった。", "en": "I wanted you to say you didn't want me to go, just once." }
+          ],
+          "sug": [{ "jp": "行{い}ってほしくない", "en": "I don't want you to go" }, { "jp": "言{い}うのが怖{こわ}かった", "en": "I was afraid to say it" }],
+          "aff": 4
+        },
         {
           "id": "t_fujii_f1",
           "s": "pout",
@@ -8982,6 +9048,28 @@
         ]
       },
       "follow": [
+        {
+          "id": "t_ldr_fight_f_apology",
+          "s": "hurt",
+          "cond": { "afterText": "ごめん|すみません|謝" },
+          "b": [
+            { "jp": "謝{あやま}ってほしかった。でも、謝{あやま}られるだけで終{お}わるのも怖{こわ}い。", "en": "I wanted an apology. But I'm scared of it ending with only an apology." },
+            { "jp": "次{つぎ}に同{おな}じ日{ひ}が来{き}た時{とき}、どうするか一緒{いっしょ}に決{き}めたい。", "en": "I want us to decide what we do next time this happens." }
+          ],
+          "sug": [{ "jp": "一緒{いっしょ}に決{き}めよう", "en": "Let's decide together" }, { "jp": "次{つぎ}は一言{ひとこと}送{おく}る", "en": "I'll send one line next time" }],
+          "aff": 6
+        },
+        {
+          "id": "t_ldr_fight_f_heard",
+          "s": "serious",
+          "cond": { "afterText": "言ってくれて|言い訳はしない|いいわけはしない" },
+          "b": [
+            { "jp": "責{せ}めずに聞{き}いてくれるなら、ちゃんと話{はな}せる。", "en": "If you'll listen without blaming me, I can talk about it properly." },
+            { "jp": "寂{さび}しかった。それを怒{おこ}りに変{か}えてから送{おく}った。", "en": "I was lonely. I turned it into anger before I messaged you." }
+          ],
+          "sug": [{ "jp": "寂{さび}しかったんだね", "en": "You were lonely" }, { "jp": "話{はな}してくれてありがとう", "en": "Thank you for telling me" }],
+          "aff": 8
+        },
         {
           "id": "t_ldr_fight_f1",
           "s": "hurt",
@@ -15066,9 +15154,57 @@
       "aff": 2
     },
     {
+      "id": "ph_memory_homey",
+      "kind": "selfie",
+      "minAffection": 18,
+      "file": "assets/photos/memory-homey.jpg",
+      "alt": "Yui making tea at home",
+      "s": "smile",
+      "when": { "intent": ["happy"], "topic": ["t_home", "t_showme"], "band": ["evening"] },
+      "b": [{ "jp": "今日{きょう}は家{いえ}でお茶{ちゃ}いれてた。こういう時間{じかん}、好{す}きかも。", "en": "I made tea at home today. I think I like moments like this." }],
+      "sug": [{ "jp": "落{お}ち着{つ}きそう", "en": "That looks relaxing" }, { "jp": "一緒{いっしょ}に飲{の}みたい", "en": "I'd like to drink it with you" }]
+    },
+    {
+      "id": "ph_memory_adventure",
+      "kind": "selfie",
+      "minAffection": 24,
+      "file": "assets/photos/memory-adventure.jpg",
+      "alt": "Yui on a seaside hike",
+      "s": "excited",
+      "when": { "intent": ["weekend", "happy"], "topic": ["t_travel", "t_showme"], "band": ["afternoon"] },
+      "b": [{ "jp": "海{うみ}まで歩{ある}いてきた！思{おも}ったより冒険{ぼうけん}だった。", "en": "I walked all the way to the sea! It was more of an adventure than I expected." }],
+      "sug": [{ "jp": "楽{たの}しそう", "en": "Looks fun" }, { "jp": "次{つぎ}は一緒{いっしょ}に", "en": "Together next time" }]
+    },
+    {
+      "id": "ph_memory_crying",
+      "kind": "selfie",
+      "minAffection": 38,
+      "file": "assets/photos/memory-crying.jpg",
+      "alt": "Yui by a window with tears in her eyes",
+      "s": "sad",
+      "when": { "intent": ["sad", "sorry"], "topic": ["t_trust", "t_showme"], "band": ["night"] },
+      "b": [{ "jp": "ちょっと泣{な}いちゃった。でも、もう落{お}ち着{つ}いたよ。", "en": "I cried a little. But I'm calm now." }],
+      "sug": [{ "jp": "そばにいるよ", "en": "I'm here" }, { "jp": "無理{むり}しないで", "en": "Don't push yourself" }]
+    },
+    {
+      "id": "ph_memory_jealous",
+      "kind": "selfie",
+      "minAffection": 52,
+      "file": "assets/photos/memory-jealous.jpg",
+      "alt": "Yui making a jealous pout at a cafe",
+      "s": "jealous",
+      "when": { "intent": ["about_her", "compliment"], "topic": ["t_jealous", "t_showme"] },
+      "b": [{ "jp": "……別{べつ}に。ちょっとだけ、ずるいなって思{おも}っただけ。", "en": "...It's nothing. I only thought it was a little unfair." }],
+      "sug": [{ "jp": "やきもち？", "en": "Jealous?" }, { "jp": "結衣{ゆい}が一番{いちばん}", "en": "You're number one, Yui" }]
+    },
+    {
       "id": "ph_desk_two_photos",
       "minAffection": 44,
-      "kind": "photo",
+      "kind": "scene",
+      "file": "assets/photos/desk-two.jpg",
+      "alt": "Two personal photos on Yui's desk",
+      "s": "happy_shy",
+      "when": { "intent": ["work_talk"], "topic": ["t_work", "t_yourside"] },
       "b": [
         {
           "jp": "机{つくえ}にもう一枚{いちまい}増{ふ}えた。どれか分{わ}かる？",
@@ -15093,7 +15229,11 @@
     {
       "id": "ph_lunch_alone_choice",
       "minAffection": 46,
-      "kind": "photo",
+      "kind": "scene",
+      "file": "assets/photos/solo-dinner.jpg",
+      "alt": "Yui eating alone while replying on her phone",
+      "s": "smile",
+      "when": { "intent": ["food_talk"], "topic": ["t_choice"] },
       "b": [
         {
           "jp": "今日{きょう}は誘{さそ}われたけど断{ことわ}った。",
@@ -15118,7 +15258,11 @@
     {
       "id": "ph_night_bus",
       "minAffection": 48,
-      "kind": "photo",
+      "kind": "selfie",
+      "file": "assets/photos/train-window.jpg",
+      "alt": "Yui reflected in a dark window on the way home",
+      "s": "tired",
+      "when": { "intent": ["work_talk", "tired"], "band": ["night"] },
       "b": [
         {
           "jp": "終{お}わらなくて、バスで帰{かえ}ってる。",
@@ -15143,7 +15287,11 @@
     {
       "id": "ph_hair_cut",
       "minAffection": 50,
-      "kind": "photo",
+      "kind": "selfie",
+      "file": "assets/photos/haircut.jpg",
+      "alt": "Yui showing her freshly trimmed hair",
+      "s": "pout",
+      "when": { "topic": ["t_outfit", "t_showme"] },
       "b": [
         {
           "jp": "切{き}った。三{さん}センチだけ。",
@@ -15168,7 +15316,11 @@
     {
       "id": "ph_kitchen_two",
       "minAffection": 52,
-      "kind": "photo",
+      "kind": "scene",
+      "file": "assets/photos/scheduled-cooked-dinner.jpg",
+      "alt": "Dinner for two portions in Yui's kitchen",
+      "s": "happy_shy",
+      "when": { "intent": ["food_talk"], "topic": ["t_meals", "t_yourside"] },
       "b": [
         {
           "jp": "二人分{ふたりぶん}の量{りょう}を作{つく}っちゃった。癖{くせ}かな。",
@@ -15193,7 +15345,11 @@
     {
       "id": "ph_fuji_declined",
       "minAffection": 54,
-      "kind": "photo",
+      "kind": "scene",
+      "file": "assets/photos/walk-night.jpg",
+      "alt": "The open night sky on Yui's walk home",
+      "s": "serious",
+      "when": { "topic": ["t_fujii", "t_choice"] },
       "b": [
         {
           "jp": "さっき、断{ことわ}ってきた。",
@@ -15218,7 +15374,11 @@
     {
       "id": "ph_ticket_stub",
       "minAffection": 56,
-      "kind": "photo",
+      "kind": "scene",
+      "file": "assets/photos/ex-ticket.jpg",
+      "alt": "A saved cinema ticket stub",
+      "s": "neutral",
+      "when": { "intent": ["weekend"], "topic": ["t_ex_things"] },
       "b": [
         {
           "jp": "一人{ひとり}で映画{えいが}。半券{はんけん}、なんとなく捨{す}てられない。",
@@ -15243,7 +15403,11 @@
     {
       "id": "ph_pillow_phone",
       "minAffection": 62,
-      "kind": "photo",
+      "kind": "selfie",
+      "file": "assets/photos/phone-dark.jpg",
+      "alt": "Yui's phone beside her pillow late at night",
+      "s": "sleepy",
+      "when": { "topic": ["t_latenight", "t_ldr_call"], "band": ["night"] },
       "b": [
         {
           "jp": "この位置{いち}で話{はな}してる。想像{そうぞう}つく？",
@@ -15268,7 +15432,11 @@
     {
       "id": "ph_shirt_borrowed",
       "minAffection": 66,
-      "kind": "photo",
+      "kind": "selfie",
+      "file": "assets/photos/hoodie-shoulder.jpg",
+      "alt": "Yui wearing the top she never returned",
+      "s": "shy",
+      "when": { "topic": ["t_missing", "t_together"] },
       "b": [
         {
           "jp": "これ、返{かえ}しそびれたやつ。",
@@ -15293,7 +15461,11 @@
     {
       "id": "ph_morning_after_call",
       "minAffection": 68,
-      "kind": "photo",
+      "kind": "selfie",
+      "file": "assets/photos/morning-window.jpg",
+      "alt": "Sleepy Yui in the morning after a long call",
+      "s": "happy_shy",
+      "when": { "topic": ["t_ldr_call"], "band": ["morning"] },
       "b": [
         {
           "jp": "朝{あさ}。三時間{さんじかん}しか寝{ね}てないのに、機嫌{きげん}がいい。",
@@ -15316,17 +15488,21 @@
       ]
     },
     {
-      "id": "ph_two_toothbrush",
+      "id": "ph_two_cups_waiting",
       "minAffection": 70,
-      "kind": "photo",
+      "kind": "scene",
+      "file": "assets/photos/two-cups-home.jpg",
+      "alt": "Two mugs set out together at Yui's home",
+      "s": "shy",
+      "when": { "topic": ["t_together", "t_ldr_plan"] },
       "b": [
         {
-          "jp": "……買{か}っちゃった。気{き}が早{はや}いのは分{わ}かってる。",
-          "en": "…I bought it. I know I'm getting ahead of myself."
+          "jp": "マグカップ、二{ふた}つ並{なら}べてみた。気{き}が早{はや}いのは分{わ}かってる。",
+          "en": "I set out two mugs. I know I'm getting ahead of myself."
         },
         {
-          "jp": "使{つか}う日{ひ}が来{こ}なかったら、笑{わら}い話{ばなし}にしてね。",
-          "en": "If the day never comes, make it a funny story."
+          "jp": "いつか同{おな}じ朝{あさ}に使{つか}えたらいいな。",
+          "en": "I hope we can use them on the same morning someday."
         }
       ],
       "sug": [
@@ -15343,7 +15519,11 @@
     {
       "id": "ph_station_goodbye",
       "minAffection": 74,
-      "kind": "photo",
+      "kind": "scene",
+      "file": "assets/photos/station.jpg",
+      "alt": "The station platform after saying goodbye",
+      "s": "sad",
+      "when": { "topic": ["t_ldr_hard", "t_ldr_plan"], "band": ["evening", "night"] },
       "b": [
         {
           "jp": "さっきのホーム。振{ふ}り返{かえ}ったらもういなかった。",
@@ -15368,7 +15548,11 @@
     {
       "id": "ph_calendar_countdown",
       "minAffection": 82,
-      "kind": "photo",
+      "kind": "scene",
+      "file": "assets/photos/calendar-marked.jpg",
+      "alt": "A calendar counting down to seeing each other",
+      "s": "concerned",
+      "when": { "topic": ["t_ldr_time", "t_ldr_plan"] },
       "b": [
         {
           "jp": "数{かぞ}えるのやめようと思{おも}ったのに、また数{かぞ}えてる。",
@@ -15393,7 +15577,11 @@
     {
       "id": "ph_late_call_face",
       "minAffection": 86,
-      "kind": "photo",
+      "kind": "selfie",
+      "file": "assets/photos/call-screen.jpg",
+      "alt": "Sleepy Yui during a late call",
+      "s": "sleepy",
+      "when": { "topic": ["t_ldr_call"], "band": ["night"] },
       "b": [
         {
           "jp": "通話{つうわ}しながら撮{と}った。声{こえ}だけじゃ足{た}りない日{ひ}もあるから。",
@@ -15418,7 +15606,11 @@
     {
       "id": "ph_two_umbrella_rack",
       "minAffection": 88,
-      "kind": "photo",
+      "kind": "scene",
+      "file": "assets/photos/two-umbrellas.jpg",
+      "alt": "Two umbrellas standing together in Yui's entryway",
+      "s": "love",
+      "when": { "topic": ["t_umbrella", "t_ldr_plan"] },
       "b": [
         {
           "jp": "玄関{げんかん}。二本{にほん}並{なら}んだままにしてる。",
@@ -15441,29 +15633,121 @@
       ]
     },
     {
-      "id": "ph_ring_shop_window",
+      "id": "ph_shop_window_dressed",
       "minAffection": 90,
-      "kind": "photo",
+      "kind": "selfie",
+      "file": "assets/photos/dressed-up.jpg",
+      "alt": "Yui dressed up after stopping at a shop window",
+      "s": "happy_shy",
+      "when": { "topic": ["t_someday", "t_ldr_plan"] },
       "b": [
         {
-          "jp": "通{とお}りかかっただけ。本当{ほんとう}に、通{とお}りかかっただけだから。",
-          "en": "Just passing. Genuinely, just passing."
+          "jp": "通{とお}りかかった店{みせ}で、試着{しちゃく}だけしてみた。",
+          "en": "I stopped at a shop and only tried this on."
         },
         {
-          "jp": "……でも三分{さんぷん}くらい止{と}まってたかもしれない。",
-          "en": "…I may have stood there for three minutes."
+          "jp": "……見{み}せたい相手{あいて}が浮{う}かんだから、写真{しゃしん}も撮{と}った。",
+          "en": "…Someone I wanted to show came to mind, so I took a photo."
         }
       ],
       "sug": [
         {
-          "jp": "三分{さんぷん}は長{なが}いね",
-          "en": "Three minutes is a while"
+          "jp": "すごく似合{にあ}ってる",
+          "en": "It really suits you"
         },
         {
-          "jp": "今度{こんど}一緒{いっしょ}に見{み}よう",
-          "en": "Let's look together sometime"
+          "jp": "見{み}せてくれて嬉{うれ}しい",
+          "en": "I'm glad you showed me"
         }
       ]
+    },
+    {
+      "id": "ph_promotion_conference",
+      "kind": "selfie",
+      "minAffection": 28,
+      "file": "assets/photos/conference.jpg",
+      "alt": "Yui preparing for a conference after accepting more responsibility",
+      "s": "concerned",
+      "when": { "intent": ["work_talk"], "topic": ["t_promotion"] },
+      "b": [{ "jp": "担当{たんとう}が増{ふ}えて、こういう場{ば}にも出{で}ることになった。顔{かお}、固{かた}い？", "en": "More accounts means attending things like this. Do I look tense?" }],
+      "sug": [{ "jp": "少{すこ}しだけ", "en": "A little" }, { "jp": "似合{にあ}ってるよ", "en": "It suits you" }]
+    },
+    {
+      "id": "ph_promotion_window",
+      "kind": "scene",
+      "minAffection": 32,
+      "file": "assets/photos/office-window.jpg",
+      "alt": "The view from Yui's office after a difficult decision",
+      "s": "serious",
+      "when": { "intent": ["work_talk", "happy"], "topic": ["t_promotion", "t_work"], "band": ["evening"] },
+      "b": [{ "jp": "決{き}めた後{あと}の窓{まど}。景色{けしき}は同{おな}じなのに、少{すこ}し違{ちが}って見{み}えた。", "en": "The window after I decided. Same view, but it looked a little different." }],
+      "sug": [{ "jp": "いい決断{けつだん}だったね", "en": "It was a good decision" }, { "jp": "怖{こわ}くない？", "en": "Still scared?" }]
+    },
+    {
+      "id": "ph_boss_desk_mess",
+      "kind": "selfie",
+      "minAffection": 16,
+      "file": "assets/photos/desk-mess.jpg",
+      "alt": "Yui at a chaotic desk after another vague revision request",
+      "s": "angry",
+      "when": { "intent": ["work_talk", "tired"], "topic": ["t_boss", "t_deadline"] },
+      "b": [{ "jp": "「もうちょっとこう」で増{ふ}えた紙{かみ}。怒{おこ}ってない。……怒{おこ}ってる。", "en": "The papers added by 'make it a little more…'. I'm not angry. …I'm angry." }],
+      "sug": [{ "jp": "怒{おこ}っていい", "en": "You're allowed to be angry" }, { "jp": "片付{かたづ}け手伝{てつだ}いたい", "en": "I wish I could help tidy" }]
+    },
+    {
+      "id": "ph_sleep_ceiling",
+      "kind": "selfie",
+      "minAffection": 22,
+      "file": "assets/photos/ceiling-night.jpg",
+      "alt": "Yui awake in bed staring at the ceiling",
+      "s": "sleepy",
+      "when": { "intent": ["tired"], "topic": ["t_sleep", "t_latenight"], "band": ["night"] },
+      "b": [{ "jp": "眠{ねむ}いのに、天井{てんじょう}を見{み}てる。頭{あたま}だけまだ仕事中{しごとちゅう}。", "en": "I'm sleepy, but staring at the ceiling. Only my brain is still at work." }],
+      "sug": [{ "jp": "少{すこ}し話{はな}す？", "en": "Want to talk a little?" }, { "jp": "目{め}を閉{と}じて", "en": "Close your eyes" }]
+    },
+    {
+      "id": "ph_like_mirror",
+      "kind": "selfie",
+      "minAffection": 56,
+      "file": "assets/photos/mirror-night.jpg",
+      "alt": "Yui catching her own smile in the mirror at night",
+      "s": "happy_shy",
+      "when": { "intent": ["compliment", "confess"], "topic": ["t_like", "t_flirt"], "band": ["night"] },
+      "b": [{ "jp": "話{はな}した後{あと}、鏡{かがみ}でこんな顔{かお}してた。原因{げんいん}は言{い}わない。", "en": "This was my face in the mirror after we talked. I'm not naming the cause." }],
+      "sug": [{ "jp": "原因{げんいん}、知{し}ってる", "en": "I know the cause" }, { "jp": "かわいい顔{かお}", "en": "Cute face" }]
+    },
+    {
+      "id": "ph_minami_moving",
+      "kind": "selfie",
+      "minAffection": 24,
+      "file": "assets/photos/minami-boxes.jpg",
+      "alt": "Yui helping Minami with moving boxes",
+      "s": "concerned",
+      "when": { "intent": ["weekend", "sad"], "topic": ["t_minami"] },
+      "b": [{ "jp": "みなみの箱{はこ}。手伝{てつだ}いに来{き}たのに、思{おも}い出話{でばなし}ばっかりして進{すす}まない。", "en": "Minami's boxes. I came to help, but we keep reminiscing instead of making progress." }],
+      "sug": [{ "jp": "寂{さび}しいんだね", "en": "You're going to miss her" }, { "jp": "いい時間{じかん}だね", "en": "Sounds like good time together" }]
+    },
+    {
+      "id": "ph_fight_call_ended",
+      "kind": "selfie",
+      "minAffection": 70,
+      "file": "assets/photos/call-ended.jpg",
+      "alt": "Yui after a difficult call, calmer but still sad",
+      "s": "hurt",
+      "when": { "intent": ["sorry", "sad"], "topic": ["t_ldr_fight", "t_thaw"], "band": ["night"] },
+      "b": [{ "jp": "通話{つうわ}を切{き}った後{あと}。ちゃんと話{はな}せたけど、まだ少{す}し泣{な}きそう。", "en": "After the call. We talked properly, but I still feel a little like crying." }],
+      "sug": [{ "jp": "切{き}らなくてもよかった", "en": "We didn't have to hang up" }, { "jp": "ここにいるよ", "en": "I'm still here" }]
+    },
+    {
+      "id": "ph_trust_fingertips",
+      "kind": "selfie",
+      "minAffection": 50,
+      "file": "assets/photos/fingertips.jpg",
+      "alt": "Yui reaching toward the camera while trying to trust",
+      "s": "shy",
+      "when": { "intent": ["confess", "compliment"], "topic": ["t_trust", "t_yourside"] },
+      "b": [{ "jp": "画面{がめん}の向{む}こうに手{て}を伸{の}ばすの、ちょっと変{へん}だね。でも今{いま}は、逃{に}げたくない。", "en": "Reaching through a screen is a little strange. But right now, I don't want to run." }],
+      "sug": [{ "jp": "手{て}、届{とど}いてるよ", "en": "Your hand reaches me" }, { "jp": "逃{に}げなくていい", "en": "You don't have to run" }]
     }
   ],
   "proactive": [
@@ -25048,108 +25332,6 @@
         {
           "jp": "かわいかったよ",
           "en": "It was cute"
-        }
-      ]
-    },
-    {
-      "id": "ph_memory_homey",
-      "kind": "selfie",
-      "minAffection": 18,
-      "file": "assets/photos/memory-homey.jpg",
-      "alt": "Yui making tea at home",
-      "s": "smile",
-      "when": {
-        "intent": [
-          "home",
-          "happy"
-        ],
-        "topic": [
-          "t_showme"
-        ],
-        "band": [
-          "evening"
-        ]
-      },
-      "b": [
-        {
-          "jp": "今日は家でお茶いれてた。こういう時間、好きかも。",
-          "en": "I made tea at home today. I think I like moments like this."
-        }
-      ]
-    },
-    {
-      "id": "ph_memory_adventure",
-      "kind": "selfie",
-      "minAffection": 24,
-      "file": "assets/photos/memory-adventure.jpg",
-      "alt": "Yui on a seaside hike",
-      "s": "excited",
-      "when": {
-        "intent": [
-          "weekend",
-          "happy"
-        ],
-        "topic": [
-          "t_showme"
-        ],
-        "band": [
-          "afternoon"
-        ]
-      },
-      "b": [
-        {
-          "jp": "海まで歩いてきた！思ったより冒険だった。",
-          "en": "I walked all the way to the sea! It was more of an adventure than I expected."
-        }
-      ]
-    },
-    {
-      "id": "ph_memory_crying",
-      "kind": "selfie",
-      "minAffection": 38,
-      "file": "assets/photos/memory-crying.jpg",
-      "alt": "Yui by a window with tears in her eyes",
-      "s": "sad",
-      "when": {
-        "intent": [
-          "comfort",
-          "sad"
-        ],
-        "topic": [
-          "t_showme"
-        ],
-        "band": [
-          "night"
-        ]
-      },
-      "b": [
-        {
-          "jp": "ちょっと泣いちゃった。でも、もう落ち着いたよ。",
-          "en": "I cried a little. But I'm calm now."
-        }
-      ]
-    },
-    {
-      "id": "ph_memory_jealous",
-      "kind": "selfie",
-      "minAffection": 52,
-      "file": "assets/photos/memory-jealous.jpg",
-      "alt": "Yui making a cute jealous pout at a cafe",
-      "s": "pout",
-      "when": {
-        "intent": [
-          "jealous",
-          "tease"
-        ],
-        "topic": [
-          "t_jealous",
-          "t_showme"
-        ]
-      },
-      "b": [
-        {
-          "jp": "……別に。ちょっとだけ、ずるいなって思っただけ。",
-          "en": "...It's nothing. I only thought it was a little unfair."
         }
       ]
     }

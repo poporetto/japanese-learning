@@ -140,6 +140,22 @@ html, body {
 .row.her { justify-content: flex-start; }
 .row.me { justify-content: flex-end; }
 
+.mine {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: 82%;
+}
+.mine .bubble { max-width: 100%; }
+.receipt {
+  min-height: 14px;
+  margin: 2px 4px 0;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.2;
+}
+.receipt[hidden] { visibility: hidden; display: block; }
+
 .bubble {
   max-width: 82%;
   padding: 10px 14px;
