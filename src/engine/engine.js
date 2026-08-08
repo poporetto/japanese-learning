@@ -10,7 +10,7 @@ import { analyze, reactionBucket } from './analyze.js';
 import { matchIntent } from './match.js';
 import { ingest, fillSlots, recall } from './memory.js';
 import { direct, pick, photoPlan, teachPlan, proactivePlan, scheduledPlan } from './director.js';
-import { bumpAffection, timeBand, dayType, touchDay, stageOf, pushHistory, loadSettings, markUsed } from './state.js';
+import { bumpAffection, timeBand, dayType, dayOfWeek, touchDay, stageOf, pushHistory, loadSettings, markUsed } from './state.js';
 import { improvise, llmReady } from './llm.js';
 
 // Intents where a lexicon word is part of the request, not a fact about him.
@@ -98,6 +98,7 @@ export class Companion {
     const { gapDays } = touchDay(state);
     state._band = timeBand();
     state._dayType = dayType();
+    state._dayOfWeek = dayOfWeek();
     // A question she asked last session isn't pending anymore. Without this,
     // a restored pendingSlot swallows the first thing said on return.
     state.pendingSlot = null;
@@ -140,6 +141,7 @@ export class Companion {
   async proactive(state) {
     state._band = timeBand();
     state._dayType = dayType();
+    state._dayOfWeek = dayOfWeek();
     const plan = proactivePlan(state, this.dialogue, timeBand());
     if (!plan) return null;
 
@@ -160,6 +162,7 @@ export class Companion {
   async scheduled(state) {
     state._band = timeBand();
     state._dayType = dayType();
+    state._dayOfWeek = dayOfWeek();
     const plan = scheduledPlan(state, this.dialogue, new Date());
     if (!plan) return null;
 
@@ -185,6 +188,7 @@ export class Companion {
 
     state._band = timeBand();
     state._dayType = dayType();
+    state._dayOfWeek = dayOfWeek();
     const script = detectScript(raw);
     const a = analyze(raw);
 

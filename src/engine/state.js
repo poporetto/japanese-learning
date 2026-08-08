@@ -154,3 +154,7 @@ export function dayType(d = new Date()) {
   const day = d.getDay();
   return day === 0 || day === 6 ? 'weekend' : 'weekday';
 }
+
+export function dayOfWeek(d = new Date()) {
+  return ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'][d.getDay()];
+}

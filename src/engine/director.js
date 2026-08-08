@@ -2,7 +2,7 @@
 // This is the difference between a lookup table and a character with pacing.
 
 import { recall, callbackCandidates, slotsSatisfied } from './memory.js';
-import { stageOf, localDate, dayType } from './state.js';
+import { stageOf, localDate, dayType, dayOfWeek } from './state.js';
 
 /**
  * Filter authored variants by their conditions, then prefer unseen ones.
@@ -32,6 +32,8 @@ export function pick(variants, state, ctx = {}) {
     if (c.band && !c.band.includes(state._band)) return false;
     const allowedDays = Array.isArray(c.dayType) ? c.dayType : c.dayType ? [c.dayType] : null;
     if (allowedDays && !allowedDays.includes(state._dayType || dayType())) return false;
+    const weekdays = Array.isArray(c.dayOfWeek) ? c.dayOfWeek : c.dayOfWeek ? [c.dayOfWeek] : null;
+    if (weekdays && !weekdays.includes(state._dayOfWeek || dayOfWeek())) return false;
     if (c.flag && !state.flags[c.flag]) return false;
     if (c.notFlag && state.flags[c.notFlag]) return false;
     // Rarity dial. `pick` prefers least-seen, so an unseen line otherwise

@@ -73,6 +73,10 @@ photo opportunity so Yui remains visually consistent:
 - Keep framing, poses, expressions, and locations varied while preserving her
   gentle character design. Any romantic progression should remain tasteful,
   non-explicit, and consistent with the app's established affection gates.
+- Yui attends a small **Japanese Protestant church** on Sundays. Church scenes
+  use a simple cross, Bible, hymns, sermon, and ordinary fellowship; avoid
+  Catholic-specific imagery such as rosaries, Marian or saint statues,
+  crucifixes, priestly vestments, and Mass terminology.
 
 When prompting an image model, include this core description: **“Yui, a
 26-year-old adult anime woman with long black hair, warm brown eyes, a sweet and
