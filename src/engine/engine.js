@@ -149,7 +149,9 @@ export class Companion {
   /** The authored answer for a question chip, if this pair has one. */
   _chipAnswer(state, raw) {
     if (!state.lastSugFrom) return null;
-    const key = `${state.lastSugFrom}|${stripRuby(raw).trim()}`;
+    const i = (state.lastSug || []).indexOf(stripRuby(raw).trim());
+    if (i < 0) return null;
+    const key = `${state.lastSugFrom}|${(state.lastSugKeys || state.lastSug)[i]}`;
     const a = (this.dialogue.chipAnswers || {})[key];
     return a ? { id: `ca:${key}`, ...a } : null;
   }
@@ -508,10 +510,14 @@ export class Companion {
       b.jp = deSlot(b.jp);
       if (b.en) b.en = deSlotEn(b.en);
     }
+    // Keys for the authored answers must come from the *unfilled* text, since
+    // 「{name}は？」 reaches the user as 「ケンは？」 and would never match.
+    const sugKeys = suggestions.map((s) => stripRuby(s.jp).trim());
     suggestions = suggestions.map((s) => ({ jp: deSlot(s.jp), en: s.en }));
     // Stored post-fill and ruby-stripped, matching what app.js puts in the
     // input on a tap; it rides in `state` so it survives a reload.
     state.lastSug = suggestions.map((s) => stripRuby(s.jp).trim());
+    state.lastSugKeys = sugKeys;
     state.lastSugFrom = sugFrom;
 
     // Her side of the transcript, ruby markup stripped — the API shouldn't be
