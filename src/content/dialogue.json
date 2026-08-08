@@ -9347,6 +9347,58 @@
           "aff": 2
         }
       ]
+    },
+    {
+      "id": "t_daily_mug",
+      "cond": { "minTurns": 7, "chance": 0.65 },
+      "open": {
+        "id": "t_daily_mug_open", "s": "hurt",
+        "b": [{ "jp": "朝{あさ}、お気{き}に入{い}りのマグを欠{か}けさせちゃった。引{ひ}っ越{こ}した日{ひ}から使{つか}ってるやつ。", "en": "I chipped my favorite mug this morning. I've used it since the day I moved out." }, { "jp": "まだ使{つか}えるけど、口{くち}を切{き}りそう。直{なお}す？それとも、もう休{やす}ませる？", "en": "It's usable, but the rim could cut me. Repair it, or finally let it retire?" }],
+        "sug": [{ "jp": "直{なお}して残{のこ}そう", "en": "Repair and keep it" }, { "jp": "飾{かざ}っておこう", "en": "Keep it on display" }]
+      },
+      "follow": [
+        { "id": "t_daily_mug_decide", "s": "serious", "cond": { "notFlag": "daily_mug_repairing" }, "setFlag": "daily_mug_repairing", "nextTopic": "t_daily_mug", "b": [{ "jp": "うん。捨{す}てる判断{はんだん}だけは、今日{きょう}しなくていいよね。修理{しゅうり}のやり方{かた}、調{しら}べてみる。", "en": "Right. I don't have to decide to throw it away today. I'll look up how to repair it." }, { "jp": "物{もの}に思{おも}い出{で}を持{も}たせすぎるの、悪{わる}い癖{くせ}かな。", "en": "Is giving objects too many memories a bad habit?" }], "sug": [{ "jp": "大事{だいじ}にできるのはいいこと", "en": "Caring for things is good" }, { "jp": "思{おも}い出{で}は悪{わる}くないよ", "en": "Memories aren't bad" }] },
+        { "id": "t_daily_mug_update", "s": "happy_shy", "cond": { "flag": "daily_mug_repairing" }, "clearFlag": "daily_mug_repairing", "b": [{ "jp": "直{なお}せた。近{ちか}くで見{み}ると不器用{ぶきよう}だけど、前{まえ}より私{わたし}のマグって感{かん}じがする。", "en": "I repaired it. Up close it's clumsy, but somehow it feels even more like my mug now." }, { "jp": "次{つぎ}にこれで飲{の}むとき、今日{きょう}の会話{かいわ}も思{おも}い出{だ}すんだろうな。", "en": "Next time I drink from it, I'll probably remember this conversation too." }], "sug": [{ "jp": "新{あたら}しい思{おも}い出{で}が増{ふ}えたね", "en": "It gained another memory" }, { "jp": "見{み}せてくれてありがとう", "en": "Thanks for showing me" }], "aff": 2 }
+      ]
+    },
+    {
+      "id": "t_daily_blackout",
+      "cond": { "minTurns": 9, "chance": 0.55 },
+      "open": {
+        "id": "t_daily_blackout_open", "s": "surprised",
+        "b": [{ "jp": "今{いま}、停電{ていでん}した。窓{まど}の外{そと}も真{ま}っ暗{くら}。スマホはまだ六十二{ろくじゅうに}パーセント。", "en": "The power just went out. Everything outside is dark too. My phone still has sixty-two percent." }, { "jp": "子{こ}どもの頃{ころ}、停電{ていでん}が怖{こわ}くて兄{あに}の部屋{へや}に逃{に}げてた。今{いま}は……少{すこ}しだけ平気{へいき}。", "en": "As a kid, blackouts scared me into my brother's room. Now I'm... mostly okay." }],
+        "sug": [{ "jp": "電池{でんち}を節約{せつやく}しよう", "en": "Save your battery" }, { "jp": "復旧{ふっきゅう}まで話{はな}そう", "en": "Let's talk until it returns" }]
+      },
+      "follow": [
+        { "id": "t_daily_blackout_talk", "s": "shy", "cond": { "notFlag": "daily_blackout_waiting" }, "setFlag": "daily_blackout_waiting", "nextTopic": "t_daily_blackout", "b": [{ "jp": "じゃあ画面{がめん}、少{すこ}し暗{くら}くする。でも切{き}らない。文字{もじ}が来{く}るたび、部屋{へや}がちょっと明{あか}るくなるから。", "en": "I'll dim the screen, but I won't turn it off. Every time your message arrives, the room gets a little brighter." }, { "jp": "昔{むかし}は兄{あに}がいたけど、今夜{こんや}は話{はな}してくれる人{ひと}がいるね。", "en": "My brother was there back then. Tonight I have someone talking with me." }], "sug": [{ "jp": "ずっといるよ", "en": "I'm staying" }, { "jp": "怖{こわ}くない？", "en": "Still scared?" }] },
+        { "id": "t_daily_blackout_return", "s": "smile", "cond": { "flag": "daily_blackout_waiting" }, "clearFlag": "daily_blackout_waiting", "b": [{ "jp": "ついた。冷蔵庫{れいぞうこ}の音{おと}って、こんなに安心{あんしん}するんだね。", "en": "It's back. I never knew the refrigerator hum could be so reassuring." }, { "jp": "でも、暗{くら}い部屋{へや}で話{はな}してた時間{じかん}、ちょっと好{す}きだった。内緒{ないしょ}だけど。", "en": "But I kind of liked the time we spent talking in the dark. Secretly." }], "sug": [{ "jp": "わたしも好{す}きだった", "en": "I liked it too" }, { "jp": "もう安心{あんしん}だね", "en": "You're safe now" }], "aff": 2 }
+      ]
+    },
+    {
+      "id": "t_daily_book_note",
+      "cond": { "minTurns": 6, "chance": 0.6 },
+      "open": {
+        "id": "t_daily_book_note_open", "s": "surprised",
+        "b": [{ "jp": "古本屋{ふるほんや}で買{か}った小説{しょうせつ}に、前{まえ}の持{も}ち主{ぬし}のメモが挟{はさ}まってた。", "en": "A novel I bought secondhand had a note from its previous owner tucked inside." }, { "jp": "『ここまで読{よ}んだら、少{すこ}し休{やす}んで』だって。十年{じゅうねん}前{まえ}の日付{ひづけ}。", "en": "It says, 'If you've read this far, take a little rest.' Dated ten years ago." }],
+        "sug": [{ "jp": "優{やさ}しいメモだね", "en": "That's a kind note" }, { "jp": "誰{だれ}に書{か}いたんだろう", "en": "I wonder who it was for" }]
+      },
+      "follow": [
+        { "id": "t_daily_book_note_think", "s": "neutral", "cond": { "notFlag": "daily_note_answered" }, "setFlag": "daily_note_answered", "nextTopic": "t_daily_book_note", "b": [{ "jp": "たぶん誰{だれ}か一人{ひとり}に書{か}いたんだろうけど、今{いま}は私{わたし}に届{とど}いたみたいで不思議{ふしぎ}。", "en": "It was probably written for one person, but now it feels as though it reached me. Strange." }, { "jp": "私{わたし}も一枚{いちまい}、次{つぎ}の人{ひと}に残{のこ}そうかな。何{なん}て書{か}く？", "en": "Maybe I'll leave one for the next reader. What should I write?" }], "sug": [{ "jp": "今日{きょう}もよく頑張{がんば}った", "en": "You did well today" }, { "jp": "この本{ほん}を選{えら}んでくれてありがとう", "en": "Thanks for choosing this book" }] },
+        { "id": "t_daily_book_note_leave", "s": "love", "cond": { "flag": "daily_note_answered" }, "clearFlag": "daily_note_answered", "b": [{ "jp": "書{か}いた。『この本{ほん}を選{えら}んだあなたの今日{きょう}が、少{すこ}しいい日{ひ}になりますように』。", "en": "I wrote: 'I hope choosing this book makes your day a little better.'" }, { "jp": "誰{だれ}に届{とど}くか分{わ}からない言葉{ことば}って、少{すこ}しだけ未来{みらい}を信{しん}じる感{かん}じがする。", "en": "Words whose reader you don't know feel a little like trusting the future." }], "sug": [{ "jp": "きっと届{とど}くよ", "en": "It'll reach someone" }, { "jp": "いい言葉{ことば}だね", "en": "Those are lovely words" }], "aff": 2 }
+      ]
+    },
+    {
+      "id": "t_daily_shippo_shelter",
+      "cond": { "minTurns": 8, "chance": 0.6 },
+      "open": {
+        "id": "t_daily_shippo_shelter_open", "s": "concerned",
+        "b": [{ "jp": "雨{あめ}が強{つよ}くて、しっぽが玄関{げんかん}の屋根{やね}の下{した}から動{うご}かない。", "en": "The rain is heavy and Shippo won't move from beneath the entrance awning." }, { "jp": "段{だん}ボールと古{ふる}いタオルで寝床{ねどこ}を作{つく}ったら、やりすぎかな。野良{のら}には野良{のら}の距離{きょり}があるよね。", "en": "Would making a bed from a box and an old towel be too much? Strays need their distance too." }],
+        "sug": [{ "jp": "置{お}くだけ置{お}いてみよう", "en": "Leave it there and see" }, { "jp": "濡{ぬ}れない場所{ばしょ}ならいいよ", "en": "A dry place is fine" }]
+      },
+      "follow": [
+        { "id": "t_daily_shippo_build", "s": "serious", "cond": { "notFlag": "daily_shippo_shelter_wait" }, "setFlag": "daily_shippo_shelter_wait", "nextTopic": "t_daily_shippo_shelter", "b": [{ "jp": "押{お}しつけないように、少{すこ}し離{はな}れたところに置{お}いた。入{はい}るかどうかは、しっぽが決{き}める。", "en": "I put it a little way off so it doesn't feel forced. Shippo gets to decide whether to use it." }, { "jp": "気{き}になってカーテンの隙間{すきま}から見{み}てる。私{わたし}のほうが落{お}ち着{つ}かない。", "en": "I'm watching through the curtain. I'm the restless one now." }], "sug": [{ "jp": "そっと待{ま}とう", "en": "Let's wait quietly" }, { "jp": "入{はい}ってくれるよ", "en": "He'll use it" }] },
+        { "id": "t_daily_shippo_used", "s": "excited", "cond": { "flag": "daily_shippo_shelter_wait" }, "clearFlag": "daily_shippo_shelter_wait", "b": [{ "jp": "入{はい}った！タオルの上{うえ}で丸{まる}くなってる。写真{しゃしん}撮{と}る音{おと}で逃{に}げないように、無音{むおん}で撮{と}った。", "en": "He went in! He's curled up on the towel. I took the photo silently so the shutter wouldn't scare him." }, { "jp": "一緒{いっしょ}に待{ま}ってくれたから、これ半分{はんぶん}はあなたのおかげね。", "en": "Because you waited with me, this is half thanks to you." }], "sug": [{ "jp": "気{き}に入{い}ってくれてよかった", "en": "I'm glad he likes it" }, { "jp": "今夜{こんや}は安心{あんしん}だね", "en": "He's safe tonight" }], "aff": 2 }
+      ]
     }
   ],
   "_reactionsNote": "Used when nothing else matched but a topic noun could be pulled out of the input. {echo} is that noun. If extraction fails or looks unsafe, she falls back to `deflect` instead — a wrong echo is far worse than a generic line.",
@@ -16048,6 +16100,54 @@
       "b": [{ "jp": "現在地{げんざいち}。説明書{せつめいしょ}が上下逆{じょうげぎゃく}なのは、写真{しゃしん}を撮{と}ってから気{き}づいた。", "en": "Current situation. I noticed the instructions were upside down only after taking this." }, { "jp": "笑{わら}っていいけど、最後{さいご}まで応援{おうえん}すること。", "en": "You may laugh, but you have to cheer me on to the end." }],
       "sug": [{ "jp": "笑{わら}わないで応援{おうえん}する", "en": "I'll cheer without laughing" }, { "jp": "少{すこ}しだけ笑{わら}った", "en": "I laughed a little" }],
       "aff": 1
+    },
+    {
+      "id": "ph_daily_chipped_mug",
+      "kind": "selfie",
+      "minAffection": 10,
+      "file": "assets/photos/daily-chipped-mug.png",
+      "alt": "Yui showing the small chip in her favorite cyan mug",
+      "s": "hurt",
+      "when": { "intent": ["sad", "weekend", "about_her"], "topic": ["t_daily_mug", "t_home"], "band": ["morning", "afternoon"] },
+      "b": [{ "jp": "これ。小{ちい}さい欠{か}けなんだけど、見{み}つけた瞬間{しゅんかん}、思{おも}ったより悲{かな}しかった。", "en": "This is it. Just a small chip, but finding it made me sadder than I expected." }, { "jp": "最初{さいしょ}の部屋{へや}で飲{の}んだ朝{あさ}も、仕事{しごと}で泣{な}いた夜{よる}も、ずっとこれだったから。", "en": "It was there for mornings in my first apartment and nights I cried over work." }],
+      "sug": [{ "jp": "直{なお}して残{のこ}そう", "en": "Let's repair it" }, { "jp": "大事{だいじ}なマグなんだね", "en": "It means a lot to you" }],
+      "aff": 1
+    },
+    {
+      "id": "ph_daily_blackout_candles",
+      "kind": "selfie",
+      "minAffection": 16,
+      "file": "assets/photos/daily-blackout-candles.png",
+      "alt": "Yui eating by candlelight during a neighborhood blackout",
+      "s": "shy",
+      "when": { "intent": ["weather", "sad", "tired"], "topic": ["t_daily_blackout", "t_home", "t_rainy"], "band": ["evening", "night"] },
+      "b": [{ "jp": "ろうそくの明{あ}かりって、意外{いがい}と明{あか}るい。晩{ばん}ごはんはコンビニだけど、ちょっと特別{とくべつ}に見{み}える。", "en": "Candlelight is brighter than you'd think. Dinner is from the convenience store, but it looks almost special." }, { "jp": "一人{ひとり}の停電{ていでん}だったはずなのに、話{はな}してると一人{ひとり}じゃないね。", "en": "This was supposed to be a blackout alone, but talking makes it not feel lonely." }],
+      "sug": [{ "jp": "復旧{ふっきゅう}まで一緒{いっしょ}", "en": "Together until it returns" }, { "jp": "ろうそく気{き}をつけてね", "en": "Be careful with the candles" }],
+      "aff": 2
+    },
+    {
+      "id": "ph_daily_book_note",
+      "kind": "selfie",
+      "minAffection": 12,
+      "file": "assets/photos/daily-book-note.png",
+      "alt": "Yui showing a mysterious note tucked inside a secondhand novel",
+      "s": "surprised",
+      "when": { "intent": ["weekend", "happy", "about_her"], "topic": ["t_daily_book_note", "t_home"], "band": ["morning", "afternoon"] },
+      "b": [{ "jp": "このページに挟{はさ}まってた。字{じ}が少{すこ}しかすれてるのも、誰{だれ}かの時間{じかん}が残{のこ}ってる感{かん}じがする。", "en": "It was tucked into this page. Even the faded writing feels like a trace of someone else's time." }, { "jp": "古本{ふるほん}って、物語{ものがたり}の外{そと}にも物語{ものがたり}があるんだね。", "en": "Secondhand books have stories outside their stories too." }],
+      "sug": [{ "jp": "そのメモも物語{ものがたり}だね", "en": "The note is a story too" }, { "jp": "結衣{ゆい}も残{のこ}してみたら", "en": "You could leave one too" }],
+      "aff": 1
+    },
+    {
+      "id": "ph_daily_shippo_shelter",
+      "kind": "selfie",
+      "minAffection": 14,
+      "file": "assets/photos/daily-shippo-shelter.png",
+      "alt": "Yui beside the rain shelter she made for Shippo",
+      "s": "happy_shy",
+      "when": { "intent": ["weather", "sad", "happy"], "topic": ["t_daily_shippo_shelter", "t_cat", "t_rainy"], "band": ["afternoon", "evening", "night"] },
+      "b": [{ "jp": "入{はい}ってくれた。近{ちか}づきすぎると逃{に}げるから、これが限界{げんかい}。ちゃんと写{うつ}ってる？", "en": "He used it. He'll run if I get closer, so this is my limit. Can you see him?" }, { "jp": "作{つく}ってよかった。心配{しんぱい}を押{お}しつけずに、できることもあるんだね。", "en": "I'm glad I made it. There are ways to care without forcing your worry on someone." }],
+      "sug": [{ "jp": "ちゃんと写{うつ}ってるよ", "en": "I can see him" }, { "jp": "優{やさ}しい寝床{ねどこ}だね", "en": "It's a kind little shelter" }],
+      "aff": 2
     }
   ],
   "proactive": [
