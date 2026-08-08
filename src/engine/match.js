@@ -69,7 +69,7 @@ export function scanLexicon(raw, lexicon) {
   for (const [slot, entries] of Object.entries(lexicon)) {
     for (const entry of entries) {
       if (text.includes(normalize(entry.k))) {
-        found.push({ slot, value: entry.v ?? entry.k, label: entry.k });
+        found.push({ slot, value: entry.v ?? entry.k, label: entry.k, en: entry.e });
       }
     }
   }

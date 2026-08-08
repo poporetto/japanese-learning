@@ -41,6 +41,8 @@ function fresh() {
     transcript: [],      // rendered chat log, so you can scroll back after a reload
     gallery: [],         // every photo she's sent, deduped
     recent: [],          // variant ids used lately — short-term repeat guard
+    lastSug: [],         // chips offered last turn, so a tap isn't mistaken for free text
+    lastSugFrom: null,   // the line that offered them — keys the authored chip answers
   };
 }
 

@@ -158,7 +158,12 @@ export function direct(ctx) {
   // queue — otherwise they lose the random draw forever.
   const gapTopics = dialogue.topics.filter((t) => t.cond?.lacksSlot);
   const topic = pick(gapTopics, state) || pick(dialogue.topics, state);
-  const deflect = ctx.justLearned ? null : pick(dialogue.deflect, state);
+  // She wrote the chip herself, so answering it with 「もう一回、簡単に言って」
+  // reads as her disowning her own sentence — measured at 22% of taps. A tap
+  // draws from `pivot`, which acknowledges and moves on without claiming she
+  // missed anything.
+  const pool = ctx.fromChip ? (dialogue.pivot || []) : dialogue.deflect;
+  const deflect = ctx.justLearned ? null : pick(pool, state);
   return { kind: 'deflect', variant: deflect, topic };
 }
 

@@ -8,12 +8,16 @@
 import { detectScript } from './normalize.js';
 import { analyze, reactionBucket } from './analyze.js';
 import { matchIntent } from './match.js';
-import { ingest, fillSlots, recall } from './memory.js';
+import { ingest, fillSlots, fillSlotsEn, recall } from './memory.js';
 import { direct, pick, photoPlan, teachPlan, proactivePlan, scheduledPlan } from './director.js';
+import { patternMatches, formsOf } from './pattern.js';
 import { bumpAffection, timeBand, dayType, dayOfWeek, touchDay, stageOf, pushHistory, loadSettings, markUsed } from './state.js';
 import { improvise, llmReady } from './llm.js';
 
 // Intents where a lexicon word is part of the request, not a fact about him.
+/** Ruby markup removed — the form app.js actually sends when a chip is tapped. */
+const stripRuby = (t) => String(t).replace(/\{[ぁ-んー]+\}/g, '');
+
 const SCAN_BLOCKING = ['ask_photo', 'meaning_question', 'teach_request'];
 
 // Authored bubbles are templates and get reused forever. Slot-filling must
@@ -42,10 +46,13 @@ function usedGrammar(bubbles, grammar) {
     // for 〜わけではない, 〜たとたん for 〜たとたん(に), the all-kana spelling. Exact
     // matching alone missed 43 annotations, twelve of them on one point, and
     // those lines could never produce a card.
-    const forms = [g.point.replace(NO_RUBY, ''), ...(g.aliases || [])];
+    const forms = formsOf(g);
     for (const b of bubbles) {
       const named = [...String(b.en || '').matchAll(/—\s*(〜[^\s,.;、。]+)/g)].map((m) => m[1]);
-      if (named.some((n) => forms.includes(n))) {
+      // The annotation says which pattern the line uses; the line itself has to
+      // back that up. Without this, a mislabelled API reply produced a card for
+      // a pattern its Japanese never contained.
+      if (named.some((n) => forms.includes(n)) && forms.some((f) => patternMatches(f, b.jp))) {
         hits.push({ id: g.id, line: b.jp });   // keep the sentence, ruby and all
         break;
       }
@@ -62,6 +69,7 @@ const GOALS = {
   topic_follow: '今の話題を掘り下げる。',
   callback: '前に相手が話してくれたことを思い出して、そこに触れる。',
   deflect: '相手の話にちゃんと乗る。分からないふりや話題転換はしない。',
+  chip_answer: '相手が自分の質問に答えを求めている。はぐらかさず、まっすぐ答える。',
   withdrawn: 'そっけなく短く返す。句点を増やし、質問も写真も出さない。冷たいのではなく、近づかれて身構えている。',
   default: '自然に会話を続ける。',
 };
@@ -138,6 +146,14 @@ export class Companion {
    * Deliberately authored-only: it fires on a clock rather than on user input,
    * so routing it through the API would burn free-tier quota on nobody.
    */
+  /** The authored answer for a question chip, if this pair has one. */
+  _chipAnswer(state, raw) {
+    if (!state.lastSugFrom) return null;
+    const key = `${state.lastSugFrom}|${stripRuby(raw).trim()}`;
+    const a = (this.dialogue.chipAnswers || {})[key];
+    return a ? { id: `ca:${key}`, ...a } : null;
+  }
+
   async proactive(state) {
     state._band = timeBand();
     state._dayType = dayType();
@@ -217,7 +233,16 @@ export class Companion {
     if (script === 'jp' && raw.length > 12) bumpAffection(state, 1);
     if (newMemories.length) bumpAffection(state, 1);
 
-    const plan = direct({
+    // A chip she offered is text she wrote. Comparing against what was stored
+    // last turn is what lets the director avoid answering it with 「意味が
+    // 取れなかった」 — see the pivot pool in director.js.
+    const fromChip = (state.lastSug || []).includes(stripRuby(raw).trim());
+
+    // A question she offered deserves an answer, not a pivot. Keyed on the
+    // pair, not the chip text: 「大丈夫だった？」 follows three different lines
+    // and means something different after each.
+    const answer = fromChip ? this._chipAnswer(state, raw) : null;
+    const plan = answer ? { kind: 'chip_answer', variant: answer } : direct({
       state,
       dialogue: this.dialogue,
       intentId: match?.id ?? null,
@@ -227,6 +252,7 @@ export class Companion {
       band: state._band,
       justLearned: newMemories.length > 0,
       userText: raw,
+      fromChip,
     });
 
     // What she's currently talking about decides which photo she'd reach for.
@@ -246,6 +272,7 @@ export class Companion {
     let sprite = 'neutral';
     let photo = null;
     let suggestions = [];
+    let sugFrom = null;   // the line that offered them, for chip answers
 
     // Notes accumulated while assembling the authored turn. If the API leg is
     // on, these become stage directions instead of being spoken verbatim — so
@@ -302,7 +329,7 @@ export class Companion {
         markUsed(state, p.id);
         bumpAffection(state, p.aff ?? 1);
         // A photo that asks you something needs chips to answer it with.
-        if (p.sug) suggestions = p.sug;
+        if (p.sug) { suggestions = p.sug; sugFrom = p.id; }
         if (p.q) state.pendingSlot = p.q;
       } else {
         const deny = pick(this.dialogue.photoDeny, state);
@@ -324,6 +351,7 @@ export class Companion {
         echo = meta.analysis.topic;
         bubbles.push(...clone(rx.b));
         sprite = rx.s || sprite;
+        if (rx.sug) sugFrom = rx.id;
         suggestions = rx.sug || suggestions;
         bumpAffection(state, rx.aff ?? 0);
         markUsed(state, rx.id);
@@ -335,6 +363,7 @@ export class Companion {
       bubbles.push(...clone(v.b));
       if (v.file) photo = { file: v.file, alt: v.alt || '' };
       sprite = v.s || sprite;
+      if (v.sug) sugFrom = v.id;
       suggestions = v.sug || suggestions;
       bumpAffection(state, v.aff ?? 0);
       markUsed(state, v.id);
@@ -359,6 +388,7 @@ export class Companion {
       const open = pick([plan.topic.open], state) || plan.topic.open;
       bubbles.push(...clone(open.b));
       sprite = open.s || sprite;
+      if (open.sug) sugFrom = open.id;
       suggestions = open.sug || suggestions;
       if (open.q) state.pendingSlot = open.q;
       state.pendingTopic = plan.topic.id;
@@ -411,7 +441,7 @@ export class Companion {
         bubbles.length = 0;
         bubbles.push(...out.bubbles);
         if (out.sprite) sprite = out.sprite;
-        if (out.suggestions.length) suggestions = out.suggestions;
+        if (out.suggestions.length) { suggestions = out.suggestions; sugFrom = null; }
         // Authored deflects carry no affection, so a conversation carried
         // mostly by the API would otherwise never advance a stage.
         if (plan.kind === 'deflect') {
@@ -450,7 +480,7 @@ export class Companion {
         bumpAffection(state, p.aff ?? 0);
         // She asked what you think — her question outranks whatever chips the
         // turn's own line offered, since the photo is what's on screen now.
-        if (p.sug) suggestions = p.sug;
+        if (p.sug) { suggestions = p.sug; sugFrom = p.id; }
         if (p.q) state.pendingSlot = p.q;
       }
     }
@@ -473,11 +503,16 @@ export class Companion {
     // rather than shown to the user as 「{name}、それ本当？」.
     const extras = echo ? { echo } : {};
     const deSlot = (s) => fillSlots(s, state, extras).replace(/\{(\w+)\}/g, '$1');
+    const deSlotEn = (s) => fillSlotsEn(s, state, extras).replace(/\{(\w+)\}/g, '$1');
     for (const b of bubbles) {
       b.jp = deSlot(b.jp);
-      if (b.en) b.en = deSlot(b.en);
+      if (b.en) b.en = deSlotEn(b.en);
     }
     suggestions = suggestions.map((s) => ({ jp: deSlot(s.jp), en: s.en }));
+    // Stored post-fill and ruby-stripped, matching what app.js puts in the
+    // input on a tap; it rides in `state` so it survives a reload.
+    state.lastSug = suggestions.map((s) => stripRuby(s.jp).trim());
+    state.lastSugFrom = sugFrom;
 
     // Her side of the transcript, ruby markup stripped — the API shouldn't be
     // shown furigana braces as if they were part of normal Japanese.

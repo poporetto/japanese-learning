@@ -666,7 +666,10 @@
       "topic": [
         "t_meals"
       ]
-    }
+    },
+    "aliases": [
+      "〜って言っても"
+    ]
   },
   {
     "id": "n2_toiuyori",
@@ -2274,7 +2277,10 @@
       "topic": [
         "t_meals"
       ]
-    }
+    },
+    "aliases": [
+      "〜ことは〜けど"
+    ]
   },
   {
     "id": "n2_yotta",
@@ -3169,5 +3175,13 @@
     "aliases": [
       "〜にかぎって"
     ]
+  },
+  {
+    "id": "n2_toshikaomoenai",
+    "point": "〜としか思えない",
+    "en": "I can only think that ~ / it can only be that ~",
+    "ex": "この雑{ざつ}な字{じ}、兄{あに}のとしか思{おも}えない。",
+    "exEn": "This scrawl can only be my brother's.",
+    "note": "「〜としか思{おも}えない」で、他{ほか}の解釈{かいしゃく}を否定{ひてい}して断定{だんてい}する。「〜に違{ちが}いない」より主観{しゅかん}的{てき}。"
   }
 ]

@@ -32,8 +32,8 @@ function looksLikeBareNoun(value) {
   return value.length >= 1 && value.length <= 10 && !RE_SENTENCEY.test(value);
 }
 
-export function remember(state, slot, value, label) {
-  state.memory[slot] = { value, label: label ?? value, turn: state.turns };
+export function remember(state, slot, value, label, en) {
+  state.memory[slot] = { value, label: label ?? value, en, turn: state.turns };
 }
 
 export function recall(state, slot) {
@@ -70,7 +70,7 @@ export function ingest(state, raw, lexicon, opts = {}) {
   for (const hit of scanLexicon(raw, lexicon)) {
     const existing = state.memory[hit.slot];
     if (existing && normalize(existing.value) === normalize(hit.value)) continue;
-    remember(state, hit.slot, hit.value, hit.label);
+    remember(state, hit.slot, hit.value, hit.label, hit.en);
     filled.push({ ...hit, fromPrompt: false });
   }
 
@@ -96,6 +96,22 @@ export function fillSlots(text, state, extras = {}) {
   return text.replace(/\{(\w+)\}/g, (m, slot) => {
     if (slot in extras) return extras[slot];
     return recall(state, slot) ?? m;
+  });
+}
+
+/**
+ * The same fill for the English gloss. Filling it from the Japanese produced
+ * 「Saw コーヒー at the konbini」 — a translation with an untranslated word in
+ * it. Lexicon slots have an English label; {echo}, {today} and {weekend} hold
+ * the user's own words and stay verbatim, because there they are a quotation
+ * rather than a term to translate.
+ */
+export function fillSlotsEn(text, state, extras = {}) {
+  return text.replace(/\{(\w+)\}/g, (m, slot) => {
+    if (slot in extras) return extras[slot];
+    const e = state.memory[slot];
+    if (!e) return m;
+    return e.en ?? e.value;
   });
 }
 
