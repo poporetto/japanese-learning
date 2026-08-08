@@ -148,3 +148,9 @@ export function timeBand(d = new Date()) {
   if (h < 22) return 'evening';
   return 'night';
 }
+
+/** Local workweek context for calendar-aware dialogue. */
+export function dayType(d = new Date()) {
+  const day = d.getDay();
+  return day === 0 || day === 6 ? 'weekend' : 'weekday';
+}
