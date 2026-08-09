@@ -34,6 +34,7 @@ function fresh() {
     streak: 0,
     learned: [],         // grammar point ids surfaced so far
     lastProactiveTurn: -99,
+    lastProactiveDate: null, // unanswered nudges get a fresh allowance each local day
     unanswered: 0,       // proactive messages sent since he last replied
     history: [],         // recent turns, verbatim — the LLM's short-term memory
     scheduled: {},       // "HH:MM" -> the date it last fired, so once per day

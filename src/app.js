@@ -349,6 +349,9 @@ function nextDelay() {
 function scheduleProactive() {
   clearTimeout(proactiveTimer);
   if (!settings.proactive) return;
+  // Silence is only a same-day boundary. Without this reset, five ignored
+  // weekday nudges could prevent her from saying anything all weekend.
+  if (state.lastProactiveDate !== State.localDate()) state.unanswered = 0;
   // She gives up after a handful of unanswered messages rather than nagging
   // an empty room forever. Sending anything at all resets this.
   if ((state.unanswered || 0) >= 5) return;

@@ -160,10 +160,14 @@ export class Companion {
     state._band = timeBand();
     state._dayType = dayType();
     state._dayOfWeek = dayOfWeek();
+    const today = new Date();
+    const localToday = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    if (state.lastProactiveDate !== localToday) state.unanswered = 0;
     const plan = proactivePlan(state, this.dialogue, timeBand());
     if (!plan) return null;
 
     state.lastProactiveTurn = state.turns;
+    state.lastProactiveDate = localToday;
     state.unanswered = (state.unanswered || 0) + 1;
     return this._compose(plan, state, {
       newMemories: [],
