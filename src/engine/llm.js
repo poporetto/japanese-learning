@@ -298,12 +298,26 @@ function cleanBubble(b) {
   return { jp: jp.slice(0, 160), en: String(b?.en || '').trim().slice(0, 200) };
 }
 
+// The prompt requires 漢字{かんじ}, but structured JSON only guarantees that
+// `jp` is a string — the model can still omit readings. Never show a partly
+// annotated API sentence in a learning app: remove every valid ruby pair and
+// reject the response if any bare kanji remain. The engine will then use the
+// authored response, whose readings are reviewed and complete.
+const API_RUBY_PAIR = /[一-鿿々ヶ〇0-9０-９]+\{[ぁ-ゖァ-ヴーゝゞ・]+\}/g;
+const BARE_KANJI = /[一-鿿々ヶ〇]/;
+
+function hasCompleteFurigana(text) {
+  const normalized = String(text).replace(/[｛]/g, '{').replace(/[｝]/g, '}');
+  return !BARE_KANJI.test(normalized.replace(API_RUBY_PAIR, ''));
+}
+
 function shape(data) {
   const bubbles = (Array.isArray(data?.bubbles) ? data.bubbles : [])
     .map(cleanBubble)
     .filter(Boolean)
     .slice(0, 3);
   if (!bubbles.length) return null;
+  if (bubbles.some((b) => !hasCompleteFurigana(b.jp))) return null;
 
   const suggestions = (Array.isArray(data?.suggestions) ? data.suggestions : [])
     .map(cleanBubble)
@@ -327,7 +341,10 @@ const SCHEMA = {
       type: 'array',
       items: {
         type: 'object',
-        properties: { jp: { type: 'string' }, en: { type: 'string' } },
+        properties: {
+          jp: { type: 'string', description: 'Japanese dialogue. Every kanji must immediately include a hiragana reading as 漢字{かんじ}.' },
+          en: { type: 'string' },
+        },
         required: ['jp', 'en'],
       },
     },
@@ -335,7 +352,10 @@ const SCHEMA = {
       type: 'array',
       items: {
         type: 'object',
-        properties: { jp: { type: 'string' }, en: { type: 'string' } },
+        properties: {
+          jp: { type: 'string', description: 'Short Japanese reply. Add 漢字{かんじ} readings to every kanji.' },
+          en: { type: 'string' },
+        },
         required: ['jp', 'en'],
       },
     },
