@@ -276,7 +276,7 @@ affection so they unfold rather than dump:
 |---|---|
 | `t_deadline` | the brochure gets sent back to square one, and eventually shipped |
 | `t_cat_gone` | しっぽ stops showing up; she detours home looking, then finds him |
-| `t_minami` | her best friend is moving to Tokyo — and has heard about you |
+| `t_minami*` | her outspoken brown-blonde best friend moves to Tokyo, teases Yui about you, and becomes part of their weekends |
 | `t_film_fail` | a whole roll comes back blank because she left the back open |
 | `t_promotion` | more accounts offered; she's pleased and frightened, then accepts |
 | `t_swap` | she asks you to teach her English in exchange |
