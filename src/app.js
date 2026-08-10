@@ -409,6 +409,10 @@ function notify(turn) {
       tag: 'yui',
       renotify: true,
       icon: 'assets/portraits/yui-chat-profile.png',
+      // Chromium-based installed apps can show the photo as a large preview.
+      // iOS currently falls back to the app icon, while the same photo still
+      // appears in the chat when the user opens the notification.
+      ...(turn.photo?.file ? { image: turn.photo.file } : {}),
     });
     n.onclick = () => { window.focus(); n.close(); };
   } catch { /* Safari throws outside a service worker; the bubble is still there */ }
