@@ -344,6 +344,17 @@ ruby rt {
   opacity: .7;
 }
 
+.hint.onboarding-hint {
+  margin: 0;
+  padding: 7px 14px;
+  border-top: 1px solid var(--line);
+  background: var(--panel-2);
+  opacity: 1;
+  transition: opacity .25s ease;
+}
+.hint.onboarding-hint.leaving { opacity: 0; }
+.onboarding-hint:not([hidden]) + .composer { border-top: 0; }
+
 /* ---- settings dialog ---- */
 
 .dlg {

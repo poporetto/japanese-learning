@@ -7,6 +7,19 @@ const log = $('#log');
 
 let yui, state, settings;
 
+const ONBOARDING_KEY = 'kaiwassap.onboarding.message-tip.v1';
+
+function showFirstVisitHint() {
+  const hint = $('#onboarding-hint');
+  if (!hint || localStorage.getItem(ONBOARDING_KEY)) return;
+  localStorage.setItem(ONBOARDING_KEY, 'shown');
+  hint.hidden = false;
+  window.setTimeout(() => {
+    hint.classList.add('leaving');
+    window.setTimeout(() => { hint.hidden = true; }, 250);
+  }, 15000);
+}
+
 /* ---------- rendering helpers ---------- */
 
 function esc(s) {
@@ -754,6 +767,7 @@ document.addEventListener('visibilitychange', () => {
 });
 
 settings = State.loadSettings();
+showFirstVisitHint();
 window.addEventListener('online', () => setPresence());
 window.addEventListener('offline', () => $('#sprite-label').textContent = 'オフライン · 保存済みの会話');
 let installPrompt = null;
