@@ -73,6 +73,12 @@ photo opportunity so Yui remains visually consistent:
 - Keep framing, poses, expressions, and locations varied while preserving her
   gentle character design. Any romantic progression should remain tasteful,
   non-explicit, and consistent with the app's established affection gates.
+- Treat anatomy validation as a required asset gate: each person has exactly
+  two arms and no more than two hands, every visible hand must trace cleanly to
+  its own shoulder, and selfie prompts must not combine an implied camera arm
+  with two additional visible hands. Reject images with stray or ambiguous
+  limbs before adding them to the app. The full checklist lives in
+  `assets/photos/CHARACTERS.md`.
 - Yui attends a small **Japanese Protestant church** on Sundays. Church scenes
   use a simple cross, Bible, hymns, sermon, and ordinary fellowship; avoid
   Catholic-specific imagery such as rosaries, Marian or saint statues,
