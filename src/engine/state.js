@@ -20,6 +20,7 @@ export const PARTNER_STAGE = { id: 'partner', min: 100, jp: '恋人', en: 'Toget
 function fresh() {
   return {
     affection: 0,
+    relationship: { trust: 0, closeness: 0, playfulness: 0, romance: 0 },
     turns: 0,
     memory: {},          // slot -> { value, label, turn }
     flags: {},           // arbitrary booleans set by dialogue
@@ -33,9 +34,14 @@ function fresh() {
     lastSeenDate: null,
     streak: 0,
     learned: [],         // grammar point ids surfaced so far
+    grammarStats: {},    // id -> { exposures, userUses, lastSeen }; spaced repetition
     lastProactiveTurn: -99,
     lastProactiveDate: null, // unanswered nudges get a fresh allowance each local day
     unanswered: 0,       // proactive messages sent since he last replied
+    proactiveToday: {},  // local date -> count; prevents a lively Yui becoming noisy
+    mood: { id: 'neutral', since: 0, unresolved: false },
+    lastPhotoContext: null,
+    lastActiveAt: 0,
     history: [],         // recent turns, verbatim — the LLM's short-term memory
     scheduled: {},       // "HH:MM" -> the date it last fired, so once per day
     coldUntil: 0,        // she's withdrawn until this timestamp — see dialogue.withdrawn
@@ -57,7 +63,15 @@ export function load() {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return fresh();
-    return { ...fresh(), ...JSON.parse(raw) };
+    const saved = JSON.parse(raw);
+    const base = fresh();
+    return {
+      ...base,
+      ...saved,
+      relationship: { ...base.relationship, ...(saved.relationship || {}) },
+      grammarStats: { ...base.grammarStats, ...(saved.grammarStats || {}) },
+      mood: { ...base.mood, ...(saved.mood || {}) },
+    };
   } catch {
     return fresh();
   }
@@ -80,6 +94,10 @@ const DEFAULT_SETTINGS = {
   proactive: true,    // she messages first when the conversation goes quiet
   scheduled: true,    // おはよう at 6, おやすみ at 23, meals in between
   notify: true,       // browser notification when the tab isn't focused
+  quietHours: true,
+  quietStart: 23,
+  quietEnd: 7,
+  dailyProactiveMax: 4,
 };
 
 export function loadSettings() {
@@ -128,6 +146,23 @@ export function stageOf(state) {
 
 export function bumpAffection(state, delta) {
   state.affection = Math.max(0, Math.min(100, state.affection + (delta || 0)));
+  const rel = state.relationship ||= { trust: 0, closeness: 0, playfulness: 0, romance: 0 };
+  const d = delta || 0;
+  rel.closeness = clamp(rel.closeness + d);
+  rel.trust = clamp(rel.trust + (d > 0 ? Math.max(1, Math.ceil(d * .7)) : d));
+  if (d > 0 && state.turns % 2 === 0) rel.playfulness = clamp(rel.playfulness + 1);
+  if (d > 0 && state.affection >= 30) rel.romance = clamp(rel.romance + Math.ceil(d * .6));
+}
+
+const clamp = (n) => Math.max(0, Math.min(100, n || 0));
+
+export function noteGrammar(state, id, kind = 'exposure') {
+  if (!id) return;
+  const stats = state.grammarStats ||= {};
+  const row = stats[id] ||= { exposures: 0, userUses: 0, lastSeen: null };
+  if (kind === 'use') row.userUses += 1;
+  else row.exposures += 1;
+  row.lastSeen = localDate();
 }
 
 /** Call once per session start; drives "久しぶり" vs "また来たね". */

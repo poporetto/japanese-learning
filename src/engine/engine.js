@@ -11,7 +11,7 @@ import { matchIntent } from './match.js';
 import { ingest, fillSlots, fillSlotsEn, recall } from './memory.js';
 import { direct, pick, photoPlan, teachPlan, proactivePlan, scheduledPlan } from './director.js';
 import { patternMatches, formsOf } from './pattern.js';
-import { bumpAffection, timeBand, dayType, dayOfWeek, touchDay, stageOf, pushHistory, loadSettings, markUsed } from './state.js';
+import { bumpAffection, timeBand, dayType, dayOfWeek, touchDay, stageOf, pushHistory, loadSettings, markUsed, noteGrammar } from './state.js';
 import { improvise, llmReady } from './llm.js';
 
 // Intents where a lexicon word is part of the request, not a fact about him.
@@ -214,6 +214,20 @@ export class Companion {
     const script = detectScript(raw);
     const a = analyze(raw);
 
+    // Notice the learner applying a point, not merely seeing its teaching card.
+    // This powers spaced repetition without interrupting the conversation.
+    for (const g of this.grammar.filter((point) => state.learned.includes(point.id))) {
+      if (formsOf(g).some((form) => patternMatches(form, raw))) noteGrammar(state, g.id, 'use');
+    }
+
+    // Hurt feelings persist until the user actually reaches back. They no
+    // longer vanish merely because another turn happened.
+    const reachingOut = /ごめん|大丈夫|心配|信じ|好き|愛して|話して|聞く|そばに|ここにいる|忘れない/.test(stripRuby(raw));
+    if (state.mood?.unresolved && reachingOut) {
+      state.mood = { id: 'relieved', since: state.turns, unresolved: false };
+      state.relationship.trust = Math.min(100, state.relationship.trust + 3);
+    }
+
     // Match before ingesting: the intent tells us whether a lexicon word is
     // really a fact about him (「写真が趣味」) or part of a request (「写真見せて」).
     const match = matchIntent(raw, this.intents);
@@ -248,7 +262,33 @@ export class Companion {
     // pair, not the chip text: 「大丈夫だった？」 follows three different lines
     // and means something different after each.
     const answer = fromChip ? this._chipAnswer(state, raw) : null;
-    const plan = answer ? { kind: 'chip_answer', variant: answer } : direct({
+    const photoCtx = state.lastPhotoContext;
+    const photoFollow = !answer && photoCtx && /写真|かわいい|可愛い|服|髪|どこ|場所|みなみ|見せて|似合/.test(stripRuby(raw))
+      ? {
+          id: `photo_follow:${state.turns}`,
+          s: /かわいい|可愛い|似合/.test(stripRuby(raw)) ? 'happy_shy' : 'smile',
+          b: [{
+            jp: /どこ|場所/.test(stripRuby(raw))
+              ? '写真{しゃしん}の場所{ばしょ}、気{き}になった？今度{こんど}は景色{けしき}だけでなく、そこへ行{い}った理由{りゆう}も話{はな}すね。'
+              : /みなみ/.test(stripRuby(raw))
+                ? 'みなみに気{き}づいたんだ。隠{かく}れたつもりだったらしいけど、あの子{こ}が静{しず}かに写{うつ}れるわけがないよね。'
+                : /服|髪|似合/.test(stripRuby(raw))
+                  ? 'そこまで見{み}てくれたんだ。何気{なにげ}なく選{えら}んだものの、褒{ほ}められると次{つぎ}も着{き}たくなる。'
+                  : '写真{しゃしん}そのものより、あなたがちゃんと見{み}てくれたことがうれしい。送{おく}った甲斐{かい}があった。',
+            en: 'You noticed the details in my photo. That makes sending an ordinary part of my day feel worthwhile.',
+          }],
+          sug: [
+            { jp: '写真{しゃしん}の続{つづ}きも聞{き}きたい', en: 'Tell me what happened next' },
+            { jp: 'また送{おく}ってね', en: 'Send me another sometime' },
+          ],
+          aff: 2,
+        }
+      : null;
+    const plan = answer
+      ? { kind: 'chip_answer', variant: answer }
+      : photoFollow
+        ? { kind: 'photo_followup', variant: photoFollow }
+        : direct({
       state,
       dialogue: this.dialogue,
       intentId: match?.id ?? null,
@@ -259,7 +299,7 @@ export class Companion {
       justLearned: newMemories.length > 0,
       userText: raw,
       fromChip,
-    });
+          });
 
     // What she's currently talking about decides which photo she'd reach for.
     return this._compose(plan, state, {
@@ -502,6 +542,7 @@ export class Companion {
       teach = g;
       state.lastTeachTurn = state.turns;
       if (!state.learned.includes(g.id)) state.learned.push(g.id);
+      noteGrammar(state, g.id, 'exposure');
     }
 
     // Authored lines are guaranteed fillable by pick(); an improvised one is
@@ -528,6 +569,21 @@ export class Companion {
     // shown furigana braces as if they were part of normal Japanese.
     pushHistory(state, 'her', bubbles.map((b) => b.jp).join(' ').replace(/\{[ぁ-んー]+\}/g, ''));
 
+    const unresolved = ['angry', 'sad', 'jealous', 'concerned', 'pout'].includes(sprite);
+    if (unresolved || !state.mood?.unresolved) {
+      state.mood = { id: sprite, since: state.turns, unresolved };
+    }
+    state.lastActiveAt = Date.now();
+    if (photo) {
+      state.lastPhotoContext = {
+        file: photo.file,
+        alt: photo.alt || '',
+        on: new Date().toISOString(),
+        story: bubbles.map((b) => stripRuby(b.jp)).join(' '),
+        grammar: teach?.id || null,
+      };
+    }
+
     return {
       bubbles,
       sprite: this.sprites[sprite] ? sprite : 'neutral',
@@ -536,6 +592,8 @@ export class Companion {
       suggestions,
       stage: stageOf(state),
       affection: state.affection,
+      relationship: state.relationship,
+      mood: state.mood,
       name: recall(state, 'name'),
     };
   }

@@ -337,5 +337,13 @@ export function teachPlan(state, grammar, ctx = {}) {
 
   const fresh = used.filter((g) => !state.learned.includes(g.id));
   const from = fresh.length ? fresh : used;
-  return { ...from[Math.floor(Math.random() * from.length)], used: true };
+  // Prefer points the learner has used least. Repetition remains possible—and
+  // desirable—but a mastered construction no longer crowds out a weak one.
+  const score = (g) => {
+    const s = state.grammarStats?.[g.id] || {};
+    return (s.userUses || 0) * 5 + (s.exposures || 0);
+  };
+  const min = Math.min(...from.map(score));
+  const weakest = from.filter((g) => score(g) === min);
+  return { ...weakest[Math.floor(Math.random() * weakest.length)], used: true };
 }

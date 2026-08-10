@@ -59,19 +59,24 @@ let replaying = false;
 
 function remember(entry) {
   if (replaying || !state) return;
-  state.transcript = [...(state.transcript || []), entry].slice(-TRANSCRIPT_MAX);
+  state.transcript = [...(state.transcript || []), { ...entry, at: entry.at || new Date().toISOString() }].slice(-TRANSCRIPT_MAX);
 }
 
-function addUserBubble(text) {
+const clockTime = (value = Date.now()) => new Intl.DateTimeFormat([], {
+  hour: '2-digit', minute: '2-digit',
+}).format(new Date(value));
+
+function addUserBubble(text, saved = null) {
+  const at = saved?.at || new Date().toISOString();
   const el = document.createElement('div');
   el.className = 'row me';
   el.innerHTML = `
     <div class="mine">
       <div class="bubble me">${esc(text)}</div>
-      <small class="receipt" ${replaying ? '' : 'hidden'}>既読</small>
+      <small class="receipt" ${replaying ? '' : 'hidden'}>既読 · ${clockTime(at)}</small>
     </div>`;
   log.append(el);
-  remember({ t: 'me', jp: text });
+  remember({ t: 'me', jp: text, at });
   scrollDown();
 }
 
@@ -83,6 +88,7 @@ function markLatestRead() {
 }
 
 function addHerBubble(bubble) {
+  const at = bubble.at || new Date().toISOString();
   const el = document.createElement('div');
   el.className = 'row her';
   el.innerHTML = `
@@ -90,6 +96,7 @@ function addHerBubble(bubble) {
       <div class="jp">${ruby(bubble.jp)}</div>
       ${bubble.en ? `<div class="en" hidden>${esc(bubble.en)}</div>` : ''}
       <button class="copy" title="Copy plain text" aria-label="Copy">${svgIcon('copy', 'ico-sm')}</button>
+      <small class="msgtime">${clockTime(at)}</small>
     </div>`;
   const box = el.querySelector('.bubble');
   const en = el.querySelector('.en');
@@ -105,24 +112,29 @@ function addHerBubble(bubble) {
     navigator.clipboard?.writeText(stripRuby(bubble.jp))
   );
   log.append(el);
-  remember({ t: 'her', jp: bubble.jp, en: bubble.en });
+  remember({ t: 'her', jp: bubble.jp, en: bubble.en, at });
   scrollDown();
 }
 
 function addPhoto(photo) {
+  const at = photo.at || new Date().toISOString();
   const el = document.createElement('div');
   el.className = 'row her';
   el.innerHTML = `
     <figure class="photo">
-      <img src="${esc(photo.file)}" alt="${esc(photo.alt || '')}">
+      <img src="${esc(photo.file)}" alt="${esc(photo.alt || '')}" loading="lazy" decoding="async">
       <div class="photo-fallback">${svgIcon('imageOff', 'ico-lg')}<span>${esc(photo.file)}</span></div>
+      <small class="photo-time">${clockTime(at)}</small>
     </figure>`;
   const img = el.querySelector('img');
-  img.addEventListener('error', () => el.querySelector('.photo').classList.add('missing'));
+  img.addEventListener('error', () => {
+    el.querySelector('.photo').classList.add('missing');
+    if (state) state.imageErrors = [...new Set([...(state.imageErrors || []), photo.file])].slice(-20);
+  });
   el.querySelector('.photo').addEventListener('click', () => openLightbox(photo));
   log.append(el);
-  remember({ t: 'photo', file: photo.file, alt: photo.alt });
-  keepInGallery(photo);
+  remember({ t: 'photo', file: photo.file, alt: photo.alt, story: photo.story, grammar: photo.grammar, at });
+  keepInGallery({ ...photo, at });
   scrollDown();
 }
 
@@ -130,7 +142,14 @@ function addPhoto(photo) {
 function keepInGallery(photo) {
   if (replaying || !state) return;
   state.gallery = (state.gallery || []).filter((g) => g.file !== photo.file);
-  state.gallery.push({ file: photo.file, alt: photo.alt || '', on: State.localDate() });
+  state.gallery.push({
+    file: photo.file,
+    alt: photo.alt || '',
+    on: State.localDate(new Date(photo.at || Date.now())),
+    at: photo.at || new Date().toISOString(),
+    story: photo.story || state.lastPhotoContext?.story || '',
+    grammar: photo.grammar || state.lastPhotoContext?.grammar || null,
+  });
 }
 
 function addTeach(g) {
@@ -157,7 +176,7 @@ function replayLog() {
   replaying = true;
   log.classList.add('replay');
   for (const e of past) {
-    if (e.t === 'me') addUserBubble(e.jp);
+    if (e.t === 'me') addUserBubble(e.jp, e);
     else if (e.t === 'her') addHerBubble(e);
     else if (e.t === 'photo') addPhoto(e);
     else if (e.t === 'teach') addTeach(e.g);
@@ -210,7 +229,10 @@ const PROFILE_FALLBACK = 'assets/portraits/yui-chat-profile.png';
 let spriteLabel = '';
 
 function setPresence(text) {
-  $('#sprite-label').textContent = text || spriteLabel;
+  const status = document.hidden
+    ? `最終確認 ${clockTime(state?.lastActiveAt || Date.now())}`
+    : 'オンライン';
+  $('#sprite-label').textContent = text || `${status} · ${spriteLabel}`;
 }
 
 function setSprite(key) {
@@ -239,6 +261,10 @@ function setMeter() {
   $('#stage').textContent = `${stage.jp} · ${stage.en}`;
   $('#meter-fill').style.width = `${state.affection}%`;
   $('#meter').setAttribute('aria-valuenow', state.affection);
+  const r = state.relationship;
+  const detail = `Trust ${r.trust} · Closeness ${r.closeness} · Playfulness ${r.playfulness} · Romance ${r.romance}`;
+  $('#meter').title = detail;
+  $('#meter').setAttribute('aria-label', `${stage.en}. ${detail}`);
   const name = state.memory.name?.value;
   $('#who').textContent = name ? `結衣 → ${name}` : '結衣 Yui';
 }
@@ -282,7 +308,11 @@ async function play(turn) {
     await sleep(700 + Math.random() * 650);
     dots.remove();
     setPresence();
-    addPhoto(turn.photo);
+    addPhoto({
+      ...turn.photo,
+      story: turn.bubbles.map((b) => stripRuby(b.jp)).join(' '),
+      grammar: turn.teach?.point || null,
+    });
   }
 
   if (turn.teach) addTeach(turn.teach);
@@ -341,7 +371,11 @@ let proactiveTimer = null;
 
 /** Idle gap before she says something unprompted, growing as she's ignored. */
 function nextDelay() {
-  const base = 55000 + Math.random() * 50000;             // 55–105s
+  // Her rhythm follows the day: short check-ins around lunch and after work,
+  // slower gaps during work and late evening.
+  const hour = new Date().getHours();
+  const routine = hour < 9 ? 1.35 : hour < 12 ? 1.7 : hour < 14 ? .85 : hour < 17 ? 1.8 : hour < 21 ? 1 : 1.55;
+  const base = (55000 + Math.random() * 50000) * routine;
   const backoff = Math.min(6, 1.7 ** (state.unanswered || 0));
   return Math.round(base * backoff);
 }
@@ -352,6 +386,11 @@ function scheduleProactive() {
   // Silence is only a same-day boundary. Without this reset, five ignored
   // weekday nudges could prevent her from saying anything all weekend.
   if (state.lastProactiveDate !== State.localDate()) state.unanswered = 0;
+  const hour = new Date().getHours();
+  const quiet = settings.quietHours && (hour >= settings.quietStart || hour < settings.quietEnd);
+  if (quiet) return;
+  const sentToday = state.proactiveToday?.[State.localDate()] || 0;
+  if (sentToday >= settings.dailyProactiveMax) return;
   // She gives up after a handful of unanswered messages rather than nagging
   // an empty room forever. Sending anything at all resets this.
   if ((state.unanswered || 0) >= 5) return;
@@ -367,6 +406,9 @@ async function fireProactive() {
 
   await play(turn);
   notify(turn);
+  state.proactiveToday ||= {};
+  state.proactiveToday[State.localDate()] = (state.proactiveToday[State.localDate()] || 0) + 1;
+  State.save(state);
   scheduleProactive();
 }
 
@@ -400,11 +442,12 @@ function startClock() {
 function notify(turn) {
   if (!settings.notify || !document.hidden) return;
   if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
-  const body = turn.bubbles.map((b) => stripRuby(b.jp)).join(' ');
+  const all = turn.bubbles.map((b) => stripRuby(b.jp)).join(' ');
+  const body = all.length > 78 ? `${all.slice(0, 77)}…` : all;
   try {
     // `renotify` so a second message re-alerts instead of silently replacing
     // the first — the tag still keeps her to one notification in the tray.
-    const n = new Notification('結衣 Yui', {
+    const n = new Notification(turn.photo ? '結衣が写真を送信しました' : '結衣 Yui', {
       body,
       tag: 'yui',
       renotify: true,
@@ -414,8 +457,12 @@ function notify(turn) {
       // appears in the chat when the user opens the notification.
       ...(turn.photo?.file ? { image: turn.photo.file } : {}),
     });
+    state.notificationLog = { ok: true, at: new Date().toISOString(), hasPhoto: !!turn.photo };
     n.onclick = () => { window.focus(); n.close(); };
-  } catch { /* Safari throws outside a service worker; the bubble is still there */ }
+  } catch (err) {
+    state.notificationLog = { ok: false, at: new Date().toISOString(), error: String(err) };
+    /* Safari throws outside a service worker; the bubble is still there */
+  }
 }
 
 /**
@@ -491,10 +538,24 @@ async function loadContent() {
   return Object.fromEntries(entries);
 }
 
+function preloadLikelyPhotos(content) {
+  const hour = new Date().getHours();
+  const band = hour < 5 ? 'night' : hour < 11 ? 'morning' : hour < 17 ? 'afternoon' : hour < 22 ? 'evening' : 'night';
+  const candidates = [...(content.dialogue.proactive || []), ...(content.dialogue.scheduled || [])]
+    .filter((item) => item.file && (!item.cond?.band || item.cond.band.includes(band)))
+    .slice(0, 8);
+  for (const item of candidates) {
+    const img = new Image();
+    img.decoding = 'async';
+    img.src = item.file;
+  }
+}
+
 async function boot() {
   try {
     const content = await loadContent();
     yui = new Companion(content);
+    preloadLikelyPhotos(content);
   } catch (err) {
     log.innerHTML = `<div class="row her"><div class="bubble her">
       <div class="jp">読み込みエラー</div>
@@ -525,12 +586,22 @@ function openGallery() {
   for (const g of shots) {
     const fig = document.createElement('figure');
     fig.className = 'shot';
+    fig.tabIndex = 0;
+    fig.setAttribute('role', 'button');
     fig.innerHTML = `
       <img src="${esc(g.file)}" alt="${esc(g.alt)}" loading="lazy">
       <div class="shot-fallback">${svgIcon('imageOff', 'ico-lg')}<span>${esc(g.file.split('/').pop())}</span></div>
-      <figcaption>${esc(g.alt || '')}<small>${esc(g.on || '')}</small></figcaption>`;
+      <figcaption>
+        ${esc(g.alt || '')}
+        ${g.story ? `<span class="shot-story">${esc(g.story)}</span>` : ''}
+        ${g.grammar ? `<span class="shot-grammar">N2 · ${esc(g.grammar)}</span>` : ''}
+        <small>${esc(g.on || '')}</small>
+      </figcaption>`;
     fig.querySelector('img').addEventListener('error', () => fig.classList.add('missing'));
     fig.addEventListener('click', () => openLightbox(g));
+    fig.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(g); }
+    });
     grid.append(fig);
   }
   $('#gallery-dlg').showModal();
@@ -578,6 +649,8 @@ function syncSettingsForm() {
   $('#set-scheduled').checked = settings.scheduled;
   $('#notify-status').textContent = notifyState().msg;
   $('#set-notify').checked = settings.notify;
+  $('#set-quiet').checked = settings.quietHours;
+  $('#set-daily-max').value = String(settings.dailyProactiveMax);
   const q = quotaStatus(settings);
   $('#llm-status').textContent = !llmReady(settings)
     ? 'off — authored replies only'
@@ -623,6 +696,8 @@ $('#set-save').addEventListener('click', async (e) => {
     proactive: $('#set-proactive').checked,
     scheduled: $('#set-scheduled').checked,
     notify: $('#set-notify').checked,
+    quietHours: $('#set-quiet').checked,
+    dailyProactiveMax: Number($('#set-daily-max').value),
   };
 
   if (settings.notify && typeof Notification !== 'undefined' && Notification.permission === 'default') {
@@ -661,16 +736,60 @@ $('#debug').addEventListener('click', () => {
     `pendingSlot: ${state.pendingSlot}\npendingTopic: ${state.pendingTopic}\n` +
     `unanswered: ${state.unanswered}\nLLM: ${llmReady(settings) ? settings.model : 'off'}` +
     `${lastError ? ` (last error: ${lastError})` : ''}\n\n` +
-    `memory:\n${mem}\n\ngrammar seen: ${state.learned.length}`
+    `relationship: trust ${state.relationship.trust}, closeness ${state.relationship.closeness}, ` +
+    `playfulness ${state.relationship.playfulness}, romance ${state.relationship.romance}\n` +
+    `mood: ${state.mood.id}${state.mood.unresolved ? ' (unresolved)' : ''}\n` +
+    `notification: ${state.notificationLog?.ok === false ? state.notificationLog.error : state.notificationLog?.at || 'not tested'}\n\n` +
+    `memory:\n${mem}\n\ngrammar seen: ${state.learned.length} · used: ` +
+    `${Object.values(state.grammarStats || {}).filter((g) => g.userUses).length}`
   );
 });
 
 // Coming back to the tab shouldn't trigger an instant backlog of nudges.
 document.addEventListener('visibilitychange', () => {
+  setPresence();
   if (document.hidden) return;
   scheduleProactive();
   tickScheduled();
 });
 
 settings = State.loadSettings();
+window.addEventListener('online', () => setPresence());
+window.addEventListener('offline', () => $('#sprite-label').textContent = 'オフライン · 保存済みの会話');
+let installPrompt = null;
+let waitingWorker = null;
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  installPrompt = event;
+  $('#install').hidden = false;
+});
+$('#install').addEventListener('click', async () => {
+  if (waitingWorker) {
+    waitingWorker.postMessage({ type: 'SKIP_WAITING' });
+    location.reload();
+    return;
+  }
+  if (!installPrompt) return;
+  await installPrompt.prompt();
+  installPrompt = null;
+  $('#install').hidden = true;
+});
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  navigator.serviceWorker.register('./sw.js').then((registration) => {
+    const offerUpdate = (worker) => {
+      waitingWorker = worker;
+      const button = $('#install');
+      button.hidden = false;
+      button.title = 'Update kaiwassap';
+      button.setAttribute('aria-label', 'Update kaiwassap');
+    };
+    if (registration.waiting) offerUpdate(registration.waiting);
+    registration.addEventListener('updatefound', () => {
+      const worker = registration.installing;
+      worker?.addEventListener('statechange', () => {
+        if (worker.state === 'installed' && navigator.serviceWorker.controller) offerUpdate(worker);
+      });
+    });
+  }).catch(() => {});
+}
 boot();
