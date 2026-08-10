@@ -8,6 +8,7 @@ Use this canon for every future generated image. Both characters are adult Japan
 - Slender, naturally modest/flat silhouette.
 - Softer expressions and quieter poses than Minami.
 - Usually wears blue, cyan, cream, or soft pink. Hairstyles and clothing may vary while these anchors remain recognizable.
+- Anger, jealousy, grief, and frustration must not redesign or age her face. Preserve the same soft cheeks, warm rounded brown eyes, small nose, gentle jaw, and recognizable cute proportions; convey stronger emotion through brows, blush, tears, gaze, and a small pout rather than a harsher or more photorealistic face.
 
 ## Minami
 
