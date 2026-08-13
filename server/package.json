@@ -1,0 +1,7 @@
+{
+  "name": "kaiwassap-push",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node index.js", "keys": "web-push generate-vapid-keys" },
+  "dependencies": { "web-push": "^3.6.7" }
+}

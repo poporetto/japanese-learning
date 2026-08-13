@@ -31,6 +31,7 @@
       </div>
       <div class="tools">
         <span class="emo" id="sprite-label"></span>
+        <button id="search" title="Search and bookmarks" aria-label="Search and bookmarks"><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
         <button id="install" title="Install kaiwassap" aria-label="Install kaiwassap" hidden><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></button>
         <button id="gallery" title="Photos she's sent" aria-label="Gallery"><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 11-1.296-1.296a2.4 2.4 0 0 0-3.408 0L11 16"/><path d="M4 8a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2"/><circle cx="13" cy="7" r="1" fill="currentColor"/><rect x="8" y="2" width="14" height="14" rx="2"/></svg></button>
         <button id="settings" title="Settings" aria-label="Settings"><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg></button>
@@ -114,10 +115,46 @@
         </select>
       </label>
 
+      <hr class="divider">
+      <h3>Voice messages</h3>
+      <label class="fld"><span>Yui's Japanese voice</span><select id="set-voice"></select></label>
+      <label class="fld compact"><span>Playback speed</span><select id="set-voice-rate">
+        <option value="0.75">0.75× · practice</option><option value="0.9">0.9× · gentle</option>
+        <option value="1">1× · natural</option><option value="1.15">1.15× · lively</option>
+      </select></label>
+      <p class="fine">The sweetest Japanese voice installed on this device is selected automatically. The microphone compares recognized words locally; it is a practice aid, not a phonetic score.</p>
+
+      <hr class="divider">
+      <h3>Closed-app notifications</h3>
+      <label class="fld"><span>Push server URL</span><input id="set-push-url" type="url" placeholder="https://your-push-server.example"></label>
+      <p class="fine"><button type="button" id="push-toggle" class="mini">Enable closed-app push</button> <span id="push-status">Not configured</span></p>
+
       <menu>
         <button value="cancel">Cancel</button>
         <button id="set-save" value="save" class="primary">Save</button>
       </menu>
+    </form>
+  </dialog>
+
+  <dialog id="search-dlg" class="dlg wide">
+    <form method="dialog">
+      <h2>会話を探す · Search</h2>
+      <div class="search-controls">
+        <input id="search-query" type="search" placeholder="日本語 or English…" autocomplete="off">
+        <select id="search-grammar"><option value="">All grammar</option></select>
+        <label class="chk inline"><input id="search-bookmarked" type="checkbox"><span>Bookmarks only</span></label>
+      </div>
+      <div id="search-results" class="search-results"></div>
+      <menu><button value="close">Close</button></menu>
+    </form>
+  </dialog>
+
+  <dialog id="continuity-dlg" class="dlg wide">
+    <form method="dialog">
+      <h2>Story continuity</h2>
+      <p class="fine">Development view · add <code>?dev=1</code> to the URL to enable it.</p>
+      <div id="continuity-body" class="continuity"></div>
+      <menu><button value="close">Close</button></menu>
     </form>
   </dialog>
 

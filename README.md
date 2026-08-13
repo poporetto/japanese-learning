@@ -336,6 +336,14 @@ On by default, but there are real limits worth knowing before relying on them:
 Permission is requested on your first message rather than at load, for the
 gesture reason above.
 
+For true closed-app delivery, the optional [`server/`](server/) service adds
+standards-based Web Push. In that folder, run `npm install` and `npm run keys`,
+deploy it to a persistent Node host, fill its `.env.example` variables, and
+schedule an authenticated `POST /api/push/dispatch` every 15 minutes. Enter the
+deployed URL in Settings and tap **Enable closed-app push**. The small default
+file store is intended for one personal instance; conversation history remains
+on-device and is never sent to the push service.
+
 ## Chat history and gallery
 
 The transcript persists. Reload and your conversation is still there to scroll
@@ -349,6 +357,22 @@ lightbox. Photos whose image files don't exist yet show the same dashed
 placeholder as in the chat.
 
 `↺` clears both along with her memory.
+
+The magnifying-glass button searches Japanese or English across the transcript,
+filters results by N2 point, and can show only bookmarks. Yui messages and
+grammar examples each have a bookmark control.
+
+Yui messages also have a speaker button with current-sentence highlighting and,
+where the browser supports Japanese speech recognition, a microphone practice
+button. Settings select the installed Japanese voice and playback speed. The
+default selection prefers common feminine Japanese system voices, but exact
+voice availability depends on the device. Practice reports recognized-text
+similarity, not accent or phonetic quality.
+
+On localhost, or with `?dev=1` in the URL, the info button opens a development
+continuity inspector: mood, pending topic, pending follow-up, active flags,
+active story arcs, and photos linked to them. Production keeps the existing
+compact state summary.
 
 ## Deploying to GitHub Pages
 

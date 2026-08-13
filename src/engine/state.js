@@ -46,6 +46,7 @@ function fresh() {
     scheduled: {},       // "HH:MM" -> the date it last fired, so once per day
     coldUntil: 0,        // she's withdrawn until this timestamp — see dialogue.withdrawn
     transcript: [],      // rendered chat log, so you can scroll back after a reload
+    bookmarks: [],       // durable snapshots of meaningful messages/examples
     gallery: [],         // every photo she's sent, deduped
     recent: [],          // variant ids used lately — short-term repeat guard
     lastSug: [],         // chips offered last turn, so a tap isn't mistaken for free text
@@ -98,6 +99,10 @@ const DEFAULT_SETTINGS = {
   quietStart: 23,
   quietEnd: 7,
   dailyProactiveMax: 4,
+  voiceURI: '',
+  voiceRate: 0.9,
+  pushServerUrl: '',
+  pushEnabled: false,
 };
 
 export function loadSettings() {

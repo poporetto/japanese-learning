@@ -6,6 +6,7 @@ const $ = (sel) => document.querySelector(sel);
 const log = $('#log');
 
 let yui, state, settings;
+let contentData;
 
 const ONBOARDING_KEY = 'kaiwassap.onboarding.message-tip.v1';
 
@@ -72,7 +73,87 @@ let replaying = false;
 
 function remember(entry) {
   if (replaying || !state) return;
-  state.transcript = [...(state.transcript || []), { ...entry, at: entry.at || new Date().toISOString() }].slice(-TRANSCRIPT_MAX);
+  state.transcript = [...(state.transcript || []), { id: entry.id || messageId(), ...entry, at: entry.at || new Date().toISOString() }].slice(-TRANSCRIPT_MAX);
+}
+
+const messageId = () => crypto.randomUUID?.() || `msg-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+const sentenceParts = (text) => stripRuby(text).match(/[^。！？!?]+[。！？!?]?/g)?.filter(Boolean) || [stripRuby(text)];
+const speechSupported = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+const recognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
+let speakingButton = null;
+
+function bookmarkSnapshot(entry) {
+  const list = state.bookmarks ||= [];
+  const found = list.findIndex((b) => b.id === entry.id);
+  if (found >= 0) list.splice(found, 1);
+  else list.push({ ...entry, bookmarkedAt: new Date().toISOString() });
+  State.save(state);
+  document.querySelectorAll('[data-bookmark-id]').forEach((button) => {
+    if (button.dataset.bookmarkId !== entry.id) return;
+    button.classList.toggle('active', found < 0);
+    button.setAttribute('aria-label', found < 0 ? 'Remove bookmark' : 'Bookmark');
+  });
+  return found < 0;
+}
+
+function isBookmarked(id) { return (state?.bookmarks || []).some((b) => b.id === id); }
+
+function preferredVoice() {
+  const voices = speechSupported ? speechSynthesis.getVoices().filter((v) => /^ja([-_]|$)/i.test(v.lang)) : [];
+  if (settings.voiceURI) {
+    const saved = voices.find((v) => v.voiceURI === settings.voiceURI);
+    if (saved) return saved;
+  }
+  const sweet = /(nanami|kyoko|ayumi|haruka|hina|female|日本語)/i;
+  return voices.sort((a, b) => Number(sweet.test(b.name)) - Number(sweet.test(a.name)))[0] || null;
+}
+
+function speakMessage(button, text, segmentEls) {
+  if (!speechSupported) return;
+  speechSynthesis.cancel();
+  document.querySelectorAll('.speech-segment.speaking').forEach((x) => x.classList.remove('speaking'));
+  if (speakingButton === button) { speakingButton = null; return; }
+  speakingButton = button;
+  button.classList.add('active');
+  const parts = sentenceParts(text);
+  const voice = preferredVoice();
+  const next = (index) => {
+    if (index >= parts.length) {
+      button.classList.remove('active'); speakingButton = null; return;
+    }
+    segmentEls.forEach((x, i) => x.classList.toggle('speaking', i === index));
+    const utterance = new SpeechSynthesisUtterance(parts[index]);
+    utterance.lang = 'ja-JP'; utterance.rate = Number(settings.voiceRate) || .9; utterance.pitch = 1.08;
+    if (voice) utterance.voice = voice;
+    utterance.onend = () => next(index + 1);
+    utterance.onerror = () => { button.classList.remove('active'); speakingButton = null; };
+    speechSynthesis.speak(utterance);
+  };
+  next(0);
+}
+
+const normalizeJapanese = (s) => String(s || '').normalize('NFKC').replace(/[\s、。！？!?「」『』]/g, '');
+function wordMatch(a, b) {
+  a = normalizeJapanese(a); b = normalizeJapanese(b);
+  if (!a || !b) return 0;
+  const dp = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
+  for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++)
+    dp[i][j] = a[i - 1] === b[j - 1] ? dp[i - 1][j - 1] + 1 : Math.max(dp[i - 1][j], dp[i][j - 1]);
+  return Math.round(100 * dp[a.length][b.length] / Math.max(a.length, b.length));
+}
+
+function practiseMessage(button, target, output) {
+  if (!recognitionCtor) return;
+  const rec = new recognitionCtor();
+  rec.lang = 'ja-JP'; rec.interimResults = false; rec.maxAlternatives = 1;
+  button.classList.add('active'); output.textContent = '聞いてる…';
+  rec.onresult = (event) => {
+    const heard = event.results[0][0].transcript;
+    output.textContent = `聞こえた: ${heard} · word match ${wordMatch(heard, target)}%`;
+  };
+  rec.onerror = (event) => { output.textContent = `Could not listen (${event.error}).`; };
+  rec.onend = () => button.classList.remove('active');
+  rec.start();
 }
 
 const clockTime = (value = Date.now()) => new Intl.DateTimeFormat([], {
@@ -102,20 +183,28 @@ function markLatestRead() {
 
 function addHerBubble(bubble) {
   const at = bubble.at || new Date().toISOString();
+  const id = bubble.id || messageId();
+  const parts = sentenceParts(bubble.jp);
   const el = document.createElement('div');
   el.className = 'row her';
   el.innerHTML = `
     <div class="bubble her" role="button" tabindex="0">
-      <div class="jp">${ruby(bubble.jp)}</div>
+      <div class="jp">${parts.map((part) => `<span class="speech-segment">${ruby(part)}</span>`).join('')}</div>
       ${bubble.en ? `<div class="en" hidden>${esc(bubble.en)}</div>` : ''}
-      <button class="copy" title="Copy plain text" aria-label="Copy">${svgIcon('copy', 'ico-sm')}</button>
+      <div class="message-actions">
+        ${speechSupported ? `<button class="voice" title="Play Japanese" aria-label="Play Japanese">${svgIcon('volume', 'ico-sm')}</button>` : ''}
+        ${recognitionCtor ? `<button class="practice" title="Practise speaking" aria-label="Practise speaking">${svgIcon('mic', 'ico-sm')}</button>` : ''}
+        <button class="bookmark ${isBookmarked(id) ? 'active' : ''}" data-bookmark-id="${esc(id)}" title="Bookmark" aria-label="Bookmark">${svgIcon('bookmark', 'ico-sm')}</button>
+        <button class="copy" title="Copy plain text" aria-label="Copy">${svgIcon('copy', 'ico-sm')}</button>
+      </div>
+      <small class="practice-result" aria-live="polite"></small>
       <small class="msgtime">${clockTime(at)}</small>
     </div>`;
   const box = el.querySelector('.bubble');
   const en = el.querySelector('.en');
   const toggle = () => en && (en.hidden = !en.hidden);
   box.addEventListener('click', (e) => {
-    if (e.target.closest('.copy')) return;
+    if (e.target.closest('button')) return;
     toggle();
   });
   box.addEventListener('keydown', (e) => {
@@ -124,8 +213,11 @@ function addHerBubble(bubble) {
   el.querySelector('.copy').addEventListener('click', () =>
     navigator.clipboard?.writeText(stripRuby(bubble.jp))
   );
+  el.querySelector('.bookmark').addEventListener('click', () => bookmarkSnapshot({ id, t: 'her', jp: bubble.jp, en: bubble.en, grammarId: bubble.grammarId, grammarPoint: bubble.grammarPoint, at }));
+  el.querySelector('.voice')?.addEventListener('click', (e) => speakMessage(e.currentTarget, bubble.jp, [...el.querySelectorAll('.speech-segment')]));
+  el.querySelector('.practice')?.addEventListener('click', (e) => practiseMessage(e.currentTarget, stripRuby(bubble.jp), el.querySelector('.practice-result')));
   log.append(el);
-  remember({ t: 'her', jp: bubble.jp, en: bubble.en, at });
+  remember({ id, t: 'her', jp: bubble.jp, en: bubble.en, grammarId: bubble.grammarId, grammarPoint: bubble.grammarPoint, at });
   scrollDown();
 }
 
@@ -166,6 +258,7 @@ function keepInGallery(photo) {
 }
 
 function addTeach(g) {
+  const id = g.entryId || messageId();
   const el = document.createElement('div');
   el.className = 'row her';
   el.innerHTML = `
@@ -176,9 +269,11 @@ function addTeach(g) {
       <p class="ex">${ruby(g.ex)}</p>
       <p class="exen">${esc(g.exEn)}</p>
       ${g.note ? `<p class="note">${esc(g.note)}</p>` : ''}
+      <button class="teach-bookmark bookmark ${isBookmarked(id) ? 'active' : ''}" data-bookmark-id="${esc(id)}" type="button" aria-label="Bookmark example">${svgIcon('bookmark', 'ico-sm')}</button>
     </details>`;
+  el.querySelector('.teach-bookmark').addEventListener('click', () => bookmarkSnapshot({ id, t: 'teach', g, at: new Date().toISOString() }));
   log.append(el);
-  remember({ t: 'teach', g });
+  remember({ id, t: 'teach', g });
   scrollDown();
 }
 
@@ -192,7 +287,7 @@ function replayLog() {
     if (e.t === 'me') addUserBubble(e.jp, e);
     else if (e.t === 'her') addHerBubble(e);
     else if (e.t === 'photo') addPhoto(e);
-    else if (e.t === 'teach') addTeach(e.g);
+    else if (e.t === 'teach') addTeach({ ...e.g, entryId: e.id });
   }
   const rule = document.createElement('div');
   rule.className = 'daybreak';
@@ -222,6 +317,9 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const ICONS = {
   copy: '<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
   imageOff: '<line x1="2" x2="22" y1="2" y2="22"/><path d="M10.41 10.41a2 2 0 1 1-2.83-2.83"/><line x1="13.5" x2="6" y1="13.5" y2="21"/><line x1="18" x2="21" y1="12" y2="15"/><path d="M3.59 3.59A1.99 1.99 0 0 0 3 5v14a2 2 0 0 0 2 2h14c.55 0 1.052-.22 1.41-.59"/><path d="M21 15V5a2 2 0 0 0-2-2H9"/>',
+  volume: '<path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a8 8 0 0 1 0 12"/>',
+  mic: '<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/>',
+  bookmark: '<path d="M6 3a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v19l-6-4-6 4z"/>',
 };
 
 // Width/height are attributes, not just CSS: an svg with only a viewBox sizes
@@ -311,7 +409,7 @@ async function play(turn) {
     await sleep(Math.min(1600, 320 + chars * 45));
     dots.remove();
     setPresence();
-    addHerBubble(bubble);
+    addHerBubble({ ...bubble, grammarId: turn.teach?.id, grammarPoint: turn.teach?.point });
     await sleep(220 + Math.random() * 260);
   }
 
@@ -567,6 +665,7 @@ function preloadLikelyPhotos(content) {
 async function boot() {
   try {
     const content = await loadContent();
+    contentData = content;
     yui = new Companion(content);
     preloadLikelyPhotos(content);
   } catch (err) {
@@ -651,8 +750,20 @@ function buildSettings() {
   sel.innerHTML = MODELS.map(
     (m) => `<option value="${m.id}">${esc(m.label)}</option>`
   ).join('');
+  populateVoices();
   syncSettingsForm();
 }
+
+function populateVoices() {
+  const select = $('#set-voice');
+  if (!select) return;
+  const voices = speechSupported ? speechSynthesis.getVoices().filter((v) => /^ja([-_]|$)/i.test(v.lang)) : [];
+  select.innerHTML = voices.length
+    ? `<option value="">Automatic · sweet Japanese voice</option>${voices.map((v) => `<option value="${esc(v.voiceURI)}">${esc(v.name)} · ${esc(v.lang)}</option>`).join('')}`
+    : '<option value="">No Japanese system voice found</option>';
+  select.value = settings.voiceURI || '';
+}
+if (speechSupported) speechSynthesis.addEventListener?.('voiceschanged', populateVoices);
 
 function syncSettingsForm() {
   $('#set-key').value = settings.apiKey;
@@ -664,6 +775,10 @@ function syncSettingsForm() {
   $('#set-notify').checked = settings.notify;
   $('#set-quiet').checked = settings.quietHours;
   $('#set-daily-max').value = String(settings.dailyProactiveMax);
+  $('#set-voice').value = settings.voiceURI || '';
+  $('#set-voice-rate').value = String(settings.voiceRate || .9);
+  $('#set-push-url').value = settings.pushServerUrl || '';
+  $('#push-status').textContent = settings.pushEnabled ? 'Enabled on this device' : 'Not enabled';
   const q = quotaStatus(settings);
   $('#llm-status').textContent = !llmReady(settings)
     ? 'off — authored replies only'
@@ -711,6 +826,9 @@ $('#set-save').addEventListener('click', async (e) => {
     notify: $('#set-notify').checked,
     quietHours: $('#set-quiet').checked,
     dailyProactiveMax: Number($('#set-daily-max').value),
+    voiceURI: $('#set-voice').value,
+    voiceRate: Number($('#set-voice-rate').value),
+    pushServerUrl: $('#set-push-url').value.trim().replace(/\/$/, ''),
   };
 
   if (settings.notify && typeof Notification !== 'undefined' && Notification.permission === 'default') {
@@ -722,6 +840,97 @@ $('#set-save').addEventListener('click', async (e) => {
   scheduleProactive();
   $('#settings-dlg').close();
 });
+
+const base64Key = (value) => {
+  const padded = `${value}${'='.repeat((4 - value.length % 4) % 4)}`.replace(/-/g, '+').replace(/_/g, '/');
+  return Uint8Array.from(atob(padded), (c) => c.charCodeAt(0));
+};
+
+async function setPushEnabled() {
+  const status = $('#push-status');
+  const url = $('#set-push-url').value.trim().replace(/\/$/, '');
+  if (!url) { status.textContent = 'Enter the deployed push server URL first.'; return; }
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) { status.textContent = 'Push is not supported here.'; return; }
+  try {
+    const registration = await navigator.serviceWorker.ready;
+    const existing = await registration.pushManager.getSubscription();
+    if (existing) {
+      await fetch(`${url}/api/push/unsubscribe`, { method: 'DELETE', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ endpoint: existing.endpoint }) });
+      await existing.unsubscribe(); settings.pushEnabled = false;
+      status.textContent = 'Disabled'; $('#push-toggle').textContent = 'Enable closed-app push';
+    } else {
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') throw new Error('notification permission was not granted');
+      const keyResponse = await fetch(`${url}/api/push/public-key`);
+      if (!keyResponse.ok) throw new Error('push server is unavailable');
+      const { publicKey } = await keyResponse.json();
+      const subscription = await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: base64Key(publicKey) });
+      const response = await fetch(`${url}/api/push/subscribe`, {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ subscription, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, quietHours: $('#set-quiet').checked, quietStart: settings.quietStart, quietEnd: settings.quietEnd, dailyMax: Number($('#set-daily-max').value) }),
+      });
+      if (!response.ok) { await subscription.unsubscribe(); throw new Error('subscription was rejected'); }
+      settings.pushEnabled = true; settings.pushServerUrl = url;
+      status.textContent = 'Enabled on this device'; $('#push-toggle').textContent = 'Disable closed-app push';
+    }
+    State.saveSettings(settings);
+  } catch (error) { status.textContent = `Could not enable: ${error.message}`; }
+}
+$('#push-toggle').addEventListener('click', setPushEnabled);
+
+/* ---------- search, bookmarks, continuity ---------- */
+
+function renderSearch() {
+  const query = normalizeJapanese($('#search-query').value).toLowerCase();
+  const grammar = $('#search-grammar').value;
+  const bookmarkedOnly = $('#search-bookmarked').checked;
+  const bookmarks = new Map((state.bookmarks || []).map((b) => [b.id, b]));
+  const source = bookmarkedOnly ? [...bookmarks.values()] : (state.transcript || []);
+  const results = source.filter((entry) => {
+    if (!['her', 'teach'].includes(entry.t)) return false;
+    const g = entry.t === 'teach' ? entry.g : entry;
+    if (grammar && (g.grammarId || g.id) !== grammar) return false;
+    const haystack = normalizeJapanese(`${entry.jp || ''} ${entry.en || ''} ${entry.g?.point || ''} ${entry.g?.line || ''} ${entry.g?.ex || ''}`).toLowerCase();
+    return !query || haystack.includes(query);
+  }).slice(-100).reverse();
+  $('#search-results').innerHTML = results.length ? results.map((entry) => {
+    const id = entry.id || `legacy-${entry.at || entry.g?.id}`;
+    const jp = entry.t === 'teach' ? (entry.g.line || entry.g.ex || entry.g.point) : entry.jp;
+    const en = entry.t === 'teach' ? entry.g.en : entry.en;
+    return `<article class="search-hit"><div><span class="result-type">${entry.t === 'teach' ? `N2 · ${esc(entry.g.point)}` : esc(entry.grammarPoint || 'Yui')}</span><p>${ruby(jp || '')}</p>${en ? `<small>${esc(en)}</small>` : ''}</div><button type="button" class="bookmark ${bookmarks.has(id) ? 'active' : ''}" data-result-id="${esc(id)}" aria-label="Bookmark">${svgIcon('bookmark', 'ico-sm')}</button></article>`;
+  }).join('') : '<p class="empty">No matching messages yet.</p>';
+  $('#search-results').querySelectorAll('[data-result-id]').forEach((button) => button.addEventListener('click', () => {
+    const entry = results.find((e) => (e.id || `legacy-${e.at || e.g?.id}`) === button.dataset.resultId);
+    if (entry) { bookmarkSnapshot({ ...entry, id: button.dataset.resultId }); renderSearch(); }
+  }));
+}
+
+function openSearch() {
+  const points = new Map();
+  for (const entry of state.transcript || []) {
+    if (entry.grammarId) points.set(entry.grammarId, entry.grammarPoint || entry.grammarId);
+    if (entry.t === 'teach' && entry.g?.id) points.set(entry.g.id, entry.g.point);
+  }
+  $('#search-grammar').innerHTML = `<option value="">All grammar</option>${[...points].map(([id, point]) => `<option value="${esc(id)}">${esc(point)}</option>`).join('')}`;
+  renderSearch(); $('#search-dlg').showModal();
+}
+$('#search').addEventListener('click', openSearch);
+['#search-query', '#search-grammar', '#search-bookmarked'].forEach((selector) => $(selector).addEventListener('input', renderSearch));
+
+function renderContinuity() {
+  const flags = Object.entries(state.flags || {}).filter(([, value]) => value);
+  const topics = contentData?.dialogue?.topics || [];
+  const active = topics.filter((topic) => topic.id === state.pendingTopic || flags.some(([name]) => JSON.stringify(topic).includes(`\"${name}\"`)));
+  const photos = contentData?.dialogue?.photos || [];
+  const cards = active.map((topic) => {
+    const linked = photos.filter((photo) => JSON.stringify(photo.when || {}).includes(topic.id));
+    return `<article class="arc"><h3>${esc(topic.id)}</h3><p>${topic.id === state.pendingTopic ? 'Waiting for the user’s reply.' : 'Activated by a saved story flag.'}</p>${linked.length ? `<div class="arc-photos">${linked.map((p) => `<img src="${esc(p.file)}" alt="${esc(p.alt || '')}">`).join('')}</div>` : '<small>No directly linked photos.</small>'}</article>`;
+  }).join('');
+  $('#continuity-body').innerHTML = `<section class="continuity-summary"><b>Mood</b> ${esc(state.mood.id)}${state.mood.unresolved ? ' · unresolved' : ''}<br><b>Pending topic</b> ${esc(state.pendingTopic || 'none')}<br><b>Pending follow-up</b> ${esc(state.pendingSlot || 'none')}<br><b>Active flags</b> ${flags.length}</section>${cards || '<p class="empty">No active story arcs.</p>'}`;
+}
+const devMode = ['localhost', '127.0.0.1'].includes(location.hostname) || new URLSearchParams(location.search).has('dev');
+$('#debug').title = devMode ? 'Story continuity inspector' : 'Inspect state';
+if (devMode) $('#debug').addEventListener('click', (event) => { event.stopImmediatePropagation(); renderContinuity(); $('#continuity-dlg').showModal(); }, true);
 
 $('#form').addEventListener('submit', (e) => {
   e.preventDefault();

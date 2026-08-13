@@ -1,4 +1,4 @@
-const CACHE = 'kaiwassap-v2';
+const CACHE = 'kaiwassap-v3';
 const CORE = [
   './', './index.html', './manifest.webmanifest', './src/styles.css', './src/app.js',
   './src/engine/engine.js', './src/engine/state.js', './src/engine/director.js',
@@ -31,4 +31,27 @@ self.addEventListener('fetch', (event) => {
       })
       .catch(() => caches.match(event.request).then((cached) => cached || caches.match('./index.html')))
   );
+});
+
+self.addEventListener('push', (event) => {
+  let data = {};
+  try { data = event.data?.json() || {}; } catch { data = { body: event.data?.text() || '' }; }
+  event.waitUntil(self.registration.showNotification(data.title || '結衣 Yui', {
+    body: data.body || 'ちょっと話したくなった。',
+    icon: './assets/portraits/yui-chat-profile.png',
+    badge: './assets/icons/kaiwassap-192.png',
+    tag: data.tag || 'yui-background', renotify: true,
+    ...(data.image ? { image: data.image } : {}),
+    data: { url: data.url || './', message: data.message || null },
+  }));
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const target = new URL(event.notification.data?.url || './', self.registration.scope).href;
+  event.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(async (clients) => {
+    const existing = clients.find((client) => new URL(client.url).origin === new URL(target).origin);
+    if (existing) { await existing.focus(); existing.postMessage({ type: 'PUSH_OPENED', payload: event.notification.data }); return; }
+    return self.clients.openWindow(target);
+  }));
 });

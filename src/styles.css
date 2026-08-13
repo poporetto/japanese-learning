@@ -193,7 +193,8 @@ html, body {
   box-shadow: var(--shadow);
   border-bottom-left-radius: 6px;
   cursor: pointer;
-  padding-right: 30px;
+  padding-right: 34px;
+  padding-bottom: 28px;
 }
 .bubble.me {
   background: var(--me);
@@ -224,7 +225,6 @@ ruby rt {
 }
 
 .copy {
-  position: absolute; top: 6px; right: 6px;
   background: none; border: 0; color: var(--dim);
   opacity: .35; cursor: pointer; font-size: 13px; line-height: 1;
 }
@@ -528,7 +528,6 @@ svg { max-width: 100%; }
 .copy {
   display: inline-flex; align-items: center; justify-content: center;
   width: 22px; height: 22px; padding: 0;
-  top: 5px; right: 5px;
   border-radius: 6px;
 }
 
@@ -541,6 +540,46 @@ svg { max-width: 100%; }
 input[type="checkbox"], input[type="radio"], progress { accent-color: var(--brand); }
 ::selection { background: color-mix(in srgb, var(--brand) 30%, transparent); }
 
+.message-actions {
+  position: absolute; right: 5px; bottom: 4px;
+  display: flex; gap: 2px;
+}
+.message-actions button, .search-hit > button {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 25px; height: 25px; padding: 0; border: 0; border-radius: 7px;
+  color: var(--dim); background: transparent; cursor: pointer; opacity: .48;
+}
+.message-actions button:hover, .message-actions button.active, .search-hit > button.active {
+  opacity: 1; color: var(--brand); background: var(--panel-2);
+}
+.speech-segment { border-radius: 4px; transition: background .18s ease; }
+.speech-segment.speaking { background: color-mix(in srgb, var(--brand) 22%, transparent); }
+.practice-result { display: block; margin-top: 5px; color: var(--dim); font-size: 10.5px; }
+.practice-result:empty { display: none; }
+.divider { border: 0; border-top: 1px solid var(--line); margin: 18px 0; }
+.dlg h3 { margin: 0 0 10px; font-size: 14px; }
+.search-controls { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; margin-bottom: 14px; }
+.search-controls input, .search-controls select {
+  min-width: 0; padding: 9px 11px; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--panel-2); color: var(--ink); font: inherit;
+}
+.search-controls .inline { grid-column: 1 / -1; margin: 0; }
+.search-results { display: grid; gap: 8px; max-height: min(58vh, 520px); overflow: auto; }
+.search-hit, .arc, .continuity-summary {
+  display: flex; justify-content: space-between; gap: 10px; padding: 11px;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--panel-2);
+}
+.search-hit p { margin: 4px 0; line-height: 1.8; }
+.search-hit small, .result-type, .empty { color: var(--dim); font-size: 11px; }
+.result-type { color: var(--brand-dim); }
+.continuity { display: grid; gap: 10px; max-height: 65vh; overflow: auto; }
+.continuity-summary { display: block; line-height: 1.8; }
+.arc { display: block; }
+.arc h3, .arc p { margin: 0 0 6px; }
+.arc-photos { display: flex; gap: 6px; overflow-x: auto; }
+.arc-photos img { width: 72px; height: 72px; object-fit: cover; border-radius: 9px; }
+@media (max-width: 520px) { .search-controls { grid-template-columns: 1fr; } .search-controls .inline { grid-column: auto; } }
+
 /* The line she just said, quoted inside the grammar card. This is the whole
    point of the card — the generic example is the secondary illustration. */
 .teach .said {
@@ -552,3 +591,10 @@ input[type="checkbox"], input[type="radio"], progress { accent-color: var(--bran
   font-size: 15.5px;
 }
 .teach .saidnote { margin: 0 0 8px; font-size: 10.5px; color: var(--dim); }
+.teach { position: relative; }
+.teach-bookmark {
+  position: absolute; right: 7px; bottom: 7px; width: 26px; height: 26px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 0; border-radius: 7px; background: transparent; color: var(--dim); cursor: pointer;
+}
+.teach-bookmark.active { color: var(--brand); background: var(--panel-2); }
