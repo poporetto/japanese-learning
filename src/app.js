@@ -629,6 +629,7 @@ async function loadContent() {
     persona: 'src/content/persona.json',
     intents: 'src/content/intents.json',
     dialogue: 'src/content/dialogue.json',
+    socialStories: 'src/content/social_stories.json',
     qa: 'src/content/qa.json',
     grammar: 'src/content/grammar-n2.json',
     lexicon: 'src/content/lexicon.json',
@@ -646,7 +647,10 @@ async function loadContent() {
       return [k, await res.json()];
     })
   );
-  return Object.fromEntries(entries);
+  const content = Object.fromEntries(entries);
+  content.dialogue.topics.push(...(content.socialStories.topics || []));
+  content.dialogue.photos.push(...(content.socialStories.photos || []));
+  return content;
 }
 
 function preloadLikelyPhotos(content) {
@@ -771,6 +775,7 @@ function syncSettingsForm() {
   $('#set-llm').checked = settings.llm;
   $('#set-proactive').checked = settings.proactive;
   $('#set-scheduled').checked = settings.scheduled;
+  $('#set-conversation-style').value = settings.conversationStyle || 'natural';
   $('#notify-status').textContent = notifyState().msg;
   $('#set-notify').checked = settings.notify;
   $('#set-quiet').checked = settings.quietHours;
@@ -823,6 +828,7 @@ $('#set-save').addEventListener('click', async (e) => {
     llm: $('#set-llm').checked,
     proactive: $('#set-proactive').checked,
     scheduled: $('#set-scheduled').checked,
+    conversationStyle: $('#set-conversation-style').value,
     notify: $('#set-notify').checked,
     quietHours: $('#set-quiet').checked,
     dailyProactiveMax: Number($('#set-daily-max').value),
